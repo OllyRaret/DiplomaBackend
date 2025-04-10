@@ -1,28 +1,58 @@
 from django.contrib.auth.models import AbstractUser
-from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.db.models import JSONField
+
+from users.manager import NoUsernameUserManager
 
 
 # Справочники
 class Profession(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, verbose_name='Название')
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = 'Профессия'
+        verbose_name_plural = 'Профессии'
 
 
 class Skill(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, verbose_name='Название')
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = 'Навык'
+        verbose_name_plural = 'Навыки'
 
 
 class Industry(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, verbose_name='Название')
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = 'Сфера'
+        verbose_name_plural = 'Сферы'
+
+
+class StartupStage:
+    WAITING = 'waiting'
+    IN_PROGRESS = 'in_progress'
+    LAUNCH = 'launch'
+    ANALYSIS = 'analysis'
+    COMPLETED = 'completed'
+
+    CHOICES = [
+        (WAITING, 'Ожидание'),
+        (IN_PROGRESS, 'В процессе'),
+        (LAUNCH, 'Запуск'),
+        (ANALYSIS, 'Анализ результатов'),
+        (COMPLETED, 'Завершён'),
+    ]
 
 
 # Пользователь (с возможностью авторизации по email)
@@ -32,93 +62,148 @@ class User(AbstractUser):
         INVESTOR = 'investor', 'Инвестор'
         SPECIALIST = 'specialist', 'Специалист'
 
-    username = None
-    email = models.EmailField(unique=True)
-    role = models.CharField(max_length=20, choices=Role.choices)
+    username = models.TextField(blank=True, verbose_name='Имя пользователя', help_text='Не используется')
+    email = models.EmailField(unique=True, verbose_name='Электронная почта')
+    role = models.CharField(max_length=20, choices=Role.choices, verbose_name='Роль', blank=True)
+
+    objects = NoUsernameUserManager()  # Создание пользователя без username
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     # Общие поля профиля
-    full_name = models.CharField(max_length=200)
-    bio = models.TextField(blank=True)
-    contact_phone = models.CharField(max_length=20, blank=True)
-    contact_email = models.EmailField(blank=True)
-    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
+    full_name = models.CharField(max_length=200, verbose_name='Полное имя', blank=True)
+    bio = models.TextField(blank=True, verbose_name='Описание')
+    contact_phone = models.CharField(max_length=20, blank=True, verbose_name='Контактный телефон')
+    contact_email = models.EmailField(blank=True, verbose_name='Контактная электронная почта')
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True, verbose_name='Аватар')
 
     def __str__(self):
         return f"{self.email} ({self.get_role_display()})"
 
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+
 
 # Профиль специалиста
 class SpecialistProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='specialist_profile')
-    profession = models.ForeignKey(Profession, on_delete=models.SET_NULL, null=True, blank=True)
-    skills = models.ManyToManyField(Skill, blank=True)
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name='specialist_profile',
+        verbose_name='Пользователь')
+    profession = models.ForeignKey(
+        Profession,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name='Профессия'
+    )
+    skills = models.ManyToManyField(Skill, blank=True, verbose_name='Навыки')
 
     def __str__(self):
-        return f'Specialist: {self.user.full_name}'
+        return f'Специалист: {self.user.full_name}'
+
+    class Meta:
+        verbose_name = 'Специалист'
+        verbose_name_plural = 'Специалисты'
 
 
 # Профиль основателя стартапа
 class FounderProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='founder_profile')
-    industry = models.ForeignKey(Industry, on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name='founder_profile',
+        verbose_name='Пользователь'
+    )
+    industry = models.ForeignKey(Industry, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Сфера')
 
     def __str__(self):
-        return f'Founder: {self.user.full_name}'
+        return f'Основатель: {self.user.full_name}'
+
+    class Meta:
+        verbose_name = 'Основатель стартапов'
+        verbose_name_plural = 'Основатели стартапов'
 
 
 # Опыт работы
 class WorkExperience(models.Model):
     # может быть либо у специалиста, либо у основателя
     specialist = models.ForeignKey(
-        SpecialistProfile, on_delete=models.CASCADE, related_name='experiences', null=True, blank=True
+        SpecialistProfile,
+        on_delete=models.CASCADE,
+        related_name='experiences',
+        null=True,
+        blank=True,
+        verbose_name='Специалист'
     )
     founder = models.ForeignKey(
-        FounderProfile, on_delete=models.CASCADE, related_name='experiences', null=True, blank=True
+        FounderProfile,
+        on_delete=models.CASCADE,
+        related_name='experiences',
+        null=True,
+        blank=True,
+        verbose_name='Основатель'
     )
 
-    organization = models.CharField(max_length=200)
-    position = models.CharField(max_length=100)
-    start_date = models.DateField()
-    end_date = models.DateField(blank=True, null=True)
-    description = models.TextField(blank=True)
+    organization = models.CharField(max_length=200, verbose_name='Организация')
+    position = models.CharField(max_length=100, verbose_name='Должность')
+    start_date = models.DateField(verbose_name='Дата начала')
+    end_date = models.DateField(blank=True, null=True, verbose_name='Дата окончания')
+    description = models.TextField(blank=True, verbose_name='Описание')
 
     def __str__(self):
         owner = self.specialist or self.founder
         return f'{owner}: {self.organization} — {self.position}'
 
+    class Meta:
+        verbose_name = 'Опыт работы'
+        verbose_name_plural = 'Опыт работы'
+
 
 # Профиль инвестора
 class InvestorProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Пользователь')
 
-    industry = models.ForeignKey(Industry, on_delete=models.SET_NULL, null=True)
-    company = models.CharField(max_length=255)
-    position = models.CharField(max_length=255)
+    industry = models.ForeignKey(Industry, on_delete=models.SET_NULL, null=True, verbose_name='Сфера')
+    company = models.CharField(max_length=255, verbose_name='Компания')
+    position = models.CharField(max_length=255, verbose_name='Должность')
 
-    STAGE_CHOICES = [
-        ('waiting', 'Ожидание'),
-        ('in_progress', 'В процессе'),
-        ('launch', 'Запуск'),
-        ('analysis', 'Анализ результатов'),
-        ('completed', 'Завершён'),
-    ]
-    preferred_stages = ArrayField(
-        base_field=models.CharField(max_length=20, choices=STAGE_CHOICES),
+    preferred_stages = JSONField(
         default=list,
-        verbose_name='Предпочтительные стадии инвестирования'
+        verbose_name='Предпочтительные стадии инвестирования',
+        help_text='Список стадий из StartupStage.CHOICES'
     )
 
-    investment_min = models.DecimalField(max_digits=12, decimal_places=2)
-    investment_max = models.DecimalField(max_digits=12, decimal_places=2)
+    investment_min = models.DecimalField(max_digits=12, decimal_places=2, verbose_name='Минимальная инвестиция')
+    investment_max = models.DecimalField(max_digits=12, decimal_places=2, verbose_name='Максимальная инвестиция')
+
+    def __str__(self):
+        return f'Инвестор: {self.user.full_name}'
+
+    class Meta:
+        verbose_name = 'Инвестор'
+        verbose_name_plural = 'Инвесторы'
 
 
 class InvestorPreviousInvestment(models.Model):
-    investor = models.ForeignKey(InvestorProfile, on_delete=models.CASCADE, related_name='previous_investments')
-    title = models.CharField(max_length=255)
-    industry = models.ForeignKey(Industry, on_delete=models.SET_NULL, null=True)
-    stage = models.ForeignKey('StartupStage', on_delete=models.SET_NULL, null=True)
-    date = models.DateField()
-    description = models.TextField(blank=True)
+    investor = models.ForeignKey(
+        InvestorProfile,
+        on_delete=models.CASCADE,
+        related_name='previous_investments',
+        verbose_name='Инвестор'
+    )
+    title = models.CharField(max_length=255, verbose_name='Название')
+    industry = models.ForeignKey(Industry, on_delete=models.SET_NULL, null=True, verbose_name='Сфера')
+    stage = models.CharField(max_length=20, choices=StartupStage.CHOICES, verbose_name='Стадия')
+    date = models.DateField(verbose_name='Дата')
+    description = models.TextField(blank=True, verbose_name='Описание')
+
+    def __str__(self):
+        return f'{self.title} ({self.date})'
+
+    class Meta:
+        verbose_name = 'Предыдущая инвестиция'
+        verbose_name_plural = 'Предыдущие инвестиции'
