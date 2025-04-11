@@ -1,9 +1,7 @@
 from django.contrib import admin
-from .models import (
-    User, Profession, Skill, Industry,
-    SpecialistProfile, FounderProfile, InvestorProfile,
-    WorkExperience, InvestorPreviousInvestment
-)
+
+from .forms import InvestorProfileForm
+from .models import WorkExperience, InvestorPreviousInvestment, User, SpecialistProfile, FounderProfile, InvestorProfile
 
 
 class WorkExperienceInline(admin.TabularInline):
@@ -27,21 +25,6 @@ class UserAdmin(admin.ModelAdmin):
     search_fields = ('email', 'full_name')
 
 
-@admin.register(Profession)
-class ProfessionAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-
-
-@admin.register(Skill)
-class SkillAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-
-
-@admin.register(Industry)
-class IndustryAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-
-
 @admin.register(SpecialistProfile)
 class SpecialistProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'profession')
@@ -59,4 +42,5 @@ class FounderProfileAdmin(admin.ModelAdmin):
 class InvestorProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'company', 'position')
     list_filter = ('industry',)
+    form = InvestorProfileForm
     inlines = [PreviousInvestmentInline]

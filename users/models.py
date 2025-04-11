@@ -2,57 +2,9 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models import JSONField
 
+from reference.models import Profession, Skill, Industry
+from reference.stages import StartupStage
 from users.manager import NoUsernameUserManager
-
-
-# Справочники
-class Profession(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название')
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Профессия'
-        verbose_name_plural = 'Профессии'
-
-
-class Skill(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название')
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Навык'
-        verbose_name_plural = 'Навыки'
-
-
-class Industry(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название')
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Сфера'
-        verbose_name_plural = 'Сферы'
-
-
-class StartupStage:
-    WAITING = 'waiting'
-    IN_PROGRESS = 'in_progress'
-    LAUNCH = 'launch'
-    ANALYSIS = 'analysis'
-    COMPLETED = 'completed'
-
-    CHOICES = [
-        (WAITING, 'Ожидание'),
-        (IN_PROGRESS, 'В процессе'),
-        (LAUNCH, 'Запуск'),
-        (ANALYSIS, 'Анализ результатов'),
-        (COMPLETED, 'Завершён'),
-    ]
 
 
 # Пользователь (с возможностью авторизации по email)
