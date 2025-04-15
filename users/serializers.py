@@ -1,25 +1,44 @@
+from django.contrib.auth import authenticate
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+from djoser.serializers import TokenCreateSerializer as DjoserTokenCreateSerializer
 from djoser.serializers import UserCreateSerializer as BaseUserCreateSerializer, UserSerializer as BaseUserSerializer
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 
+from reference.models import Profession, Skill, Industry
+from reference.serializers import ProfessionSerializer, SkillSerializer, IndustrySerializer
 from .models import User, SpecialistProfile, FounderProfile, InvestorProfile, WorkExperience, InvestorPreviousInvestment
 
 
-class UserCreateSerializer(BaseUserCreateSerializer):
-    password = serializers.CharField(write_only=True)
-    password_confirmation = serializers.CharField(write_only=True)
-    role = serializers.ChoiceField(choices=User.Role.choices)
+class CustomUserCreateSerializer(BaseUserCreateSerializer):
+    email = serializers.EmailField(
+        validators=[
+            UniqueValidator(queryset=User.objects.all(), message="Пользователь с такой почтой уже зарегистрирован.")
+        ]
+    )
+    password = serializers.CharField(write_only=True, required=True)
+    re_password = serializers.CharField(write_only=True, required=True)
+    role = serializers.ChoiceField(choices=User.Role.choices, required=True)
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'password', 'password_confirmation', 'role')
+        fields = ('id', 'email', 'password', 're_password', 'role')
 
     def validate(self, data):
-        if data['password'] != data['password_confirmation']:
-            raise serializers.ValidationError("Пароли не совпадают.")
+        if data['password'] != data['re_password']:
+            raise serializers.ValidationError({"re_password": "Пароли не совпадают."})
+
+        # Проверка пароля через встроенные валидаторы Django
+        try:
+            validate_password(data['password'], user=User(email=data.get('email')))
+        except ValidationError as e:
+            raise serializers.ValidationError({"password": list(e.messages)})
+
         return data
 
     def create(self, validated_data):
-        validated_data.pop('password_confirmation')
+        validated_data.pop('re_password')
         role = validated_data.get('role')
         user = User.objects.create_user(**validated_data)
 
@@ -34,7 +53,38 @@ class UserCreateSerializer(BaseUserCreateSerializer):
         return user
 
 
-class UserSerializer(BaseUserSerializer):
+class CustomTokenCreateSerializer(DjoserTokenCreateSerializer):
+    email = serializers.EmailField(required=True, error_messages={
+        'required': 'Поле email обязательно.',
+        'blank': 'Поле email не может быть пустым.',
+        'invalid': 'Введите корректный адрес электронной почты.'
+    })
+    password = serializers.CharField(required=True, error_messages={
+        'required': 'Поле пароль обязательно.',
+        'blank': 'Поле пароль не может быть пустым.'
+    })
+
+    default_error_messages = {
+        'invalid_credentials': 'Неверный email или пароль.',
+        'inactive_account': 'Учетная запись отключена.'
+    }
+
+    def validate(self, attrs):
+        self.user = authenticate(
+            request=self.context.get('request'),
+            email=attrs.get('email'),
+            password=attrs.get('password')
+        )
+
+        if not self.user:
+            raise serializers.ValidationError(self.error_messages['invalid_credentials'], code='authorization')
+        if not self.user.is_active:
+            raise serializers.ValidationError(self.error_messages['inactive_account'], code='authorization')
+
+        return attrs
+
+
+class CustomUserSerializer(BaseUserSerializer):
     class Meta:
         model = User
         fields = ('id', 'email', 'role', 'full_name', 'bio', 'contact_phone', 'contact_email', 'avatar')
@@ -56,19 +106,28 @@ class InvestorPreviousInvestmentSerializer(serializers.ModelSerializer):
 
 class SpecialistProfileSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
+    role = serializers.ChoiceField(source='user.role', choices=User.Role.choices, read_only=True)
     full_name = serializers.CharField(source='user.full_name')
     bio = serializers.CharField(source='user.bio')
     contact_phone = serializers.CharField(source='user.contact_phone')
     contact_email = serializers.EmailField(source='user.contact_email')
     avatar = serializers.ImageField(source='user.avatar')
     experience = WorkExperienceSerializer(many=True, source='experiences', required=False)
+    profession = ProfessionSerializer(read_only=True)
+    profession_id = serializers.PrimaryKeyRelatedField(
+        queryset=Profession.objects.all(), source='profession', write_only=True, required=False
+    )
+    skills = SkillSerializer(many=True, read_only=True)
+    skill_ids = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=Skill.objects.all(), source='skills', write_only=True, required=False
+    )
     is_favorited = serializers.SerializerMethodField()
 
     class Meta:
         model = SpecialistProfile
         fields = [
-            'user_id', 'full_name', 'bio', 'contact_phone', 'contact_email', 'avatar',
-            'profession', 'skills', 'experience', 'is_favorited'
+            'user_id', 'role', 'full_name', 'bio', 'contact_phone', 'contact_email', 'avatar',
+            'profession', 'profession_id', 'skills', 'skill_ids', 'experience', 'is_favorited'
         ]
 
     def get_is_favorited(self, obj):
@@ -99,23 +158,28 @@ class SpecialistProfileSerializer(serializers.ModelSerializer):
             WorkExperience.objects.create(specialist=instance, **exp)
 
         instance.save()
-        return super().update(instance, validated_data)
+        return instance
 
 
 class FounderProfileSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
+    role = serializers.ChoiceField(source='user.role', choices=User.Role.choices, read_only=True)
     full_name = serializers.CharField(source='user.full_name')
     bio = serializers.CharField(source='user.bio')
     contact_phone = serializers.CharField(source='user.contact_phone')
     contact_email = serializers.EmailField(source='user.contact_email')
     avatar = serializers.ImageField(source='user.avatar')
     experience = WorkExperienceSerializer(many=True, source='experiences', required=False)
+    industry = IndustrySerializer(read_only=True)
+    industry_id = serializers.PrimaryKeyRelatedField(
+        queryset=Industry.objects.all(), source='industry', write_only=True, required=False
+    )
     is_favorited = serializers.SerializerMethodField()
 
     class Meta:
         model = FounderProfile
         fields = [
-            'user_id', 'full_name', 'industry', 'bio', 'contact_phone', 'contact_email', 'avatar',
+            'user_id', 'role', 'full_name', 'industry', 'industry_id', 'bio', 'contact_phone', 'contact_email', 'avatar',
             'experience', 'is_favorited'
         ]
 
@@ -148,22 +212,28 @@ class FounderProfileSerializer(serializers.ModelSerializer):
 
 class InvestorProfileSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
+    role = serializers.ChoiceField(source='user.role', choices=User.Role.choices, read_only=True)
     full_name = serializers.CharField(source='user.full_name')
     bio = serializers.CharField(source='user.bio')
     contact_phone = serializers.CharField(source='user.contact_phone')
     contact_email = serializers.EmailField(source='user.contact_email')
     avatar = serializers.ImageField(source='user.avatar')
     experience = InvestorPreviousInvestmentSerializer(many=True, source='previous_investments', required=False)
+    industry = IndustrySerializer(read_only=True)
+    industry_id = serializers.PrimaryKeyRelatedField(
+        queryset=Industry.objects.all(), source='industry', write_only=True, required=False
+    )
     is_favorited = serializers.SerializerMethodField()
 
     class Meta:
         model = InvestorProfile
         fields = [
-            'user_id', 'full_name', 'industry', 'company', 'position',
+            'user_id', 'role', 'full_name', 'industry', 'industry_id', 'company', 'position',
             'bio', 'contact_phone', 'contact_email', 'avatar',
             'preferred_stages', 'investment_min', 'investment_max',
             'experience', 'is_favorited'
         ]
+
 
     def get_is_favorited(self, obj):
         request = self.context.get('request')

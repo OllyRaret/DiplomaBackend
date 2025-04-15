@@ -118,7 +118,12 @@ class WorkExperience(models.Model):
 
 # Профиль инвестора
 class InvestorProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name='investor_profile',
+        verbose_name='Пользователь'
+    )
 
     industry = models.ForeignKey(Industry, on_delete=models.SET_NULL, null=True, verbose_name='Сфера')
     company = models.CharField(max_length=255, verbose_name='Компания')
