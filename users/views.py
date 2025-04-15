@@ -10,7 +10,7 @@ from .serializers import (
 )
 
 
-class UserProfileView(RetrieveUpdateAPIView):
+class CurrentUserProfileView(RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):

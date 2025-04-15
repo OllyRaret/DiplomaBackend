@@ -44,7 +44,8 @@ class SpecialistProfile(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name='specialist_profile',
-        verbose_name='Пользователь')
+        verbose_name='Пользователь'
+    )
     profession = models.ForeignKey(
         Profession,
         on_delete=models.SET_NULL,

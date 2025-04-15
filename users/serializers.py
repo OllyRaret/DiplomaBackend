@@ -78,20 +78,27 @@ class SpecialistProfileSerializer(serializers.ModelSerializer):
         return False # ToDo
 
     def update(self, instance, validated_data):
-        user_data = validated_data.pop('user', {})
-        for attr, value in user_data.items():
-            setattr(instance.user, attr, value)
-        instance.user.save()
+        user = instance.user
 
-        skills = validated_data.pop('skills', None)
-        if skills is not None:
-            instance.skills.set(skills)
+        # Обновляем поля User (обнуляем при отсутствии)
+        user.full_name = validated_data.get('full_name')
+        user.bio = validated_data.get('bio')
+        user.contact_phone = validated_data.get('contact_phone')
+        user.contact_email = validated_data.get('contact_email')
+        user.avatar = validated_data.get('avatar')
+        user.save()
 
-        experience_data = validated_data.pop('experiences', [])
+        # Обновляем поля профиля (обнуляем при отсутствии)
+        instance.profession = validated_data.get('profession')
+        skills = validated_data.get('skills', [])
+        instance.skills.set(skills)
+
+        experiences_data = validated_data.pop('experiences', [])
         instance.experiences.all().delete()
-        for exp in experience_data:
+        for exp in experiences_data:
             WorkExperience.objects.create(specialist=instance, **exp)
 
+        instance.save()
         return super().update(instance, validated_data)
 
 
@@ -119,17 +126,24 @@ class FounderProfileSerializer(serializers.ModelSerializer):
         return False # ToDo
 
     def update(self, instance, validated_data):
-        user_data = validated_data.pop('user', {})
-        for attr, value in user_data.items():
-            setattr(instance.user, attr, value)
-        instance.user.save()
+        user = instance.user
 
-        experience_data = validated_data.pop('experiences', [])
+        user.full_name = validated_data.get('full_name')
+        user.bio = validated_data.get('bio')
+        user.contact_phone = validated_data.get('contact_phone')
+        user.contact_email = validated_data.get('contact_email')
+        user.avatar = validated_data.get('avatar')
+        user.save()
+
+        instance.industry = validated_data.get('industry')
+
+        experiences_data = validated_data.get('experience', [])
         instance.experiences.all().delete()
-        for exp in experience_data:
+        for exp in experiences_data:
             WorkExperience.objects.create(founder=instance, **exp)
 
-        return super().update(instance, validated_data)
+        instance.save()
+        return instance
 
 
 class InvestorProfileSerializer(serializers.ModelSerializer):
@@ -158,15 +172,26 @@ class InvestorProfileSerializer(serializers.ModelSerializer):
         return False # ToDo
 
     def update(self, instance, validated_data):
-        user_data = validated_data.pop('user', {})
-        for attr, value in user_data.items():
-            setattr(instance.user, attr, value)
-        instance.user.save()
+        user = instance.user
 
-        experience_data = validated_data.pop('previous_investments', [])
+        user.full_name = validated_data.get('full_name')
+        user.bio = validated_data.get('bio')
+        user.contact_phone = validated_data.get('contact_phone')
+        user.contact_email = validated_data.get('contact_email')
+        user.avatar = validated_data.get('avatar')
+        user.save()
+
+        instance.industry = validated_data.get('industry')
+        instance.company = validated_data.get('company')
+        instance.position = validated_data.get('position')
+        instance.preferred_stages.set(validated_data.get('preferred_stages', []))
+        instance.investment_min = validated_data.get('investment_min')
+        instance.investment_max = validated_data.get('investment_max')
+
+        previous_data = validated_data.get('previous_investments', [])
         instance.previous_investments.all().delete()
-        for exp in experience_data:
+        for exp in previous_data:
             InvestorPreviousInvestment.objects.create(investor=instance, **exp)
 
-        return super().update(instance, validated_data)
-
+        instance.save()
+        return instance
