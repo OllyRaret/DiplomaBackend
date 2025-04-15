@@ -9,7 +9,7 @@ class UserCreateSerializer(BaseUserCreateSerializer):
     password_confirmation = serializers.CharField(write_only=True)
     role = serializers.ChoiceField(choices=User.Role.choices)
 
-    class Meta(BaseUserCreateSerializer.Meta):
+    class Meta:
         model = User
         fields = ('id', 'email', 'password', 'password_confirmation', 'role')
 
