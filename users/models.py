@@ -125,18 +125,19 @@ class InvestorProfile(models.Model):
         verbose_name='Пользователь'
     )
 
-    industry = models.ForeignKey(Industry, on_delete=models.SET_NULL, null=True, verbose_name='Сфера')
-    company = models.CharField(max_length=255, verbose_name='Компания')
-    position = models.CharField(max_length=255, verbose_name='Должность')
+    industry = models.ForeignKey(Industry, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Сфера')
+    company = models.CharField(max_length=255, verbose_name='Компания', blank=True)
+    position = models.CharField(max_length=255, verbose_name='Должность', blank=True)
 
     preferred_stages = JSONField(
         default=list,
         verbose_name='Предпочтительные стадии инвестирования',
-        help_text='Список стадий из StartupStage.CHOICES'
+        help_text='Список стадий из StartupStage.CHOICES',
+        blank=True
     )
 
-    investment_min = models.DecimalField(max_digits=12, decimal_places=2, verbose_name='Минимальная инвестиция')
-    investment_max = models.DecimalField(max_digits=12, decimal_places=2, verbose_name='Максимальная инвестиция')
+    investment_min = models.DecimalField(max_digits=12, decimal_places=2, blank=True, verbose_name='Минимальная инвестиция')
+    investment_max = models.DecimalField(max_digits=12, decimal_places=2, blank=True, verbose_name='Максимальная инвестиция')
 
     def __str__(self):
         return f'Инвестор: {self.user.full_name}'
