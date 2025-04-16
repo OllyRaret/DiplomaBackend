@@ -104,14 +104,21 @@ class InvestorPreviousInvestmentSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'industry', 'stage', 'date', 'description']
 
 
+def update_user_fields(user, data):
+    user_data = data.get('user', {})
+    for field in ['full_name', 'bio', 'contact_phone', 'contact_email', 'avatar']:
+        setattr(user, field, user_data.get(field, getattr(user, field)))
+    user.save()
+
+
 class SpecialistProfileSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
     role = serializers.ChoiceField(source='user.role', choices=User.Role.choices, read_only=True)
-    full_name = serializers.CharField(source='user.full_name')
-    bio = serializers.CharField(source='user.bio')
-    contact_phone = serializers.CharField(source='user.contact_phone')
-    contact_email = serializers.EmailField(source='user.contact_email')
-    avatar = serializers.ImageField(source='user.avatar')
+    full_name = serializers.CharField(source='user.full_name', required=False, allow_blank=True, allow_null=True)
+    bio = serializers.CharField(source='user.bio', required=False, allow_blank=True, allow_null=True)
+    contact_phone = serializers.CharField(source='user.contact_phone', required=False, allow_blank=True, allow_null=True)
+    contact_email = serializers.EmailField(source='user.contact_email', required=False, allow_blank=True, allow_null=True)
+    avatar = serializers.ImageField(source='user.avatar', required=False, allow_null=True)
     experience = WorkExperienceSerializer(many=True, source='experiences', required=False)
     profession = ProfessionSerializer(read_only=True)
     profession_id = serializers.PrimaryKeyRelatedField(
@@ -139,13 +146,8 @@ class SpecialistProfileSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         user = instance.user
 
-        # Обновляем поля User (обнуляем при отсутствии)
-        user.full_name = validated_data.get('full_name')
-        user.bio = validated_data.get('bio')
-        user.contact_phone = validated_data.get('contact_phone')
-        user.contact_email = validated_data.get('contact_email')
-        user.avatar = validated_data.get('avatar')
-        user.save()
+        # Обновляем поля User
+        update_user_fields(user, validated_data)
 
         # Обновляем поля профиля (обнуляем при отсутствии)
         instance.profession = validated_data.get('profession')
@@ -164,11 +166,11 @@ class SpecialistProfileSerializer(serializers.ModelSerializer):
 class FounderProfileSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
     role = serializers.ChoiceField(source='user.role', choices=User.Role.choices, read_only=True)
-    full_name = serializers.CharField(source='user.full_name')
-    bio = serializers.CharField(source='user.bio')
-    contact_phone = serializers.CharField(source='user.contact_phone')
-    contact_email = serializers.EmailField(source='user.contact_email')
-    avatar = serializers.ImageField(source='user.avatar')
+    full_name = serializers.CharField(source='user.full_name', required=False, allow_blank=True, allow_null=True)
+    bio = serializers.CharField(source='user.bio', required=False, allow_blank=True, allow_null=True)
+    contact_phone = serializers.CharField(source='user.contact_phone', required=False, allow_blank=True, allow_null=True)
+    contact_email = serializers.EmailField(source='user.contact_email', required=False, allow_blank=True, allow_null=True)
+    avatar = serializers.ImageField(source='user.avatar', required=False, allow_null=True)
     experience = WorkExperienceSerializer(many=True, source='experiences', required=False)
     industry = IndustrySerializer(read_only=True)
     industry_id = serializers.PrimaryKeyRelatedField(
@@ -192,16 +194,9 @@ class FounderProfileSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         user = instance.user
 
-        user.full_name = validated_data.get('full_name')
-        user.bio = validated_data.get('bio')
-        user.contact_phone = validated_data.get('contact_phone')
-        user.contact_email = validated_data.get('contact_email')
-        user.avatar = validated_data.get('avatar')
-        user.save()
+        update_user_fields(user, validated_data)
 
-        instance.industry = validated_data.get('industry')
-
-        experiences_data = validated_data.get('experience', [])
+        experiences_data = validated_data.get('experiences', [])
         instance.experiences.all().delete()
         for exp in experiences_data:
             WorkExperience.objects.create(founder=instance, **exp)
@@ -213,11 +208,11 @@ class FounderProfileSerializer(serializers.ModelSerializer):
 class InvestorProfileSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
     role = serializers.ChoiceField(source='user.role', choices=User.Role.choices, read_only=True)
-    full_name = serializers.CharField(source='user.full_name')
-    bio = serializers.CharField(source='user.bio')
-    contact_phone = serializers.CharField(source='user.contact_phone')
-    contact_email = serializers.EmailField(source='user.contact_email')
-    avatar = serializers.ImageField(source='user.avatar')
+    full_name = serializers.CharField(source='user.full_name', required=False, allow_blank=True, allow_null=True)
+    bio = serializers.CharField(source='user.bio', required=False, allow_blank=True, allow_null=True)
+    contact_phone = serializers.CharField(source='user.contact_phone', required=False, allow_blank=True, allow_null=True)
+    contact_email = serializers.EmailField(source='user.contact_email', required=False, allow_blank=True, allow_null=True)
+    avatar = serializers.ImageField(source='user.avatar', required=False, allow_null=True)
     experience = InvestorPreviousInvestmentSerializer(many=True, source='previous_investments', required=False)
     industry = IndustrySerializer(read_only=True)
     industry_id = serializers.PrimaryKeyRelatedField(
@@ -241,22 +236,17 @@ class InvestorProfileSerializer(serializers.ModelSerializer):
             return False
         return False # ToDo
 
+
     def update(self, instance, validated_data):
         user = instance.user
 
-        user.full_name = validated_data.get('full_name')
-        user.bio = validated_data.get('bio')
-        user.contact_phone = validated_data.get('contact_phone')
-        user.contact_email = validated_data.get('contact_email')
-        user.avatar = validated_data.get('avatar')
-        user.save()
+        update_user_fields(user, validated_data)
 
-        instance.industry = validated_data.get('industry')
-        instance.company = validated_data.get('company')
-        instance.position = validated_data.get('position')
-        instance.preferred_stages.set(validated_data.get('preferred_stages', []))
-        instance.investment_min = validated_data.get('investment_min')
-        instance.investment_max = validated_data.get('investment_max')
+        instance.company = validated_data.get('company', instance.company)
+        instance.position = validated_data.get('position', instance.position)
+        instance.preferred_stages = validated_data.get('preferred_stages', instance.preferred_stages)
+        instance.investment_min = validated_data.get('investment_min', instance.investment_min)
+        instance.investment_max = validated_data.get('investment_max', instance.investment_max)
 
         previous_data = validated_data.get('previous_investments', [])
         instance.previous_investments.all().delete()

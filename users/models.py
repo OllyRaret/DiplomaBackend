@@ -24,10 +24,10 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     # Общие поля профиля
-    full_name = models.CharField(max_length=200, verbose_name='Полное имя', blank=True)
-    bio = models.TextField(blank=True, verbose_name='Описание')
-    contact_phone = models.CharField(max_length=20, blank=True, verbose_name='Контактный телефон')
-    contact_email = models.EmailField(blank=True, verbose_name='Контактная электронная почта')
+    full_name = models.CharField(max_length=200, verbose_name='Полное имя', blank=True, null=True)
+    bio = models.TextField(blank=True, null=True, verbose_name='Описание')
+    contact_phone = models.CharField(max_length=20, blank=True, null=True, verbose_name='Контактный телефон')
+    contact_email = models.EmailField(blank=True, null=True, verbose_name='Контактная электронная почта')
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True, verbose_name='Аватар')
 
     def __str__(self):
