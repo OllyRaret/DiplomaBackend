@@ -136,8 +136,8 @@ class InvestorProfile(models.Model):
         blank=True
     )
 
-    investment_min = models.DecimalField(max_digits=12, decimal_places=2, blank=True, verbose_name='Минимальная инвестиция')
-    investment_max = models.DecimalField(max_digits=12, decimal_places=2, blank=True, verbose_name='Максимальная инвестиция')
+    investment_min = models.DecimalField(max_digits=12, decimal_places=2, null=True, verbose_name='Минимальная инвестиция')
+    investment_max = models.DecimalField(max_digits=12, decimal_places=2, null=True, verbose_name='Максимальная инвестиция')
 
     def __str__(self):
         return f'Инвестор: {self.user.full_name}'
