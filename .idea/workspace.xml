@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b63f324-3bf0-42b6-b748-f6e9b49705bf" name="Changes" comment="Fix Investor Fields">
+    <list default="true" id="6b63f324-3bf0-42b6-b748-f6e9b49705bf" name="Changes" comment="Fix Profile Updating">
+      <change afterPath="$PROJECT_DIR$/messaging/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/messaging/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reference/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/serializers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -162,7 +166,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744803832168</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Fix Profile Updating">
+      <option name="closed" value="true" />
+      <created>1744816849172</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1744816849172</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -187,6 +199,7 @@
     <MESSAGE value="Blank Fields For Investor" />
     <MESSAGE value="Add Media Root" />
     <MESSAGE value="Fix Investor Fields" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix Investor Fields" />
+    <MESSAGE value="Fix Profile Updating" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix Profile Updating" />
   </component>
 </project>

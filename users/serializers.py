@@ -8,7 +8,9 @@ from rest_framework.validators import UniqueValidator
 
 from reference.models import Profession, Skill, Industry
 from reference.serializers import ProfessionSerializer, SkillSerializer, IndustrySerializer
+from reference.stages import StartupStage
 from .models import User, SpecialistProfile, FounderProfile, InvestorProfile, WorkExperience, InvestorPreviousInvestment
+from .utils import update_user_fields
 
 
 class CustomUserCreateSerializer(BaseUserCreateSerializer):
@@ -99,16 +101,14 @@ class WorkExperienceSerializer(serializers.ModelSerializer):
 
 # Инвестиционный опыт
 class InvestorPreviousInvestmentSerializer(serializers.ModelSerializer):
+    industry = IndustrySerializer(read_only=True)
+    industry_id = serializers.PrimaryKeyRelatedField(
+        queryset=Industry.objects.all(), source='industry', write_only=True
+    )
+
     class Meta:
         model = InvestorPreviousInvestment
-        fields = ['id', 'title', 'industry', 'stage', 'date', 'description']
-
-
-def update_user_fields(user, data):
-    user_data = data.get('user', {})
-    for field in ['full_name', 'bio', 'contact_phone', 'contact_email', 'avatar']:
-        setattr(user, field, user_data.get(field, getattr(user, field)))
-    user.save()
+        fields = ['id', 'title', 'industry', 'industry_id', 'stage', 'date', 'description']
 
 
 class SpecialistProfileSerializer(serializers.ModelSerializer):
@@ -242,9 +242,17 @@ class InvestorProfileSerializer(serializers.ModelSerializer):
 
         update_user_fields(user, validated_data)
 
+        preferred_stages = validated_data.get('preferred_stages', instance.preferred_stages)
+        valid_stages = [choice[0] for choice in StartupStage.CHOICES]
+        invalid_stages = [stage for stage in preferred_stages if stage not in valid_stages]
+        if invalid_stages:
+            raise serializers.ValidationError({
+                'preferred_stages': f"Недопустимые значения: {invalid_stages}. Допустимые: {valid_stages}"
+            })
+
         instance.company = validated_data.get('company', instance.company)
         instance.position = validated_data.get('position', instance.position)
-        instance.preferred_stages = validated_data.get('preferred_stages', instance.preferred_stages)
+        instance.preferred_stages = preferred_stages
         instance.investment_min = validated_data.get('investment_min', instance.investment_min)
         instance.investment_max = validated_data.get('investment_max', instance.investment_max)
 
