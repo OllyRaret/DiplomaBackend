@@ -150,14 +150,16 @@ class SpecialistProfileSerializer(serializers.ModelSerializer):
         update_user_fields(user, validated_data)
 
         # Обновляем поля профиля (обнуляем при отсутствии)
-        instance.profession = validated_data.get('profession')
-        skills = validated_data.get('skills', [])
-        instance.skills.set(skills)
+        instance.profession = validated_data.get('profession', instance.profession)
+        if validated_data.__contains__('skills'):
+            skills = validated_data.get('skills', [])
+            instance.skills.set(skills)
 
-        experiences_data = validated_data.pop('experiences', [])
-        instance.experiences.all().delete()
-        for exp in experiences_data:
-            WorkExperience.objects.create(specialist=instance, **exp)
+        if validated_data.__contains__('experiences'):
+            experiences_data = validated_data.pop('experiences', instance.experiences)
+            instance.experiences.all().delete()
+            for exp in experiences_data:
+                WorkExperience.objects.create(specialist=instance, **exp)
 
         instance.save()
         return instance
@@ -196,10 +198,13 @@ class FounderProfileSerializer(serializers.ModelSerializer):
 
         update_user_fields(user, validated_data)
 
-        experiences_data = validated_data.get('experiences', [])
-        instance.experiences.all().delete()
-        for exp in experiences_data:
-            WorkExperience.objects.create(founder=instance, **exp)
+        instance.industry = validated_data.get('industry', instance.industry)
+
+        if validated_data.__contains__('experiences'):
+            experiences_data = validated_data.get('experiences', instance.experiences)
+            instance.experiences.all().delete()
+            for exp in experiences_data:
+                WorkExperience.objects.create(founder=instance, **exp)
 
         instance.save()
         return instance
@@ -250,16 +255,18 @@ class InvestorProfileSerializer(serializers.ModelSerializer):
                 'preferred_stages': f"Недопустимые значения: {invalid_stages}. Допустимые: {valid_stages}"
             })
 
+        instance.industry = validated_data.get('industry', instance.industry)
         instance.company = validated_data.get('company', instance.company)
         instance.position = validated_data.get('position', instance.position)
         instance.preferred_stages = preferred_stages
         instance.investment_min = validated_data.get('investment_min', instance.investment_min)
         instance.investment_max = validated_data.get('investment_max', instance.investment_max)
 
-        previous_data = validated_data.get('previous_investments', [])
-        instance.previous_investments.all().delete()
-        for exp in previous_data:
-            InvestorPreviousInvestment.objects.create(investor=instance, **exp)
+        if validated_data.__contains__('previous_investments'):
+            previous_data = validated_data.get('previous_investments', [])
+            instance.previous_investments.all().delete()
+            for exp in previous_data:
+                InvestorPreviousInvestment.objects.create(investor=instance, **exp)
 
         instance.save()
         return instance
