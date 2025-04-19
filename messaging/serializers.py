@@ -13,6 +13,22 @@ class MessageSerializer(serializers.ModelSerializer):
         fields = ['id', 'sender', 'recipient', 'text', 'timestamp', 'is_read']
         read_only_fields = ['id', 'sender', 'timestamp', 'is_read']
 
+    def validate(self, data):
+        sender = self.context['request'].user
+        recipient_id = data.get('recipient_id')
+
+        # Проверка существования пользователя
+        try:
+            recipient = User.objects.get(id=recipient_id)
+        except User.DoesNotExist:
+            raise serializers.ValidationError({'recipient_id': 'Пользователь с таким ID не найден.'})
+
+        # Проверка на отправку самому себе
+        if sender.id == recipient.id:
+            raise serializers.ValidationError('Нельзя отправить сообщение самому себе.')
+
+        return data
+
     def create(self, validated_data):
         # Получаем отправителя из контекста
         validated_data['sender'] = self.context['request'].user

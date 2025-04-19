@@ -155,7 +155,7 @@ class InvestorPreviousInvestment(models.Model):
         verbose_name='Инвестор'
     )
     title = models.CharField(max_length=255, verbose_name='Название')
-    industry = models.ForeignKey(Industry, on_delete=models.SET_NULL, null=True, verbose_name='Сфера')
+    industry = models.CharField(max_length=255, verbose_name='Сфера')
     stage = models.CharField(max_length=20, choices=StartupStage.CHOICES, verbose_name='Стадия')
     date = models.DateField(verbose_name='Дата')
     description = models.TextField(blank=True, verbose_name='Описание')

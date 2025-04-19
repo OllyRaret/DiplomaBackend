@@ -12,6 +12,9 @@ from reference.stages import StartupStage
 from .models import User, SpecialistProfile, FounderProfile, InvestorProfile, WorkExperience, InvestorPreviousInvestment
 from .utils import update_user_fields
 
+import re
+from django.core.exceptions import ValidationError as DjangoValidationError
+
 
 class CustomUserCreateSerializer(BaseUserCreateSerializer):
     email = serializers.EmailField(
@@ -98,17 +101,19 @@ class WorkExperienceSerializer(serializers.ModelSerializer):
         model = WorkExperience
         fields = ['id', 'organization', 'position', 'start_date', 'end_date', 'description']
 
+    def validate(self, data):
+        start_date = data.get('start_date')
+        end_date = data.get('end_date')
+        if start_date and end_date and end_date < start_date:
+            raise serializers.ValidationError("Дата окончания не может быть раньше даты начала.")
+        return data
+
 
 # Инвестиционный опыт
 class InvestorPreviousInvestmentSerializer(serializers.ModelSerializer):
-    industry = IndustrySerializer(read_only=True)
-    industry_id = serializers.PrimaryKeyRelatedField(
-        queryset=Industry.objects.all(), source='industry', write_only=True
-    )
-
     class Meta:
         model = InvestorPreviousInvestment
-        fields = ['id', 'title', 'industry', 'industry_id', 'stage', 'date', 'description']
+        fields = ['id', 'title', 'industry', 'stage', 'date', 'description']
 
 
 class SpecialistProfileSerializer(serializers.ModelSerializer):
@@ -242,12 +247,8 @@ class InvestorProfileSerializer(serializers.ModelSerializer):
         return False # ToDo
 
 
-    def update(self, instance, validated_data):
-        user = instance.user
-
-        update_user_fields(user, validated_data)
-
-        preferred_stages = validated_data.get('preferred_stages', instance.preferred_stages)
+    def validate(self, data):
+        preferred_stages = data.get('preferred_stages', [])
         valid_stages = [choice[0] for choice in StartupStage.CHOICES]
         invalid_stages = [stage for stage in preferred_stages if stage not in valid_stages]
         if invalid_stages:
@@ -255,10 +256,18 @@ class InvestorProfileSerializer(serializers.ModelSerializer):
                 'preferred_stages': f"Недопустимые значения: {invalid_stages}. Допустимые: {valid_stages}"
             })
 
+        return data
+
+
+    def update(self, instance, validated_data):
+        user = instance.user
+
+        update_user_fields(user, validated_data)
+
         instance.industry = validated_data.get('industry', instance.industry)
         instance.company = validated_data.get('company', instance.company)
         instance.position = validated_data.get('position', instance.position)
-        instance.preferred_stages = preferred_stages
+        instance.preferred_stages = validated_data.get('preferred_stages', instance.preferred_stages)
         instance.investment_min = validated_data.get('investment_min', instance.investment_min)
         instance.investment_max = validated_data.get('investment_max', instance.investment_max)
 
