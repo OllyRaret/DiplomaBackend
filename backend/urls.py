@@ -9,6 +9,7 @@ from rest_framework.routers import DefaultRouter
 
 from messaging.views import MessageViewSet
 from reference.views import ProfessionListView, IndustryListView, SkillListView
+from startups.views import StartupViewSet
 from users.views import CurrentUserProfileView, PublicUserProfileView
 
 # Для swagger
@@ -25,6 +26,7 @@ schema_view = get_schema_view(
 
 router = DefaultRouter()
 router.register(r'messages', MessageViewSet, basename='message')
+router.register(r'startups', StartupViewSet, basename='startup')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

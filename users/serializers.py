@@ -12,9 +12,6 @@ from reference.stages import StartupStage
 from .models import User, SpecialistProfile, FounderProfile, InvestorProfile, WorkExperience, InvestorPreviousInvestment
 from .utils import update_user_fields
 
-import re
-from django.core.exceptions import ValidationError as DjangoValidationError
-
 
 class CustomUserCreateSerializer(BaseUserCreateSerializer):
     email = serializers.EmailField(

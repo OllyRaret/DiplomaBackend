@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b63f324-3bf0-42b6-b748-f6e9b49705bf" name="Changes" comment="Update Profiles Serializers">
+    <list default="true" id="6b63f324-3bf0-42b6-b748-f6e9b49705bf" name="Changes" comment="Profiles &amp; Messages Error Handling">
+      <change afterPath="$PROJECT_DIR$/reference/permissions.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/startups/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/startups/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messaging/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/messaging/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,7 +189,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744909733161</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Profiles &amp; Messages Error Handling">
+      <option name="closed" value="true" />
+      <created>1745065419987</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1745065419987</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -216,6 +225,7 @@
     <MESSAGE value="Fix Profile Updating" />
     <MESSAGE value="Bug Fixes &amp; Messages Routing" />
     <MESSAGE value="Update Profiles Serializers" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update Profiles Serializers" />
+    <MESSAGE value="Profiles &amp; Messages Error Handling" />
+    <option name="LAST_COMMIT_MESSAGE" value="Profiles &amp; Messages Error Handling" />
   </component>
 </project>
