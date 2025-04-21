@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b63f324-3bf0-42b6-b748-f6e9b49705bf" name="Changes" comment="Delete Dialog">
+    <list default="true" id="6b63f324-3bf0-42b6-b748-f6e9b49705bf" name="Changes" comment="Disable Blank Contacts">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/serializers.py" afterDir="false" />
     </list>
@@ -305,7 +305,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745252693821</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Disable Blank Contacts">
+      <option name="closed" value="true" />
+      <created>1745253367298</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1745253367298</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -320,7 +328,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Admin on Users" />
     <MESSAGE value="Message and Startup Models" />
     <MESSAGE value="Auth &amp; User Profiles" />
     <MESSAGE value="User Profiles Updating" />
@@ -345,6 +352,7 @@
     <MESSAGE value="Rework on RequiredSpecialists Updating" />
     <MESSAGE value="Short User Serializers" />
     <MESSAGE value="Delete Dialog" />
-    <option name="LAST_COMMIT_MESSAGE" value="Delete Dialog" />
+    <MESSAGE value="Disable Blank Contacts" />
+    <option name="LAST_COMMIT_MESSAGE" value="Disable Blank Contacts" />
   </component>
 </project>
