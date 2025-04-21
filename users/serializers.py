@@ -113,6 +113,15 @@ class InvestorPreviousInvestmentSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'industry', 'stage', 'date', 'description']
 
 
+class SpecialistShortSerializer(serializers.ModelSerializer):
+    user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
+    full_name = serializers.CharField(source='user.full_name')
+
+    class Meta:
+        model = SpecialistProfile
+        fields = ['user_id', 'full_name']
+
+
 class SpecialistProfileSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
     role = serializers.ChoiceField(source='user.role', choices=User.Role.choices, read_only=True)
@@ -165,6 +174,17 @@ class SpecialistProfileSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+
+
+class FounderShortSerializer(serializers.ModelSerializer):
+    user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
+    full_name = serializers.CharField(source='user.full_name')
+    contact_phone = serializers.CharField(source='user.contact_phone')
+    contact_email = serializers.EmailField(source='user.email')
+
+    class Meta:
+        model = FounderProfile
+        fields = ['user_id', 'full_name', 'contact_phone', 'contact_email']
 
 
 class FounderProfileSerializer(serializers.ModelSerializer):

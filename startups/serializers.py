@@ -6,7 +6,7 @@ from rest_framework.exceptions import ValidationError
 
 from reference.models import Industry, Profession, Skill
 from reference.serializers import ProfessionSerializer, IndustrySerializer, SkillSerializer
-from users.serializers import FounderProfileSerializer, SpecialistProfileSerializer
+from users.serializers import SpecialistShortSerializer, FounderShortSerializer
 from .models import Startup, RequiredSpecialist
 
 User = get_user_model()
@@ -26,7 +26,7 @@ class RequiredSpecialistSerializer(serializers.ModelSerializer):
         write_only=True,
         source='skills'
     )
-    specialist = SpecialistProfileSerializer(read_only=True)
+    specialist = SpecialistShortSerializer(read_only=True)
     specialist_user_id = serializers.IntegerField(
         write_only=True,
         required=False,
@@ -58,7 +58,7 @@ class RequiredSpecialistSerializer(serializers.ModelSerializer):
 
 
 class StartupSerializer(serializers.ModelSerializer):
-    founder = FounderProfileSerializer(read_only=True) # ToDo
+    founder = FounderShortSerializer(read_only=True)
     image = serializers.ImageField(required=False, allow_null=True)
     industry = IndustrySerializer(read_only=True)
     industry_id = serializers.PrimaryKeyRelatedField(
