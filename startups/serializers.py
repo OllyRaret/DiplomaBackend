@@ -1,10 +1,14 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from reference.models import Industry, Profession, Skill
 from users.models import SpecialistProfile
 from .models import Startup, RequiredSpecialist
 from users.serializers import FounderProfileSerializer, SpecialistProfileSerializer, CustomUserSerializer
 from reference.serializers import ProfessionSerializer, IndustrySerializer, SkillSerializer
+
+User = get_user_model()
 
 
 class RequiredSpecialistSerializer(serializers.ModelSerializer):
@@ -22,12 +26,10 @@ class RequiredSpecialistSerializer(serializers.ModelSerializer):
         source='skills'
     )
     specialist = SpecialistProfileSerializer(read_only=True)
-    specialist_id = serializers.PrimaryKeyRelatedField(
-        queryset=SpecialistProfile.objects.all(),
+    specialist_user_id = serializers.IntegerField(
         write_only=True,
         required=False,
-        allow_null=True,
-        source='specialist'
+        allow_null=True
     )
 
     class Meta:
@@ -35,8 +37,36 @@ class RequiredSpecialistSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'profession', 'skills', 'specialist',
-            'profession_id', 'skills_ids', 'specialist_id'
+            'profession_id', 'skills_ids', 'specialist_user_id'
         ]
+
+
+    def validate_specialist_user_id(self, value):
+        if value is None:
+            return None
+
+        try:
+            user = User.objects.get(id=value)
+        except User.DoesNotExist:
+            raise ValidationError("Пользователь с указанным ID не найден")
+
+        if not hasattr(user, 'specialist_profile'):
+            raise ValidationError("Указанный пользователь не является специалистом")
+
+        return user.specialist_profile
+
+
+    def create(self, validated_data):
+        specialist_profile = validated_data.pop('specialist_user_id', None)
+        validated_data['specialist'] = specialist_profile
+        return super().create(validated_data)
+
+
+    def update(self, instance, validated_data):
+        specialist_profile = validated_data.pop('specialist_user_id', None)
+        if specialist_profile is not None:
+            validated_data['specialist'] = specialist_profile
+        return super().update(instance, validated_data)
 
 
 class StartupSerializer(serializers.ModelSerializer):
