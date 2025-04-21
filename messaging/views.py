@@ -1,4 +1,5 @@
 from rest_framework import viewsets, permissions
+from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.db.models import Q, Max
@@ -11,12 +12,49 @@ class MessageViewSet(viewsets.ModelViewSet):
     serializer_class = MessageSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+
     def get_queryset(self):
         user = self.request.user
         return Message.objects.filter(Q(sender=user) | Q(recipient=user)).order_by('-timestamp')
 
+
+    def get_object(self):
+        """ Получаем другого пользователя по ID """
+        try:
+            return User.objects.get(pk=self.kwargs['pk'])
+        except User.DoesNotExist:
+            raise NotFound('Пользователь не найден.')
+
+
     def perform_create(self, serializer):
         serializer.save(sender=self.request.user)
+
+
+    def destroy(self, request, pk=None):
+        """ Удаление диалога с пользователем /messages/{id}/ """
+        recipient = self.get_object()
+        user = request.user
+
+        messages = Message.objects.filter(
+            Q(sender=user, recipient=recipient) | Q(sender=recipient, recipient=user)
+        )
+        deleted_count = messages.count()
+        messages.delete()
+        return Response({'status': f'Удалено {deleted_count} сообщений.'}, status=204)
+
+
+    def retrieve(self, request, pk=None):
+        """ Получить диалог с конкретным пользователем (по его id) """
+        other_user = self.get_object()
+        user = request.user
+        messages = Message.objects.filter(
+            Q(sender=user, recipient=other_user) |
+            Q(sender=other_user, recipient=user)
+        ).order_by('timestamp')
+
+        serializer = self.get_serializer(messages, many=True)
+        return Response(serializer.data)
+
 
     @action(detail=False, methods=['get'])
     def inbox(self, request):
@@ -25,12 +63,14 @@ class MessageViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(messages, many=True)
         return Response(serializer.data)
 
+
     @action(detail=False, methods=['get'])
     def sent(self, request):
         """ Получить отправленные пользователем сообщения """
         messages = Message.objects.filter(sender=request.user)
         serializer = self.get_serializer(messages, many=True)
         return Response(serializer.data)
+
 
     @action(detail=False, methods=['get'])
     def dialogs(self, request):
@@ -58,21 +98,6 @@ class MessageViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(unique_dialogs.values(), many=True)
         return Response(serializer.data)
 
-    def retrieve(self, request, pk=None):
-        """ Получить диалог с конкретным пользователем (по его id) """
-        user = request.user
-        try:
-            other_user = User.objects.get(pk=pk)
-        except User.DoesNotExist:
-            return Response({'detail': 'Пользователь не найден.'}, status=404)
-
-        messages = Message.objects.filter(
-            (Q(sender=user) & Q(recipient=other_user)) |
-            (Q(sender=other_user) & Q(recipient=user))
-        ).order_by('timestamp')
-
-        serializer = self.get_serializer(messages, many=True)
-        return Response(serializer.data)
 
     @action(detail=True, methods=['post'], url_path='mark-as-read')
     def mark_as_read(self, request, pk=None):

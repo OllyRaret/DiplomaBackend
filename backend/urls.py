@@ -25,7 +25,7 @@ schema_view = get_schema_view(
 )
 
 router = DefaultRouter()
-router.register(r'messages', MessageViewSet, basename='message')
+router.register(r'messages', MessageViewSet, basename='messages')
 router.register(r'startups', StartupViewSet, basename='startup')
 
 urlpatterns = [
