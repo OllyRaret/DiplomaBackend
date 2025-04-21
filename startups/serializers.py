@@ -55,19 +55,6 @@ class RequiredSpecialistSerializer(serializers.ModelSerializer):
         return user.specialist_profile
 
 
-    def create(self, validated_data):
-        specialist_profile = validated_data.pop('specialist_user_id', None)
-        validated_data['specialist'] = specialist_profile
-        return super().create(validated_data)
-
-
-    def update(self, instance, validated_data):
-        specialist_profile = validated_data.pop('specialist_user_id', None)
-        if specialist_profile is not None:
-            validated_data['specialist'] = specialist_profile
-        return super().update(instance, validated_data)
-
-
 class StartupSerializer(serializers.ModelSerializer):
     founder = FounderProfileSerializer(read_only=True) # ToDo
     image = serializers.ImageField(required=False, allow_null=True)
@@ -94,9 +81,12 @@ class StartupSerializer(serializers.ModelSerializer):
         required_specialists_data = validated_data.pop('required_specialists', [])
         startup = Startup.objects.create(**validated_data)
 
+        print(required_specialists_data)
+
         for specialist_data in required_specialists_data:
             skills = specialist_data.pop('skills', [])
-            required_specialist = RequiredSpecialist.objects.create(startup=startup, **specialist_data)
+            specialist = specialist_data.pop('specialist_user_id', None)
+            required_specialist = RequiredSpecialist.objects.create(startup=startup, specialist=specialist, **specialist_data)
             required_specialist.skills.set(skills)
 
         return startup
@@ -115,7 +105,8 @@ class StartupSerializer(serializers.ModelSerializer):
             # Добавляем новых
             for specialist_data in required_specialists_data:
                 skills = specialist_data.pop('skills', [])
-                required_specialist = RequiredSpecialist.objects.create(startup=instance, **specialist_data)
+                specialist = specialist_data.pop('specialist_user_id', None)
+                required_specialist = RequiredSpecialist.objects.create(startup=instance, specialist=specialist, **specialist_data)
                 required_specialist.skills.set(skills)
 
         return instance
