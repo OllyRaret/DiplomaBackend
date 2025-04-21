@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b63f324-3bf0-42b6-b748-f6e9b49705bf" name="Changes" comment="Startups Routes">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="6b63f324-3bf0-42b6-b748-f6e9b49705bf" name="Changes" comment="Fix Message Validation">
       <change beforePath="$PROJECT_DIR$/messaging/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/messaging/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,7 +200,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745070227408</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Fix Message Validation">
+      <option name="closed" value="true" />
+      <created>1745232093580</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1745232093580</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -232,6 +238,7 @@
     <MESSAGE value="Update Profiles Serializers" />
     <MESSAGE value="Profiles &amp; Messages Error Handling" />
     <MESSAGE value="Startups Routes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Startups Routes" />
+    <MESSAGE value="Fix Message Validation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix Message Validation" />
   </component>
 </project>

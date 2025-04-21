@@ -25,13 +25,3 @@ class MessageSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('Нельзя отправить сообщение самому себе.')
 
         return data
-
-    def create(self, validated_data):
-        # Получаем отправителя из контекста
-        validated_data['sender'] = self.context['request'].user
-
-        # Извлекаем recipient_id и получаем получателя
-        recipient_id = self.context['request'].data.get('recipient_id')
-        validated_data['recipient'] = User.objects.get(id=recipient_id)
-
-        return super().create(validated_data)
