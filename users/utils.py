@@ -13,8 +13,9 @@ def update_user_fields(user, data):
     old_avatar = user.avatar
 
     # Удаление старого аватара, если передан null или новый аватар
-    if 'avatar' in user_data and (new_avatar is None and old_avatar)\
-            or (new_avatar is not None and old_avatar and new_avatar != old_avatar):
+    if 'avatar' in user_data and old_avatar and (
+            new_avatar is None or new_avatar != old_avatar
+    ):
         avatar_path = old_avatar.path
         user.avatar.delete(save=False)
         if os.path.isfile(avatar_path):

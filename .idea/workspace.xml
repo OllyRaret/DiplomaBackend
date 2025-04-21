@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b63f324-3bf0-42b6-b748-f6e9b49705bf" name="Changes" comment="Fix RequiredSpecialists On Startups">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="6b63f324-3bf0-42b6-b748-f6e9b49705bf" name="Changes" comment="Fix Old Avatars">
       <change beforePath="$PROJECT_DIR$/users/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -249,7 +248,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745241405826</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Fix Old Avatars">
+      <option name="closed" value="true" />
+      <created>1745242375938</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1745242375938</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -284,6 +291,7 @@
     <MESSAGE value="Update specialist_id Field on RequiredSpecialistSerializer" />
     <MESSAGE value="Delete Old Avatar if Changed" />
     <MESSAGE value="Fix RequiredSpecialists On Startups" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix RequiredSpecialists On Startups" />
+    <MESSAGE value="Fix Old Avatars" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix Old Avatars" />
   </component>
 </project>
