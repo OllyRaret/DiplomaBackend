@@ -9,11 +9,14 @@ def update_user_fields(user, data):
 
     validate_phone_format(user_data.get('contact_phone'))
 
-    # Удаляем аватар, если пришёл null и раньше он был установлен
-    if 'avatar' in user_data and user_data['avatar'] is None and user.avatar:
-        # Сохраняем путь до удаления, чтобы потом убедиться, что файл есть
-        avatar_path = user.avatar.path
-        user.avatar.delete(save=False)  # Удалить файл, но не сохранять пока
+    new_avatar = user_data.get('avatar', None)
+    old_avatar = user.avatar
+
+    # Удаление старого аватара, если передан null или новый аватар
+    if 'avatar' in user_data and (new_avatar is None and old_avatar)\
+            or (new_avatar is not None and new_avatar != old_avatar):
+        avatar_path = old_avatar.path
+        user.avatar.delete(save=False)
         if os.path.isfile(avatar_path):
             os.remove(avatar_path)
 
