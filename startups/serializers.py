@@ -113,7 +113,7 @@ class StartupSerializer(serializers.ModelSerializer):
             new_image is None or new_image != old_image
         ):
             image_path = old_image.path
-            instance.image.delete(save=False)
+            instance.image = None
             if os.path.isfile(image_path):
                 os.remove(image_path)
 
@@ -122,13 +122,41 @@ class StartupSerializer(serializers.ModelSerializer):
         instance.save()
 
         if required_specialists_data is not None:
-            # Удаляем старых
-            instance.required_specialists.all().delete()
-            # Добавляем новых
-            for specialist_data in required_specialists_data:
-                skills = specialist_data.pop('skills', [])
-                specialist = specialist_data.pop('specialist_user_id', None)
-                required_specialist = RequiredSpecialist.objects.create(startup=instance, specialist=specialist, **specialist_data)
-                required_specialist.skills.set(skills)
+            existing_specialists = list(instance.required_specialists.all())
+            updated_specialists = []
+
+            for new_data in required_specialists_data:
+                new_skills_ids = set([new_skill.id for new_skill in new_data.get('skills', [])])
+                new_profession = new_data.get('profession')
+                new_specialist = new_data.get('specialist_user_id', None)
+
+                match_found = False
+
+                for existing in existing_specialists:
+                    existing_skills_ids = set(existing.skills.values_list('id', flat=True))
+                    if (
+                        existing_skills_ids == new_skills_ids and
+                        existing.profession == new_profession
+                    ):
+                        # Совпали по skills и профессии — проверяем specialist
+                        if 'specialist_user_id' in new_data and existing.specialist != new_specialist:
+                            existing.specialist = new_specialist
+                            existing.save()
+                        updated_specialists.append(existing.id)
+                        match_found = True
+                        break
+
+                if not match_found:
+                    # Если совпадения нет — создаём новую запись
+                    skills = new_data.pop('skills', [])
+                    specialist = new_data.pop('specialist_user_id', None)
+                    required_specialist = RequiredSpecialist.objects.create(
+                        startup=instance, specialist=specialist, **new_data
+                    )
+                    required_specialist.skills.set(skills)
+                    updated_specialists.append(required_specialist.id)
+
+            # Удаляем все записи, которые не вошли в updated_specialists
+            instance.required_specialists.exclude(id__in=updated_specialists).delete()
 
         return instance

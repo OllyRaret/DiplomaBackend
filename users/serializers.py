@@ -153,11 +153,11 @@ class SpecialistProfileSerializer(serializers.ModelSerializer):
 
         # Обновляем поля профиля (обнуляем при отсутствии)
         instance.profession = validated_data.get('profession', instance.profession)
-        if validated_data.__contains__('skills'):
+        if 'skills' in validated_data:
             skills = validated_data.get('skills', [])
             instance.skills.set(skills)
 
-        if validated_data.__contains__('experiences'):
+        if 'experiences' in validated_data:
             experiences_data = validated_data.pop('experiences', instance.experiences)
             instance.experiences.all().delete()
             for exp in experiences_data:
@@ -202,7 +202,7 @@ class FounderProfileSerializer(serializers.ModelSerializer):
 
         instance.industry = validated_data.get('industry', instance.industry)
 
-        if validated_data.__contains__('experiences'):
+        if 'experiences' in validated_data:
             experiences_data = validated_data.get('experiences', instance.experiences)
             instance.experiences.all().delete()
             for exp in experiences_data:
@@ -268,7 +268,7 @@ class InvestorProfileSerializer(serializers.ModelSerializer):
         instance.investment_min = validated_data.get('investment_min', instance.investment_min)
         instance.investment_max = validated_data.get('investment_max', instance.investment_max)
 
-        if validated_data.__contains__('previous_investments'):
+        if 'previous_investments' in validated_data:
             previous_data = validated_data.get('previous_investments', [])
             instance.previous_investments.all().delete()
             for exp in previous_data:

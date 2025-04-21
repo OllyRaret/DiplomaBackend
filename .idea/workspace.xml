@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b63f324-3bf0-42b6-b748-f6e9b49705bf" name="Changes" comment="Add Image on MyStartups">
+    <list default="true" id="6b63f324-3bf0-42b6-b748-f6e9b49705bf" name="Changes" comment="Delete Old Startup Image on Updating">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/startups/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/startups/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/serializers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -273,7 +274,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745246348926</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Delete Old Startup Image on Updating">
+      <option name="closed" value="true" />
+      <created>1745247649567</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1745247649567</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -310,6 +319,7 @@
     <MESSAGE value="Fix RequiredSpecialists On Startups" />
     <MESSAGE value="Fix Old Avatars" />
     <MESSAGE value="Add Image on MyStartups" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Image on MyStartups" />
+    <MESSAGE value="Delete Old Startup Image on Updating" />
+    <option name="LAST_COMMIT_MESSAGE" value="Delete Old Startup Image on Updating" />
   </component>
 </project>
