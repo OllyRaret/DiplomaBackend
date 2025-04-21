@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b63f324-3bf0-42b6-b748-f6e9b49705bf" name="Changes" comment="Profiles &amp; Messages Error Handling">
-      <change afterPath="$PROJECT_DIR$/reference/permissions.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/startups/serializers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/startups/views.py" afterDir="false" />
+    <list default="true" id="6b63f324-3bf0-42b6-b748-f6e9b49705bf" name="Changes" comment="Startups Routes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/messaging/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,7 +194,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745065419987</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Startups Routes">
+      <option name="closed" value="true" />
+      <created>1745070227408</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1745070227408</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -226,6 +231,7 @@
     <MESSAGE value="Bug Fixes &amp; Messages Routing" />
     <MESSAGE value="Update Profiles Serializers" />
     <MESSAGE value="Profiles &amp; Messages Error Handling" />
-    <option name="LAST_COMMIT_MESSAGE" value="Profiles &amp; Messages Error Handling" />
+    <MESSAGE value="Startups Routes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Startups Routes" />
   </component>
 </project>

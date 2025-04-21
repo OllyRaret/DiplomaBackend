@@ -7,21 +7,18 @@ from users.serializers import CustomUserSerializer
 class MessageSerializer(serializers.ModelSerializer):
     sender = CustomUserSerializer(read_only=True)
     recipient = CustomUserSerializer(read_only=True)
+    recipient_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(), source='recipient', write_only=True
+    )
 
     class Meta:
         model = Message
-        fields = ['id', 'sender', 'recipient', 'text', 'timestamp', 'is_read']
+        fields = ['id', 'sender', 'recipient', 'recipient_id', 'text', 'timestamp', 'is_read']
         read_only_fields = ['id', 'sender', 'timestamp', 'is_read']
 
     def validate(self, data):
         sender = self.context['request'].user
-        recipient_id = data.get('recipient_id')
-
-        # Проверка существования пользователя
-        try:
-            recipient = User.objects.get(id=recipient_id)
-        except User.DoesNotExist:
-            raise serializers.ValidationError({'recipient_id': 'Пользователь с таким ID не найден.'})
+        recipient = data.get('recipient')
 
         # Проверка на отправку самому себе
         if sender.id == recipient.id:
