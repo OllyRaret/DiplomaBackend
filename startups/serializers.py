@@ -3,10 +3,9 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from reference.models import Industry, Profession, Skill
-from users.models import SpecialistProfile
-from .models import Startup, RequiredSpecialist
-from users.serializers import FounderProfileSerializer, SpecialistProfileSerializer, CustomUserSerializer
 from reference.serializers import ProfessionSerializer, IndustrySerializer, SkillSerializer
+from users.serializers import FounderProfileSerializer, SpecialistProfileSerializer
+from .models import Startup, RequiredSpecialist
 
 User = get_user_model()
 
