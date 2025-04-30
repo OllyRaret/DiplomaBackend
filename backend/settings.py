@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'reference',
     'messaging',
     'startups',
+    'favorite',
 
     'rest_framework',
     'rest_framework.authtoken',
@@ -160,4 +161,9 @@ SWAGGER_SETTINGS = {
     },
     'DOC_EXPANSION': 'none',  # свернутые блоки по умолчанию
     'DEFAULT_MODEL_RENDERING': 'example',
+}
+
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
 }

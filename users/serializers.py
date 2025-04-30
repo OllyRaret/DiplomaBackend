@@ -6,6 +6,7 @@ from djoser.serializers import UserCreateSerializer as BaseUserCreateSerializer,
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
+from favorite.models import Favorite
 from reference.models import Profession, Skill, Industry
 from reference.serializers import ProfessionSerializer, SkillSerializer, IndustrySerializer
 from reference.stages import StartupStage
@@ -122,6 +123,19 @@ class SpecialistShortSerializer(serializers.ModelSerializer):
         fields = ['user_id', 'full_name']
 
 
+class SpecialistFavoriteSerializer(serializers.ModelSerializer):
+    user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
+    full_name = serializers.CharField(source='user.full_name', read_only=True)
+    avatar = serializers.ImageField(source='user.avatar', read_only=True)
+    description = serializers.CharField(source='user.description', read_only=True)
+    profession = ProfessionSerializer()
+    skills = SkillSerializer(many=True)
+
+    class Meta:
+        model = SpecialistProfile
+        fields = ['user_id', 'full_name', 'avatar', 'profession', 'description', 'skills']
+
+
 class SpecialistProfileSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
     role = serializers.ChoiceField(source='user.role', choices=User.Role.choices, read_only=True)
@@ -148,11 +162,13 @@ class SpecialistProfileSerializer(serializers.ModelSerializer):
             'profession', 'profession_id', 'skills', 'skill_ids', 'experience', 'is_favorited'
         ]
 
+
     def get_is_favorited(self, obj):
         request = self.context.get('request')
         if not request or not request.user.is_authenticated:
             return False
-        return False # ToDo
+        return Favorite.objects.filter(user=request.user, specialist=obj).exists()
+
 
     def update(self, instance, validated_data):
         user = instance.user
@@ -200,20 +216,15 @@ class FounderProfileSerializer(serializers.ModelSerializer):
     industry_id = serializers.PrimaryKeyRelatedField(
         queryset=Industry.objects.all(), source='industry', write_only=True, required=False
     )
-    is_favorited = serializers.SerializerMethodField()
+
 
     class Meta:
         model = FounderProfile
         fields = [
             'user_id', 'role', 'full_name', 'industry', 'industry_id', 'bio', 'contact_phone', 'contact_email', 'avatar',
-            'experience', 'is_favorited'
+            'experience'
         ]
 
-    def get_is_favorited(self, obj):
-        request = self.context.get('request')
-        if not request or not request.user.is_authenticated:
-            return False
-        return False # ToDo
 
     def update(self, instance, validated_data):
         user = instance.user
@@ -230,6 +241,18 @@ class FounderProfileSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+
+
+class InvestorFavoriteSerializer(serializers.ModelSerializer):
+    user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
+    full_name = serializers.CharField(source='user.full_name', read_only=True)
+    avatar = serializers.ImageField(source='user.avatar', read_only=True)
+    description = serializers.CharField(source='user.description', read_only=True)
+    industry = IndustrySerializer()
+
+    class Meta:
+        model = InvestorProfile
+        fields = ['user_id', 'full_name', 'avatar', 'industry', 'description', 'investment_max']
 
 
 class InvestorProfileSerializer(serializers.ModelSerializer):
@@ -261,7 +284,7 @@ class InvestorProfileSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         if not request or not request.user.is_authenticated:
             return False
-        return False # ToDo
+        return Favorite.objects.filter(user=request.user, investor=obj).exists()
 
 
     def validate(self, data):

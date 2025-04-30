@@ -38,7 +38,7 @@ class StartupViewSet(viewsets.ModelViewSet):
                     'title': s.title,
                     'description': s.description,
                     'stage': s.stage,
-                    'image': s.image,
+                    'image': s.image.url if s.image else None,
                 }
                 for s in startups
             ]
@@ -59,7 +59,7 @@ class StartupViewSet(viewsets.ModelViewSet):
                     'role': role,
                     'description': s.description,
                     'stage': s.stage,
-                    'image': s.image,
+                    'image': s.image.url if s.image else None,
                 })
             return Response(data)
 

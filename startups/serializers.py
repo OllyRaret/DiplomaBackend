@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
+from favorite.models import Favorite
 from reference.models import Industry, Profession, Skill
 from reference.serializers import ProfessionSerializer, IndustrySerializer, SkillSerializer
 from users.serializers import SpecialistShortSerializer, FounderShortSerializer
@@ -76,8 +77,10 @@ class StartupSerializer(serializers.ModelSerializer):
 
 
     def get_is_favorited(self, obj):
-        # ToDo
-        return False
+        request = self.context.get('request')
+        if not request or not request.user.is_authenticated:
+            return False
+        return Favorite.objects.filter(user=request.user, startup=obj).exists()
 
 
     def validate(self, attrs):
@@ -160,3 +163,22 @@ class StartupSerializer(serializers.ModelSerializer):
             instance.required_specialists.exclude(id__in=updated_specialists).delete()
 
         return instance
+
+
+class StartupForSpecialistShortSerializer(serializers.ModelSerializer):
+    required_specialists = RequiredSpecialistSerializer(many=True, read_only=True)
+    industry = IndustrySerializer(read_only=True)
+    founder_id = serializers.PrimaryKeyRelatedField(source='founder.user', read_only=True)
+
+    class Meta:
+        model = Startup
+        fields = ['id', 'title', 'industry', 'description', 'required_specialists', 'founder_id', 'image']
+
+
+class StartupForInvestorShortSerializer(serializers.ModelSerializer):
+    industry = IndustrySerializer(read_only=True)
+    founder_id = serializers.PrimaryKeyRelatedField(source='founder.user', read_only=True)
+
+    class Meta:
+        model = Startup
+        fields = ['id', 'title', 'industry', 'description', 'investment_needed', 'image', 'founder_id']

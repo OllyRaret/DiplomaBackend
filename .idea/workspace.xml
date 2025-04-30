@@ -4,8 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b63f324-3bf0-42b6-b748-f6e9b49705bf" name="Changes" comment="Disable Blank Contacts">
+    <list default="true" id="6b63f324-3bf0-42b6-b748-f6e9b49705bf" name="Changes" comment="Disable Null Contacts">
+      <change afterPath="$PROJECT_DIR$/favorite/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/favorite/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/favorite/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/favorite/migrations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/favorite/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/favorite/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/favorite/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/messaging/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/startups/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/startups/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/startups/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/startups/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/serializers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -313,7 +325,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745253367298</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Disable Null Contacts">
+      <option name="closed" value="true" />
+      <created>1745253674342</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1745253674342</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -328,7 +348,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Message and Startup Models" />
     <MESSAGE value="Auth &amp; User Profiles" />
     <MESSAGE value="User Profiles Updating" />
     <MESSAGE value="Replace PasswordConfirmation Field" />
@@ -353,6 +372,7 @@
     <MESSAGE value="Short User Serializers" />
     <MESSAGE value="Delete Dialog" />
     <MESSAGE value="Disable Blank Contacts" />
-    <option name="LAST_COMMIT_MESSAGE" value="Disable Blank Contacts" />
+    <MESSAGE value="Disable Null Contacts" />
+    <option name="LAST_COMMIT_MESSAGE" value="Disable Null Contacts" />
   </component>
 </project>

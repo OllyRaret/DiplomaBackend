@@ -1,11 +1,12 @@
+from django.db.models import Q, Max
 from rest_framework import viewsets, permissions
+from rest_framework.decorators import action
 from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
-from rest_framework.decorators import action
-from django.db.models import Q, Max
+
+from users.models import User
 from .models import Message
 from .serializers import MessageSerializer
-from users.models import User
 
 
 class MessageViewSet(viewsets.ModelViewSet):
@@ -47,6 +48,15 @@ class MessageViewSet(viewsets.ModelViewSet):
         """ Получить диалог с конкретным пользователем (по его id) """
         other_user = self.get_object()
         user = request.user
+
+        # Отметим непрочитанные входящие сообщения как прочитанные
+        Message.objects.filter(
+            sender=other_user,
+            recipient=user,
+            is_read=False
+        ).update(is_read=True)
+
+        # Получаем все сообщения между пользователями
         messages = Message.objects.filter(
             Q(sender=user, recipient=other_user) |
             Q(sender=other_user, recipient=user)
@@ -97,14 +107,3 @@ class MessageViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(unique_dialogs.values(), many=True)
         return Response(serializer.data)
-
-
-    @action(detail=True, methods=['post'], url_path='mark-as-read')
-    def mark_as_read(self, request, pk=None):
-        """ Отметить сообщение как прочитанное """
-        message = self.get_object()
-        if message.recipient != request.user:
-            return Response({'detail': 'Нельзя отмечать чужие сообщения.'}, status=403)
-        message.is_read = True
-        message.save()
-        return Response({'status': 'прочитано'})
