@@ -4,21 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b63f324-3bf0-42b6-b748-f6e9b49705bf" name="Changes" comment="Disable Null Contacts">
-      <change afterPath="$PROJECT_DIR$/favorite/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/favorite/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/favorite/apps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/favorite/migrations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/favorite/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/favorite/serializers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/favorite/views.py" afterDir="false" />
+    <list default="true" id="6b63f324-3bf0-42b6-b748-f6e9b49705bf" name="Changes" comment="Add Favorites">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messaging/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/messaging/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/startups/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/startups/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/startups/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/startups/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,13 +46,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/Study/Диплом бэкенд/backend",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Study\Диплом бэкенд\backend" />
@@ -333,7 +323,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745253674342</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Add Favorites">
+      <option name="closed" value="true" />
+      <created>1746020422618</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1746020422618</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -348,7 +346,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Auth &amp; User Profiles" />
     <MESSAGE value="User Profiles Updating" />
     <MESSAGE value="Replace PasswordConfirmation Field" />
     <MESSAGE value="Add Redoc &amp; Fix Profiles" />
@@ -373,6 +370,7 @@
     <MESSAGE value="Delete Dialog" />
     <MESSAGE value="Disable Blank Contacts" />
     <MESSAGE value="Disable Null Contacts" />
-    <option name="LAST_COMMIT_MESSAGE" value="Disable Null Contacts" />
+    <MESSAGE value="Add Favorites" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Favorites" />
   </component>
 </project>
