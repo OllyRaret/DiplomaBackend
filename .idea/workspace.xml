@@ -4,10 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b63f324-3bf0-42b6-b748-f6e9b49705bf" name="Changes" comment="Add Favorites">
+    <list default="true" id="6b63f324-3bf0-42b6-b748-f6e9b49705bf" name="Changes" comment="Allow CORS">
+      <change afterPath="$PROJECT_DIR$/startups/filters.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users/filters.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/favorite/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/favorite/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/startups/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/startups/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/startups/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/startups/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -331,7 +339,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746020422618</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Allow CORS">
+      <option name="closed" value="true" />
+      <created>1746103442228</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1746103442228</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -346,7 +362,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="User Profiles Updating" />
     <MESSAGE value="Replace PasswordConfirmation Field" />
     <MESSAGE value="Add Redoc &amp; Fix Profiles" />
     <MESSAGE value="Blank Fields For Investor" />
@@ -371,6 +386,7 @@
     <MESSAGE value="Disable Blank Contacts" />
     <MESSAGE value="Disable Null Contacts" />
     <MESSAGE value="Add Favorites" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Favorites" />
+    <MESSAGE value="Allow CORS" />
+    <option name="LAST_COMMIT_MESSAGE" value="Allow CORS" />
   </component>
 </project>

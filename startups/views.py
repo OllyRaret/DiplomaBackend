@@ -5,8 +5,9 @@ from rest_framework.response import Response
 
 from reference.permissions import IsFounderOrReadOnly, IsStartupFounder
 from users.models import User
+from .filters import filter_startups_for_specialist, filter_startups_for_investor
 from .models import Startup
-from .serializers import StartupSerializer
+from .serializers import StartupSerializer, StartupForSpecialistShortSerializer, StartupForInvestorShortSerializer
 
 
 class StartupViewSet(viewsets.ModelViewSet):
@@ -64,3 +65,19 @@ class StartupViewSet(viewsets.ModelViewSet):
             return Response(data)
 
         return Response([], status=204)
+
+    @action(detail=False, methods=['get'], url_path='search')
+    def search_startups(self, request):
+        user = request.user
+        queryset = self.get_queryset()
+
+        if user.role == User.Role.SPECIALIST:
+            filtered = filter_startups_for_specialist(queryset, request.query_params)
+            serializer = StartupForSpecialistShortSerializer(filtered, many=True, context={'request': request})
+        elif user.role == User.Role.INVESTOR:
+            filtered = filter_startups_for_investor(queryset, request.query_params)
+            serializer = StartupForInvestorShortSerializer(filtered, many=True, context={'request': request})
+        else:
+            return Response({"detail": "Только специалисты и инвесторы могут искать стартапы."}, status=403)
+
+        return Response(serializer.data)

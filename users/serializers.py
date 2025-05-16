@@ -130,10 +130,17 @@ class SpecialistFavoriteSerializer(serializers.ModelSerializer):
     description = serializers.CharField(source='user.description', read_only=True)
     profession = ProfessionSerializer()
     skills = SkillSerializer(many=True)
+    is_favorited = serializers.SerializerMethodField()
 
     class Meta:
         model = SpecialistProfile
-        fields = ['user_id', 'full_name', 'avatar', 'profession', 'description', 'skills']
+        fields = ['user_id', 'full_name', 'avatar', 'profession', 'description', 'skills', 'is_favorited']
+
+    def get_is_favorited(self, obj):
+        user = self.context.get('request').user
+        if not user.is_authenticated:
+            return False
+        return obj.user.favorites.filter(user=user).exists()
 
 
 class SpecialistProfileSerializer(serializers.ModelSerializer):
@@ -249,10 +256,17 @@ class InvestorFavoriteSerializer(serializers.ModelSerializer):
     avatar = serializers.ImageField(source='user.avatar', read_only=True)
     description = serializers.CharField(source='user.description', read_only=True)
     industry = IndustrySerializer()
+    is_favorited = serializers.SerializerMethodField()
 
     class Meta:
         model = InvestorProfile
-        fields = ['user_id', 'full_name', 'avatar', 'industry', 'description', 'investment_max']
+        fields = ['user_id', 'full_name', 'avatar', 'industry', 'description', 'investment_max', 'is_favorited']
+
+    def get_is_favorited(self, obj):
+        user = self.context.get('request').user
+        if user.is_authenticated:
+            return Favorite.objects.filter(user=user, investor=obj).exists()
+        return False
 
 
 class InvestorProfileSerializer(serializers.ModelSerializer):

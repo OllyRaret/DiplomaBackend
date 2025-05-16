@@ -1,15 +1,18 @@
 from django.utils.decorators import method_decorator
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import generics, permissions
 from rest_framework.exceptions import NotFound, NotAuthenticated
 from rest_framework.generics import RetrieveUpdateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from reference.swagger_docs import get_current_user_profile_doc, put_current_user_profile_doc, \
     get_public_user_profile_doc
-from .models import User
+from .filters import SpecialistFilter, InvestorFilter
+from .models import User, SpecialistProfile, InvestorProfile
 from .serializers import (
     SpecialistProfileSerializer,
     FounderProfileSerializer,
-    InvestorProfileSerializer
+    InvestorProfileSerializer, SpecialistFavoriteSerializer, InvestorFavoriteSerializer
 )
 
 
@@ -79,3 +82,29 @@ class PublicUserProfileView(RetrieveAPIView):
             return User.objects.get(pk=self.kwargs['id'])
         except User.DoesNotExist:
             raise NotFound("Пользователь не найден")
+
+
+class SpecialistSearchView(generics.ListAPIView):
+    queryset = SpecialistProfile.objects.select_related('user', 'profession').prefetch_related('skills', 'experiences')
+    serializer_class = SpecialistFavoriteSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = SpecialistFilter
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
+
+
+class InvestorSearchView(generics.ListAPIView):
+    queryset = InvestorProfile.objects.select_related('user', 'industry')
+    serializer_class = InvestorFavoriteSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = InvestorFilter
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context

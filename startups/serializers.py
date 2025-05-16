@@ -169,16 +169,30 @@ class StartupForSpecialistShortSerializer(serializers.ModelSerializer):
     required_specialists = RequiredSpecialistSerializer(many=True, read_only=True)
     industry = IndustrySerializer(read_only=True)
     founder_id = serializers.PrimaryKeyRelatedField(source='founder.user', read_only=True)
+    is_favorited = serializers.SerializerMethodField()
 
     class Meta:
         model = Startup
-        fields = ['id', 'title', 'industry', 'description', 'required_specialists', 'founder_id', 'image']
+        fields = ['id', 'title', 'industry', 'description', 'required_specialists', 'founder_id', 'image', 'is_favorited']
+
+    def get_is_favorited(self, obj):
+        user = self.context['request'].user
+        if user.is_authenticated:
+            return obj.favorited_by.filter(id=user.id).exists()
+        return False
 
 
 class StartupForInvestorShortSerializer(serializers.ModelSerializer):
     industry = IndustrySerializer(read_only=True)
     founder_id = serializers.PrimaryKeyRelatedField(source='founder.user', read_only=True)
+    is_favorited = serializers.SerializerMethodField()
 
     class Meta:
         model = Startup
-        fields = ['id', 'title', 'industry', 'description', 'investment_needed', 'image', 'founder_id']
+        fields = ['id', 'title', 'industry', 'description', 'investment_needed', 'image', 'founder_id', 'is_favorited']
+
+    def get_is_favorited(self, obj):
+        user = self.context['request'].user
+        if user.is_authenticated:
+            return obj.favorited_by.filter(id=user.id).exists()
+        return False
