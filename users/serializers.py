@@ -137,10 +137,10 @@ class SpecialistFavoriteSerializer(serializers.ModelSerializer):
         fields = ['user_id', 'full_name', 'avatar', 'profession', 'description', 'skills', 'is_favorited']
 
     def get_is_favorited(self, obj):
-        user = self.context.get('request').user
-        if not user.is_authenticated:
+        request = self.context.get('request')
+        if not request or not request.user.is_authenticated:
             return False
-        return obj.user.favorites.filter(user=user).exists()
+        return Favorite.objects.filter(user=request.user, specialist=obj).exists()
 
 
 class SpecialistProfileSerializer(serializers.ModelSerializer):
@@ -263,10 +263,11 @@ class InvestorFavoriteSerializer(serializers.ModelSerializer):
         fields = ['user_id', 'full_name', 'avatar', 'industry', 'description', 'investment_max', 'is_favorited']
 
     def get_is_favorited(self, obj):
-        user = self.context.get('request').user
-        if user.is_authenticated:
-            return Favorite.objects.filter(user=user, investor=obj).exists()
-        return False
+        request = self.context.get('request')
+        if not request or not request.user.is_authenticated:
+            return False
+        return Favorite.objects.filter(user=request.user, investor=obj).exists()
+
 
 
 class InvestorProfileSerializer(serializers.ModelSerializer):

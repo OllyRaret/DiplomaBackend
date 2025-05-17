@@ -176,10 +176,10 @@ class StartupForSpecialistShortSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'industry', 'description', 'required_specialists', 'founder_id', 'image', 'is_favorited']
 
     def get_is_favorited(self, obj):
-        user = self.context['request'].user
-        if user.is_authenticated:
-            return obj.favorited_by.filter(id=user.id).exists()
-        return False
+        request = self.context.get('request')
+        if not request or not request.user.is_authenticated:
+            return False
+        return Favorite.objects.filter(user=request.user, startup=obj).exists()
 
 
 class StartupForInvestorShortSerializer(serializers.ModelSerializer):
@@ -192,7 +192,7 @@ class StartupForInvestorShortSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'industry', 'description', 'investment_needed', 'image', 'founder_id', 'is_favorited']
 
     def get_is_favorited(self, obj):
-        user = self.context['request'].user
-        if user.is_authenticated:
-            return obj.favorited_by.filter(id=user.id).exists()
-        return False
+        request = self.context.get('request')
+        if not request or not request.user.is_authenticated:
+            return False
+        return Favorite.objects.filter(user=request.user, startup=obj).exists()
