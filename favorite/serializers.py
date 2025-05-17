@@ -21,6 +21,21 @@ class FavoriteCreateSerializer(serializers.ModelSerializer):
         fields = ['id', 'specialist_id', 'investor_id', 'startup_id']
 
     def validate(self, attrs):
-        if not any([attrs.get('specialist'), attrs.get('investor'), attrs.get('startup')]):
-            raise serializers.ValidationError("Нужно указать хотя бы одно из полей: specialist_id, investor_id или startup_id")
+        user = self.context['request'].user
+        specialist = attrs.get('specialist')
+        investor = attrs.get('investor')
+        startup = attrs.get('startup')
+
+        if not any([specialist, investor, startup]):
+            raise serializers.ValidationError(
+                "Нужно указать хотя бы одно из полей: specialist_id, investor_id или startup_id")
+
+        if sum(map(bool, [specialist, investor, startup])) > 1:
+            raise serializers.ValidationError(
+                "Можно указать только одно поле из: specialist_id, investor_id, startup_id")
+
+        # Проверка на дубликат
+        if Favorite.objects.filter(user=user, specialist=specialist, investor=investor, startup=startup).exists():
+            raise serializers.ValidationError("Такая запись уже добавлена в избранное")
+
         return attrs
