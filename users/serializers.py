@@ -269,7 +269,6 @@ class InvestorFavoriteSerializer(serializers.ModelSerializer):
         return Favorite.objects.filter(user=request.user, investor=obj).exists()
 
 
-
 class InvestorProfileSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
     role = serializers.ChoiceField(source='user.role', choices=User.Role.choices, read_only=True)
