@@ -4,9 +4,9 @@ from rest_framework.response import Response
 
 from favorite.models import Favorite
 from favorite.serializers import FavoriteCreateSerializer
-from startups.serializers import StartupForSpecialistShortSerializer, StartupForInvestorShortSerializer
+from startups.serializers import StartupForSpecialistSearchSerializer, StartupForInvestorSearchSerializer
 from users.models import User
-from users.serializers import SpecialistFavoriteSerializer, InvestorFavoriteSerializer
+from users.serializers import SpecialistCardSerializer, InvestorCardSerializer
 
 
 class FavoriteViewSet(viewsets.ModelViewSet):
@@ -26,7 +26,7 @@ class FavoriteViewSet(viewsets.ModelViewSet):
             'specialist__user', 'specialist__profession'
         ).prefetch_related('specialist__skills')
 
-        serializer = SpecialistFavoriteSerializer(
+        serializer = SpecialistCardSerializer(
             [f.specialist for f in favorites],
             many=True,
             context={'request': request}
@@ -40,7 +40,7 @@ class FavoriteViewSet(viewsets.ModelViewSet):
             'investor__user', 'investor__industry'
         )
 
-        serializer = InvestorFavoriteSerializer(
+        serializer = InvestorCardSerializer(
             [f.investor for f in favorites],
             many=True,
             context={'request': request}
@@ -52,7 +52,7 @@ class FavoriteViewSet(viewsets.ModelViewSet):
         if request.user.role != User.Role.SPECIALIST and request.user.role != User.Role.STARTUP:
             return Response({'detail': 'Доступно только для специалистов и основателей стартапов.'}, status=403)
         favorites = self.get_queryset().filter(startup__isnull=False).select_related('startup__industry', 'startup__founder__user').prefetch_related('startup__required_specialists__profession')
-        serializer = StartupForSpecialistShortSerializer(
+        serializer = StartupForSpecialistSearchSerializer(
             [f.startup for f in favorites],
             many=True,
             context={'request': request}
@@ -64,7 +64,7 @@ class FavoriteViewSet(viewsets.ModelViewSet):
         if request.user.role != User.Role.INVESTOR:
             return Response({'detail': 'Доступно только для инвесторов.'}, status=403)
         favorites = self.get_queryset().filter(startup__isnull=False).select_related('startup__industry', 'startup__founder__user')
-        serializer = StartupForInvestorShortSerializer(
+        serializer = StartupForInvestorSearchSerializer(
             [f.startup for f in favorites],
             many=True,
             context={'request': request}

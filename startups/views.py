@@ -4,11 +4,13 @@ from rest_framework.decorators import action
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 
+from messaging.models import Invitation
 from reference.permissions import IsFounderOrReadOnly, IsStartupFounder
 from users.models import User
 from .filters import filter_startups_for_specialist, filter_startups_for_investor
 from .models import Startup
-from .serializers import StartupSerializer, StartupForSpecialistShortSerializer, StartupForInvestorShortSerializer
+from .serializers import StartupSerializer, StartupForSpecialistSearchSerializer, StartupForInvestorSearchSerializer, \
+    StartupForFounderShortSerializer, StartupForSpecialistShortSerializer
 
 
 class StartupViewSet(viewsets.ModelViewSet):
@@ -48,41 +50,47 @@ class StartupViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'], url_path='my-startups')
     def my_startups(self, request):
         user = request.user
+
         if user.role == User.Role.STARTUP:
-            # Стартапы, созданные пользователем
-            startups = Startup.objects.filter(founder=user.founder_profile)
-            data = [
-                {
-                    'id': s.id,
-                    'title': s.title,
-                    'description': s.description,
-                    'stage': s.stage,
-                    'image': s.image.url if s.image else None,
-                }
-                for s in startups
-            ]
-            return Response(data)
+            queryset = Startup.objects.filter(founder=user.founder_profile)
+            serializer = StartupForFounderShortSerializer(queryset, many=True)
+            return Response(serializer.data)
 
         elif user.role == User.Role.SPECIALIST:
-            # Стартапы, в которых он назначен
-            startups = Startup.objects.filter(
-                required_specialists__specialist=user.specialist_profile
-            ).distinct()
-            data = []
-            for s in startups:
-                specialist = s.required_specialists.filter(specialist=user.specialist_profile).first()
-                role = specialist.profession.name if specialist else None
-                data.append({
-                    'id': s.id,
-                    'title': s.title,
-                    'role': role,
-                    'description': s.description,
-                    'stage': s.stage,
-                    'image': s.image.url if s.image else None,
-                })
-            return Response(data)
+            queryset = Startup.objects.filter(required_specialists__specialist=user.specialist_profile).distinct()
+            serializer = StartupForSpecialistShortSerializer(queryset, many=True, context={'request': request})
+            return Response(serializer.data)
 
         return Response([], status=204)
+
+    @action(detail=False, methods=['get'], url_path='new-startups')
+    def new_startups(self, request):
+        user = request.user
+
+        if user.role != User.Role.SPECIALIST:
+            return Response([], status=204)
+
+        specialist = user.specialist_profile
+
+        # Получаем все приглашения, на которые специалист не ответил
+        pending_invitations = Invitation.objects.filter(
+            specialist=specialist,
+            is_accepted=None
+        ).select_related('startup', 'required_specialist__profession')
+
+        role_by_startup_id = {
+            inv.startup.id: inv.required_specialist.profession.name
+            for inv in pending_invitations
+        }
+
+        startups = [inv.startup for inv in pending_invitations]
+
+        serializer = StartupForSpecialistShortSerializer(
+            startups,
+            many=True,
+            context={'request': request, 'invited_roles': role_by_startup_id}
+        )
+        return Response(serializer.data)
 
     @action(detail=False, methods=['get'], url_path='search')
     def search_startups(self, request):
@@ -91,10 +99,10 @@ class StartupViewSet(viewsets.ModelViewSet):
 
         if user.role == User.Role.SPECIALIST:
             filtered = filter_startups_for_specialist(queryset, request.query_params)
-            serializer = StartupForSpecialistShortSerializer(filtered, many=True, context={'request': request})
+            serializer = StartupForSpecialistSearchSerializer(filtered, many=True, context={'request': request})
         elif user.role == User.Role.INVESTOR:
             filtered = filter_startups_for_investor(queryset, request.query_params)
-            serializer = StartupForInvestorShortSerializer(filtered, many=True, context={'request': request})
+            serializer = StartupForInvestorSearchSerializer(filtered, many=True, context={'request': request})
         else:
             return Response({"detail": "Только специалисты и инвесторы могут искать стартапы."}, status=403)
 
@@ -130,7 +138,7 @@ class StartupViewSet(viewsets.ModelViewSet):
                 required_specialists__specialist__isnull=True,
             ).distinct()[:limit]
 
-            serializer = StartupForSpecialistShortSerializer(queryset, many=True, context={'request': request})
+            serializer = StartupForSpecialistSearchSerializer(queryset, many=True, context={'request': request})
             return Response(serializer.data)
 
         elif user.role == User.Role.INVESTOR:
@@ -147,7 +155,7 @@ class StartupViewSet(viewsets.ModelViewSet):
                 investment_needed__lte=max_inv
             )[:limit]
 
-            serializer = StartupForInvestorShortSerializer(queryset, many=True, context={'request': request})
+            serializer = StartupForInvestorSearchSerializer(queryset, many=True, context={'request': request})
             return Response(serializer.data)
 
         return Response({"detail": "Только специалисты и инвесторы получают рекомендации стартапов."}, status=403)

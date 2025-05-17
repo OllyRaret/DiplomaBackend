@@ -172,7 +172,7 @@ class StartupSerializer(serializers.ModelSerializer):
         return instance
 
 
-class StartupForSpecialistShortSerializer(serializers.ModelSerializer):
+class StartupForSpecialistSearchSerializer(serializers.ModelSerializer):
     required_specialists = RequiredSpecialistSerializer(many=True, read_only=True)
     industry = IndustrySerializer(read_only=True)
     founder_id = serializers.PrimaryKeyRelatedField(source='founder.user', read_only=True)
@@ -189,7 +189,24 @@ class StartupForSpecialistShortSerializer(serializers.ModelSerializer):
         return Favorite.objects.filter(user=request.user, startup=obj).exists()
 
 
-class StartupForInvestorShortSerializer(serializers.ModelSerializer):
+class StartupForSpecialistShortSerializer(serializers.ModelSerializer):
+    role = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Startup
+        fields = ['id', 'title', 'description', 'stage', 'image', 'role']
+
+    def get_role(self, obj):
+        invited_roles = self.context.get('invited_roles', {})
+        if invited_roles:
+            return invited_roles.get(obj.id)
+
+        specialist_profile = self.context['request'].user.specialist_profile
+        required = obj.required_specialists.filter(specialist=specialist_profile).first()
+        return required.profession.name if required else None
+
+
+class StartupForInvestorSearchSerializer(serializers.ModelSerializer):
     industry = IndustrySerializer(read_only=True)
     founder_id = serializers.PrimaryKeyRelatedField(source='founder.user', read_only=True)
     is_favorited = serializers.SerializerMethodField()
@@ -203,3 +220,9 @@ class StartupForInvestorShortSerializer(serializers.ModelSerializer):
         if not request or not request.user.is_authenticated:
             return False
         return Favorite.objects.filter(user=request.user, startup=obj).exists()
+
+
+class StartupForFounderShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Startup
+        fields = ['id', 'title', 'description', 'stage', 'image']

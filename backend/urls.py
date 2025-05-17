@@ -11,7 +11,8 @@ from favorite.views import FavoriteViewSet
 from messaging.views import MessageViewSet, InvitationViewSet
 from reference.views import ProfessionListView, IndustryListView, SkillListView
 from startups.views import StartupViewSet
-from users.views import CurrentUserProfileView, PublicUserProfileView, SpecialistSearchView, InvestorSearchView
+from users.views import CurrentUserProfileView, PublicUserProfileView, SpecialistSearchView, InvestorSearchView, \
+    RecommendedSpecialistsView
 
 # Для swagger
 schema_view = get_schema_view(
@@ -46,6 +47,8 @@ urlpatterns = [
 
     path('search/specialists/', SpecialistSearchView.as_view(), name='specialist-search'),
     path('search/investors/', InvestorSearchView.as_view(), name='investor-search'),
+
+    path('specialists/recommendations/', RecommendedSpecialistsView.as_view(), name='specialist-recommendations'),
 
     path('', include(router.urls)),
 

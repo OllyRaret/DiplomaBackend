@@ -32,10 +32,11 @@ class MessageSerializer(serializers.ModelSerializer):
 
 
 class InvitationSerializer(serializers.ModelSerializer):
-    specialist_id = serializers.PrimaryKeyRelatedField(
-        queryset=SpecialistProfile.objects.all(), source='specialist', write_only=True
+    user_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(), write_only=True
     )
     specialist = SpecialistShortSerializer(read_only=True)
+
     required_specialist_id = serializers.PrimaryKeyRelatedField(
         queryset=RequiredSpecialist.objects.all(), source='required_specialist', write_only=True
     )
@@ -45,39 +46,33 @@ class InvitationSerializer(serializers.ModelSerializer):
         model = Invitation
         fields = [
             'id',
-            'specialist_id', 'required_specialist_id',
+            'user_id', 'required_specialist_id',
             'specialist', 'required_specialist',
             'is_accepted', 'created_at',
         ]
         read_only_fields = ['id', 'startup', 'is_accepted', 'created_at']
 
     def validate(self, data):
-        print(0)
-
         user = self.context['request'].user
         if not hasattr(user, 'founder_profile'):
             raise serializers.ValidationError("Только стартаперы могут отправлять приглашения.")
 
-        required_specialist = data['required_specialist']
-        specialist = data['specialist']
-        startup = required_specialist.startup
+        invited_user = data['user_id']
+        if not hasattr(invited_user, 'specialist_profile'):
+            raise serializers.ValidationError("Указанный пользователь не является специалистом.")
 
-        print(1)
+        required_specialist = data['required_specialist']
+        specialist = invited_user.specialist_profile
+        startup = required_specialist.startup
 
         if required_specialist.specialist is not None:
             raise serializers.ValidationError("Эта вакансия уже занята.")
 
-        print(2)
-
         if Invitation.objects.filter(required_specialist=required_specialist, is_accepted=None).exists():
             raise serializers.ValidationError("Уже есть активное приглашение на эту вакансию.")
 
-        print(3)
-
         if specialist.user == user:
             raise serializers.ValidationError("Нельзя приглашать самого себя.")
-
-        print(4)
 
         # Нельзя пригласить или назначить специалиста на другую вакансию в том же стартапе
         already_invited = Invitation.objects.filter(
@@ -94,7 +89,8 @@ class InvitationSerializer(serializers.ModelSerializer):
         if already_invited or already_assigned:
             raise serializers.ValidationError("Этот специалист уже приглашён или назначен на другую вакансию в этом стартапе.")
 
-        print(5)
+        data['specialist'] = specialist
+        data.pop('user_id')
 
         return data
 

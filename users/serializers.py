@@ -123,7 +123,7 @@ class SpecialistShortSerializer(serializers.ModelSerializer):
         fields = ['user_id', 'full_name']
 
 
-class SpecialistFavoriteSerializer(serializers.ModelSerializer):
+class SpecialistCardSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
     full_name = serializers.CharField(source='user.full_name', read_only=True)
     avatar = serializers.ImageField(source='user.avatar', read_only=True)
@@ -250,7 +250,7 @@ class FounderProfileSerializer(serializers.ModelSerializer):
         return instance
 
 
-class InvestorFavoriteSerializer(serializers.ModelSerializer):
+class InvestorCardSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
     full_name = serializers.CharField(source='user.full_name', read_only=True)
     avatar = serializers.ImageField(source='user.avatar', read_only=True)
