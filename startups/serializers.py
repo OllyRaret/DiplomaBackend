@@ -67,12 +67,15 @@ class StartupSerializer(serializers.ModelSerializer):
     )
     required_specialists = RequiredSpecialistSerializer(many=True) # ToDo
     is_favorited = serializers.SerializerMethodField()
+    views = serializers.IntegerField(read_only=True)
+    favorites_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Startup
         fields = [
             'id', 'title', 'image', 'industry', 'industry_id', 'description',
-            'stage', 'investment_needed', 'founder', 'required_specialists', 'is_favorited'
+            'stage', 'investment_needed', 'founder', 'required_specialists',
+            'is_favorited', 'views', 'favorites_count'
         ]
 
 
@@ -81,6 +84,10 @@ class StartupSerializer(serializers.ModelSerializer):
         if not request or not request.user.is_authenticated:
             return False
         return Favorite.objects.filter(user=request.user, startup=obj).exists()
+
+
+    def get_favorites_count(self, obj):
+        return Favorite.objects.filter(startup=obj).count()
 
 
     def validate(self, attrs):

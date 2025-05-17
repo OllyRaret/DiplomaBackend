@@ -1,3 +1,4 @@
+from django.db.models import F, Count
 from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.exceptions import PermissionDenied
@@ -19,6 +20,23 @@ class StartupViewSet(viewsets.ModelViewSet):
         if not hasattr(self.request.user, 'founder_profile'):
             raise PermissionDenied('Только основатели могут создавать стартапы')
         serializer.save(founder=self.request.user.founder_profile)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+
+        # Увеличить просмотры, если пользователь не является основателем
+        user = request.user
+        if (
+                user.is_authenticated
+                and hasattr(user, 'founder_profile')
+                and instance.founder != user.founder_profile
+        ) or not user.is_authenticated:
+            instance.views = F('views') + 1
+            instance.save(update_fields=['views'])
+            instance.refresh_from_db(fields=['views'])  # получить новое значение views
+
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
 
     def get_permissions(self):
         if self.action in ['update', 'partial_update', 'destroy']:
@@ -81,3 +99,55 @@ class StartupViewSet(viewsets.ModelViewSet):
             return Response({"detail": "Только специалисты и инвесторы могут искать стартапы."}, status=403)
 
         return Response(serializer.data)
+
+    @action(detail=False, methods=['get'], url_path='recommendations')
+    def recommendations(self, request):
+        user = request.user
+        if not user.is_authenticated:
+            return Response({'detail': 'Требуется аутентификация'}, status=401)
+
+        limit = request.query_params.get('limit')
+        try:
+            limit = int(limit)
+        except (TypeError, ValueError):
+            limit = 5  # значение по умолчанию
+
+        queryset = Startup.objects.all().select_related('founder__user', 'industry') \
+            .prefetch_related('required_specialists__skills') \
+            .annotate(
+                favorites_count=Count('favorited_by'),
+            ).order_by('-favorites_count', '-views')  # популярные выше
+
+        if user.role == User.Role.SPECIALIST:
+            profile = user.specialist_profile
+            skills = profile.skills.all()
+            profession = profile.profession
+
+            # Фильтруем по совпадению профессии и хотя бы одного навыка
+            queryset = queryset.filter(
+                required_specialists__profession=profession,
+                required_specialists__skills__in=skills,
+                required_specialists__specialist__isnull=True,
+            ).distinct()[:limit]
+
+            serializer = StartupForSpecialistShortSerializer(queryset, many=True, context={'request': request})
+            return Response(serializer.data)
+
+        elif user.role == User.Role.INVESTOR:
+            profile = user.investor_profile
+            industry = profile.industry
+            stages = profile.preferred_stages
+            min_inv = profile.investment_min
+            max_inv = profile.investment_max
+
+            queryset = queryset.filter(
+                industry=industry,
+                stage__in=stages,
+                investment_needed__gte=min_inv,
+                investment_needed__lte=max_inv
+            )[:limit]
+
+            serializer = StartupForInvestorShortSerializer(queryset, many=True, context={'request': request})
+            return Response(serializer.data)
+
+        return Response({"detail": "Только специалисты и инвесторы получают рекомендации стартапов."}, status=403)
