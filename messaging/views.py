@@ -1,12 +1,12 @@
 from django.db.models import Q, Max
 from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
-from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import NotFound, PermissionDenied
 from rest_framework.response import Response
 
 from users.models import User
-from .models import Message
-from .serializers import MessageSerializer
+from .models import Message, Invitation
+from .serializers import MessageSerializer, InvitationSerializer
 
 
 class MessageViewSet(viewsets.ModelViewSet):
@@ -107,3 +107,66 @@ class MessageViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(unique_dialogs.values(), many=True)
         return Response(serializer.data)
+
+
+class InvitationViewSet(viewsets.ModelViewSet):
+    queryset = Invitation.objects.select_related('specialist__user', 'required_specialist', 'startup')
+    serializer_class = InvitationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        if hasattr(user, 'founder_profile'):
+            return self.queryset.filter(startup__founder=user.founder_profile)
+        elif hasattr(user, 'specialist_profile'):
+            return self.queryset.filter(specialist=user.specialist_profile)
+        return Invitation.objects.none()
+
+    @action(detail=True, methods=['post'], url_path='accept')
+    def accept_invitation(self, request, pk=None):
+        invitation = self.get_object()
+        user = request.user
+
+        if invitation.specialist.user != user:
+            raise PermissionDenied("Вы не можете принять это приглашение.")
+
+        if invitation.is_accepted is not None:
+            return Response({'detail': 'Приглашение уже обработано.'}, status=400)
+
+        # Назначаем специалиста на вакансию
+        invitation.required_specialist.specialist = invitation.specialist
+        invitation.required_specialist.save()
+        invitation.is_accepted = True
+        invitation.save()
+
+        # Системное сообщение стартаперу
+        Message.objects.create(
+            sender=None,
+            recipient=invitation.startup.founder.user,
+            text=f"Специалист {user.full_name} принял приглашение в стартап '{invitation.startup.title}'."
+        )
+
+        return Response({'detail': 'Приглашение принято.'})
+
+    @action(detail=True, methods=['post'], url_path='decline')
+    def decline_invitation(self, request, pk=None):
+        invitation = self.get_object()
+        user = request.user
+
+        if invitation.specialist.user != user:
+            raise PermissionDenied("Вы не можете отклонить это приглашение.")
+
+        if invitation.is_accepted is not None:
+            return Response({'detail': 'Приглашение уже обработано.'}, status=400)
+
+        invitation.is_accepted = False
+        invitation.save()
+
+        # Системное сообщение стартаперу
+        Message.objects.create(
+            sender=None,
+            recipient=invitation.startup.founder.user,
+            text=f"Специалист {user.full_name} отклонил приглашение в стартап '{invitation.startup.title}'."
+        )
+
+        return Response({'detail': 'Приглашение отклонено.'})

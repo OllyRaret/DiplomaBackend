@@ -8,7 +8,7 @@ from rest_framework import permissions
 from rest_framework.routers import DefaultRouter
 
 from favorite.views import FavoriteViewSet
-from messaging.views import MessageViewSet
+from messaging.views import MessageViewSet, InvitationViewSet
 from reference.views import ProfessionListView, IndustryListView, SkillListView
 from startups.views import StartupViewSet
 from users.views import CurrentUserProfileView, PublicUserProfileView, SpecialistSearchView, InvestorSearchView
@@ -29,6 +29,7 @@ router = DefaultRouter()
 router.register(r'messages', MessageViewSet, basename='messages')
 router.register(r'startups', StartupViewSet, basename='startup')
 router.register(r'favorites', FavoriteViewSet, basename='favorites')
+router.register(r'invitations', InvitationViewSet, basename='invitations')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
