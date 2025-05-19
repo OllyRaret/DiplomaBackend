@@ -127,14 +127,14 @@ class SpecialistCardSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
     full_name = serializers.CharField(source='user.full_name', read_only=True)
     avatar = serializers.ImageField(source='user.avatar', read_only=True)
-    description = serializers.CharField(source='user.description', read_only=True)
+    bio = serializers.CharField(source='user.bio', read_only=True)
     profession = ProfessionSerializer()
     skills = SkillSerializer(many=True)
     is_favorited = serializers.SerializerMethodField()
 
     class Meta:
         model = SpecialistProfile
-        fields = ['user_id', 'full_name', 'avatar', 'profession', 'description', 'skills', 'is_favorited']
+        fields = ['user_id', 'full_name', 'avatar', 'profession', 'bio', 'skills', 'is_favorited']
 
     def get_is_favorited(self, obj):
         request = self.context.get('request')
@@ -254,13 +254,13 @@ class InvestorCardSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
     full_name = serializers.CharField(source='user.full_name', read_only=True)
     avatar = serializers.ImageField(source='user.avatar', read_only=True)
-    description = serializers.CharField(source='user.description', read_only=True)
+    bio = serializers.CharField(source='user.bio', read_only=True)
     industry = IndustrySerializer()
     is_favorited = serializers.SerializerMethodField()
 
     class Meta:
         model = InvestorProfile
-        fields = ['user_id', 'full_name', 'avatar', 'industry', 'description', 'investment_max', 'is_favorited']
+        fields = ['user_id', 'full_name', 'avatar', 'industry', 'bio', 'investment_max', 'is_favorited']
 
     def get_is_favorited(self, obj):
         request = self.context.get('request')
