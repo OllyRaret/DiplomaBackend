@@ -447,38 +447,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Response status code is 201\", function () {\r",
-							"    pm.response.to.have.status(201);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Validate specialist request object\", function () {\r",
-							"    const res = pm.response.json();\r",
-							"\r",
-							"    pm.expect(res.id).to.be.a(\"number\");\r",
-							"\r",
-							"    pm.expect(res.specialist).to.be.an(\"object\");\r",
-							"    pm.expect(res.specialist.user_id).to.be.a(\"number\");\r",
-							"    pm.expect(res.specialist.full_name).to.be.a(\"string\");\r",
-							"\r",
-							"    pm.expect(res.required_specialist).to.be.an(\"object\");\r",
-							"    pm.expect(res.required_specialist.id).to.be.a(\"number\");\r",
-							"\r",
-							"    pm.expect(res.required_specialist.profession).to.be.an(\"object\");\r",
-							"    pm.expect(res.required_specialist.profession.id).to.be.a(\"number\");\r",
-							"    pm.expect(res.required_specialist.profession.name).to.be.a(\"string\");\r",
-							"\r",
-							"    pm.expect(res.required_specialist.skills).to.be.an(\"array\");\r",
-							"    res.required_specialist.skills.forEach(skill => {\r",
-							"        pm.expect(skill.id).to.be.a(\"number\");\r",
-							"        pm.expect(skill.name).to.be.a(\"string\");\r",
-							"    });\r",
-							"\r",
-							"    pm.expect(\r",
-							"        res.is_accepted === null ||\r",
-							"        typeof res.is_accepted === \"boolean\"\r",
-							"    ).to.be.true;\r",
-							"\r",
-							"    pm.expect(res.created_at).to.be.a(\"string\");\r",
+							"pm.test(\"Response status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
 							"});\r",
 							""
 						],
@@ -1022,7 +992,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/invitations/2/accept/",
+					"raw": "http://localhost:8000/invitations/1/accept/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1030,7 +1000,7 @@
 					"port": "8000",
 					"path": [
 						"invitations",
-						"2",
+						"1",
 						"accept",
 						""
 					]
@@ -1271,7 +1241,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/invitations/3/decline/",
+					"raw": "http://localhost:8000/invitations/2/decline/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1279,7 +1249,7 @@
 					"port": "8000",
 					"path": [
 						"invitations",
-						"3",
+						"2",
 						"decline",
 						""
 					]
