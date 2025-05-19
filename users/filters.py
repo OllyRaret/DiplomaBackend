@@ -33,20 +33,23 @@ class SpecialistFilter(filters.FilterSet):
 
 
 class InvestorFilter(filters.FilterSet):
-    investment_min = filters.NumberFilter(field_name='investment_min', lookup_expr='lte')
-    investment_max = filters.NumberFilter(field_name='investment_max', lookup_expr='gte')
+    investment_needed = filters.NumberFilter(method='filter_by_investment_range')
     industry = filters.NumberFilter(field_name='industry')
     preferred_stages = filters.CharFilter(method='filter_by_stage')
 
     class Meta:
         model = InvestorProfile
-        fields = ['industry', 'preferred_stages', 'investment_min', 'investment_max']
+        fields = ['industry', 'preferred_stages', 'investment_needed']
+
+    def filter_by_investment_range(self, queryset, name, value):
+        return queryset.filter(investment_min__lte=value, investment_max__gte=value)
 
     def filter_by_stage(self, queryset, name, value):
         """
         value может быть одной стадией или через запятую: 'launch,in_progress'
         """
         stages = value.split(',')
-        return queryset.filter(preferred_stages__icontains=stages[0]) if len(stages) == 1 else queryset.filter(
-            *(Q(preferred_stages__icontains=stage) for stage in stages)
-        )
+        q = Q()
+        for stage in stages:
+            q |= Q(preferred_stages__icontains=stage)
+        return queryset.filter(q)
