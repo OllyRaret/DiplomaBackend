@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -74,18 +75,30 @@ class FavoriteViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['delete'])
     def remove(self, request):
         user = request.user
-        specialist_id = request.data.get('specialist_id')
-        investor_id = request.data.get('investor_id')
+        user_id = request.data.get('user_id')
         startup_id = request.data.get('startup_id')
 
-        if specialist_id:
-            favorite = Favorite.objects.filter(user=user, specialist_id=specialist_id).first()
-        elif investor_id:
-            favorite = Favorite.objects.filter(user=user, investor_id=investor_id).first()
+        if user_id:
+            target_user = get_object_or_404(User, id=user_id)
+
+            # Проверяем, есть ли у него профиль специалиста или инвестора
+            specialist = getattr(target_user, 'specialist_profile', None)
+            investor = getattr(target_user, 'investor_profile', None)
+
+            if specialist:
+                favorite = Favorite.objects.filter(user=user, specialist=specialist).first()
+            elif investor:
+                favorite = Favorite.objects.filter(user=user, investor=investor).first()
+            else:
+                return Response({'detail': 'Пользователь не является ни специалистом, ни инвестором.'}, status=400)
+
         elif startup_id:
             favorite = Favorite.objects.filter(user=user, startup_id=startup_id).first()
         else:
-            return Response({'detail': 'Укажите хотя бы одно из полей: specialist_id, investor_id или startup_id'}, status=400)
+            return Response(
+                {'detail': 'Нужно указать либо user_id специалиста/инвестора, либо startup_id.'},
+                status=400
+            )
 
         if not favorite:
             return Response({'detail': 'Избранное не найдено.'}, status=404)
