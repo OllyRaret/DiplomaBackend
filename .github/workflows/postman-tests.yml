@@ -50,7 +50,7 @@ jobs:
 
       - name: Install Newman and wait-on
         run: |
-          npm install -g newman wait-on
+          npm install -g newman newman-reporter-html wait-on
 
       - name: Create folder for reports
         run: mkdir -p newman
