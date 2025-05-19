@@ -1,0 +1,3625 @@
+{
+	"info": {
+		"_postman_id": "7b08eef1-5b86-4b8b-974a-d69c2a2ae2a3",
+		"name": "8. Search",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44112372",
+		"_collection_link": "https://alinaobrezkova.postman.co/workspace/Diploma-tests~e4acbeed-fff8-4ec3-84d0-7292590347e4/collection/44112372-7b08eef1-5b86-4b8b-974a-d69c2a2ae2a3?action=share&source=collection_link&creator=44112372"
+	},
+	"item": [
+		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "startups",
+					"item": [
+						{
+							"name": "Login correct data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"if (jsonData.auth_token) {",
+											"    pm.environment.set(\"access_token_sturtup2\", jsonData.auth_token);",
+											"    console.log(\"Токен сохранён:\", jsonData.auth_token);",
+											"} else {",
+											"    console.warn(\"Токен не найден в ответе.\");",
+											"}",
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Content-Type is application/json\", function () {",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has the required field 'auth_token'\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.be.an('object');",
+											"    pm.expect(responseData.auth_token).to.exist;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Auth token is a non-empty string\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData.auth_token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Auth token should not be empty\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Verify the auth token is in a valid format\", function () {",
+											"  const responseData = pm.response.json();",
+											"  ",
+											"  pm.expect(responseData).to.be.an('object');",
+											"  pm.expect(responseData.auth_token).to.be.a('string').and.to.match(/[A-Za-z0-9]{30,}/, \"Auth token format is not valid\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"testuserextra@example.com\",\r\n  \"password\": \"StrongPassword123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/auth/token/login/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"token",
+										"login",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New profile 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Content-Type is application/json\", function () {\r",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+											"});\r",
+											"\r",
+											"pm.test('Validate user profile object (with nested and nullable fields)', function () {\r",
+											"    const data = pm.response.json();\r",
+											"\r",
+											"    pm.expect(data.user_id).to.be.a('number');\r",
+											"    pm.expect(data.role).to.be.a('string');\r",
+											"    if (data.full_name !== null) {\r",
+											"        pm.expect(data.full_name).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    pm.expect(data.industry).to.be.an('object');\r",
+											"    pm.expect(data.industry.id).to.be.a('number');\r",
+											"    pm.expect(data.industry.name).to.be.a('string');\r",
+											"\r",
+											"    if (data.bio !== null) {\r",
+											"        pm.expect(data.bio).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    if (data.contact_phone !== null) {\r",
+											"        pm.expect(data.contact_phone).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    if (data.contact_email !== null) {\r",
+											"        pm.expect(data.contact_email).to.be.a('string')\r",
+											"            .and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+											"    }\r",
+											"\r",
+											"    if (data.avatar !== null) {\r",
+											"        pm.expect(data.avatar).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    pm.expect(data.experience).to.be.an('array');\r",
+											"    data.experience.forEach(item => {\r",
+											"        pm.expect(item.id).to.be.a('number');\r",
+											"        pm.expect(item.organization).to.be.a('string');\r",
+											"        pm.expect(item.position).to.be.a('string');\r",
+											"        pm.expect(item.start_date).to.be.a('string');\r",
+											"        if (item.end_date !== null) {\r",
+											"            pm.expect(item.end_date).to.be.a('string');\r",
+											"        }\r",
+											"        if (item.description !== null) {\r",
+											"            pm.expect(item.description).to.be.a('string');\r",
+											"        }\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Token {{access_token_sturtup2}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"full_name\": \"Sturtaper 2\",\r\n  \"industry_id\": 1,\r\n  \"bio\": \"test bio\",\r\n  \"experience\": [\r\n    {\r\n      \"organization\": \"TechStars\",\r\n      \"position\": \"CEO\",\r\n      \"start_date\": \"2020-01-01\",\r\n      \"end_date\": \"2022-12-31\",\r\n      \"description\": \"Руководство командой и запуск продукта\"\r\n    },\r\n    {\r\n      \"organization\": \"YCombinator\",\r\n      \"position\": \"CTO\",\r\n      \"start_date\": \"2018-03-01\",\r\n      \"end_date\": \"2019-11-30\",\r\n      \"description\": \"Разработка MVP и управление разработкой\"\r\n    }\r\n  ]\r\n}\r\n"
+								},
+								"url": {
+									"raw": "http://localhost:8000/profile/me/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"profile",
+										"me",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login correct data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"if (jsonData.auth_token) {",
+											"    pm.environment.set(\"access_token_sturtup3\", jsonData.auth_token);",
+											"    console.log(\"Токен сохранён:\", jsonData.auth_token);",
+											"} else {",
+											"    console.warn(\"Токен не найден в ответе.\");",
+											"}",
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Content-Type is application/json\", function () {",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has the required field 'auth_token'\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.be.an('object');",
+											"    pm.expect(responseData.auth_token).to.exist;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Auth token is a non-empty string\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData.auth_token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Auth token should not be empty\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Verify the auth token is in a valid format\", function () {",
+											"  const responseData = pm.response.json();",
+											"  ",
+											"  pm.expect(responseData).to.be.an('object');",
+											"  pm.expect(responseData.auth_token).to.be.a('string').and.to.match(/[A-Za-z0-9]{30,}/, \"Auth token format is not valid\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"USERBIG@example.com\",\r\n  \"password\": \"StrongPass123!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/auth/token/login/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"token",
+										"login",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New profile 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Content-Type is application/json\", function () {\r",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+											"});\r",
+											"\r",
+											"pm.test('Validate user profile object (with nested and nullable fields)', function () {\r",
+											"    const data = pm.response.json();\r",
+											"\r",
+											"    pm.expect(data.user_id).to.be.a('number');\r",
+											"    pm.expect(data.role).to.be.a('string');\r",
+											"    if (data.full_name !== null) {\r",
+											"        pm.expect(data.full_name).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    pm.expect(data.industry).to.be.an('object');\r",
+											"    pm.expect(data.industry.id).to.be.a('number');\r",
+											"    pm.expect(data.industry.name).to.be.a('string');\r",
+											"\r",
+											"    if (data.bio !== null) {\r",
+											"        pm.expect(data.bio).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    if (data.contact_phone !== null) {\r",
+											"        pm.expect(data.contact_phone).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    if (data.contact_email !== null) {\r",
+											"        pm.expect(data.contact_email).to.be.a('string')\r",
+											"            .and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+											"    }\r",
+											"\r",
+											"    if (data.avatar !== null) {\r",
+											"        pm.expect(data.avatar).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    pm.expect(data.experience).to.be.an('array');\r",
+											"    data.experience.forEach(item => {\r",
+											"        pm.expect(item.id).to.be.a('number');\r",
+											"        pm.expect(item.organization).to.be.a('string');\r",
+											"        pm.expect(item.position).to.be.a('string');\r",
+											"        pm.expect(item.start_date).to.be.a('string');\r",
+											"        if (item.end_date !== null) {\r",
+											"            pm.expect(item.end_date).to.be.a('string');\r",
+											"        }\r",
+											"        if (item.description !== null) {\r",
+											"            pm.expect(item.description).to.be.a('string');\r",
+											"        }\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Token {{access_token_sturtup3}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"full_name\": \"Sturtaper 2\",\r\n  \"industry_id\": 3,\r\n  \"bio\": \"test bio\",\r\n  \"experience\": [\r\n    {\r\n      \"organization\": \"TechStars\",\r\n      \"position\": \"CEO\",\r\n      \"start_date\": \"2020-01-01\",\r\n      \"end_date\": \"2022-12-31\",\r\n      \"description\": \"Руководство командой и запуск продукта\"\r\n    },\r\n    {\r\n      \"organization\": \"YCombinator\",\r\n      \"position\": \"CTO\",\r\n      \"start_date\": \"2018-03-01\",\r\n      \"end_date\": \"2019-11-30\",\r\n      \"description\": \"Разработка MVP и управление разработкой\"\r\n    }\r\n  ]\r\n}\r\n"
+								},
+								"url": {
+									"raw": "http://localhost:8000/profile/me/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"profile",
+										"me",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create startup by startuper Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Checking the structure and field types of a startup\", function () {\r",
+											"    const response = pm.response.json();\r",
+											"\r",
+											"    pm.expect(response).to.have.property(\"id\").that.is.a(\"number\");\r",
+											"    pm.expect(response).to.have.property(\"title\").that.is.a(\"string\");\r",
+											"    pm.expect(response).to.have.property(\"industry\").that.is.an(\"object\");\r",
+											"    pm.expect(response).to.have.property(\"description\");\r",
+											"    pm.expect(response).to.have.property(\"stage\").that.is.a(\"string\");\r",
+											"    pm.expect(response).to.have.property(\"investment_needed\");\r",
+											"    pm.expect(response).to.have.property(\"founder\").that.is.an(\"object\");\r",
+											"    pm.expect(response).to.have.property(\"required_specialists\").that.is.an(\"array\");\r",
+											"    pm.expect(response).to.have.property(\"is_favorited\").that.is.a(\"boolean\");\r",
+											"\r",
+											"    pm.expect(response.industry).to.have.property(\"id\").that.is.a(\"number\");\r",
+											"    pm.expect(response.industry).to.have.property(\"name\").that.is.a(\"string\");\r",
+											"\r",
+											"    const founder = response.founder;\r",
+											"    pm.expect(founder).to.have.property(\"user_id\").that.is.a(\"number\");\r",
+											"    pm.expect(founder).to.have.property(\"full_name\").that.is.a(\"string\");\r",
+											"    pm.expect(founder).to.have.property(\"contact_email\").that.is.a(\"string\");\r",
+											"\r",
+											"    response.required_specialists.forEach(spec => {\r",
+											"        pm.expect(spec).to.have.property(\"id\").that.is.a(\"number\");\r",
+											"        pm.expect(spec).to.have.property(\"profession\").that.is.an(\"object\");\r",
+											"        pm.expect(spec.profession).to.have.property(\"id\").that.is.a(\"number\");\r",
+											"        pm.expect(spec.profession).to.have.property(\"name\").that.is.a(\"string\");\r",
+											"\r",
+											"        pm.expect(spec).to.have.property(\"skills\").that.is.an(\"array\");\r",
+											"        spec.skills.forEach(skill => {\r",
+											"            pm.expect(skill).to.have.property(\"id\").that.is.a(\"number\");\r",
+											"            pm.expect(skill).to.have.property(\"name\").that.is.a(\"string\");\r",
+											"        });\r",
+											"\r",
+											"        pm.expect(spec).to.have.property(\"specialist\");\r",
+											"    });\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Token {{access_token_sturtup2}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"title\": \"Test 2\",\r\n  \"industry_id\": 2,\r\n  \"description\": \"Test test test\",\r\n  \"stage\": \"waiting\",\r\n  \"investment_needed\": 50000,\r\n  \"required_specialists\": [\r\n    {\r\n      \"profession_id\": 3,\r\n      \"skills_ids\": [1, 2]\r\n    },\r\n    {\r\n      \"profession_id\": 4,\r\n      \"skills_ids\": [3, 4]\r\n    }\r\n  ]\r\n}\r\n"
+								},
+								"url": {
+									"raw": "http://localhost:8000/startups/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"startups",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create startup by startuper Copy 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Checking the structure and field types of a startup\", function () {\r",
+											"    const response = pm.response.json();\r",
+											"\r",
+											"    pm.expect(response).to.have.property(\"id\").that.is.a(\"number\");\r",
+											"    pm.expect(response).to.have.property(\"title\").that.is.a(\"string\");\r",
+											"    pm.expect(response).to.have.property(\"industry\").that.is.an(\"object\");\r",
+											"    pm.expect(response).to.have.property(\"description\");\r",
+											"    pm.expect(response).to.have.property(\"stage\").that.is.a(\"string\");\r",
+											"    pm.expect(response).to.have.property(\"investment_needed\");\r",
+											"    pm.expect(response).to.have.property(\"founder\").that.is.an(\"object\");\r",
+											"    pm.expect(response).to.have.property(\"required_specialists\").that.is.an(\"array\");\r",
+											"    pm.expect(response).to.have.property(\"is_favorited\").that.is.a(\"boolean\");\r",
+											"\r",
+											"    pm.expect(response.industry).to.have.property(\"id\").that.is.a(\"number\");\r",
+											"    pm.expect(response.industry).to.have.property(\"name\").that.is.a(\"string\");\r",
+											"\r",
+											"    const founder = response.founder;\r",
+											"    pm.expect(founder).to.have.property(\"user_id\").that.is.a(\"number\");\r",
+											"    pm.expect(founder).to.have.property(\"full_name\").that.is.a(\"string\");\r",
+											"    pm.expect(founder).to.have.property(\"contact_email\").that.is.a(\"string\");\r",
+											"\r",
+											"    response.required_specialists.forEach(spec => {\r",
+											"        pm.expect(spec).to.have.property(\"id\").that.is.a(\"number\");\r",
+											"        pm.expect(spec).to.have.property(\"profession\").that.is.an(\"object\");\r",
+											"        pm.expect(spec.profession).to.have.property(\"id\").that.is.a(\"number\");\r",
+											"        pm.expect(spec.profession).to.have.property(\"name\").that.is.a(\"string\");\r",
+											"\r",
+											"        pm.expect(spec).to.have.property(\"skills\").that.is.an(\"array\");\r",
+											"        spec.skills.forEach(skill => {\r",
+											"            pm.expect(skill).to.have.property(\"id\").that.is.a(\"number\");\r",
+											"            pm.expect(skill).to.have.property(\"name\").that.is.a(\"string\");\r",
+											"        });\r",
+											"\r",
+											"        pm.expect(spec).to.have.property(\"specialist\");\r",
+											"    });\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Token {{access_token_sturtup2}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"title\": \"Test 5\",\r\n  \"industry_id\": 4,\r\n  \"description\": \"Test test test\",\r\n  \"stage\": \"waiting\",\r\n  \"investment_needed\": 50000,\r\n  \"required_specialists\": [\r\n    {\r\n      \"profession_id\": 3,\r\n      \"skills_ids\": [1, 2]\r\n    },\r\n    {\r\n      \"profession_id\": 4,\r\n      \"skills_ids\": [3, 4]\r\n    }\r\n  ]\r\n}\r\n"
+								},
+								"url": {
+									"raw": "http://localhost:8000/startups/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"startups",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create startup by startuper Copy 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Checking the structure and field types of a startup\", function () {\r",
+											"    const response = pm.response.json();\r",
+											"\r",
+											"    pm.expect(response).to.have.property(\"id\").that.is.a(\"number\");\r",
+											"    pm.expect(response).to.have.property(\"title\").that.is.a(\"string\");\r",
+											"    pm.expect(response).to.have.property(\"industry\").that.is.an(\"object\");\r",
+											"    pm.expect(response).to.have.property(\"description\");\r",
+											"    pm.expect(response).to.have.property(\"stage\").that.is.a(\"string\");\r",
+											"    pm.expect(response).to.have.property(\"investment_needed\");\r",
+											"    pm.expect(response).to.have.property(\"founder\").that.is.an(\"object\");\r",
+											"    pm.expect(response).to.have.property(\"required_specialists\").that.is.an(\"array\");\r",
+											"    pm.expect(response).to.have.property(\"is_favorited\").that.is.a(\"boolean\");\r",
+											"\r",
+											"    pm.expect(response.industry).to.have.property(\"id\").that.is.a(\"number\");\r",
+											"    pm.expect(response.industry).to.have.property(\"name\").that.is.a(\"string\");\r",
+											"\r",
+											"    const founder = response.founder;\r",
+											"    pm.expect(founder).to.have.property(\"user_id\").that.is.a(\"number\");\r",
+											"    pm.expect(founder).to.have.property(\"full_name\").that.is.a(\"string\");\r",
+											"    pm.expect(founder).to.have.property(\"contact_email\").that.is.a(\"string\");\r",
+											"\r",
+											"    response.required_specialists.forEach(spec => {\r",
+											"        pm.expect(spec).to.have.property(\"id\").that.is.a(\"number\");\r",
+											"        pm.expect(spec).to.have.property(\"profession\").that.is.an(\"object\");\r",
+											"        pm.expect(spec.profession).to.have.property(\"id\").that.is.a(\"number\");\r",
+											"        pm.expect(spec.profession).to.have.property(\"name\").that.is.a(\"string\");\r",
+											"\r",
+											"        pm.expect(spec).to.have.property(\"skills\").that.is.an(\"array\");\r",
+											"        spec.skills.forEach(skill => {\r",
+											"            pm.expect(skill).to.have.property(\"id\").that.is.a(\"number\");\r",
+											"            pm.expect(skill).to.have.property(\"name\").that.is.a(\"string\");\r",
+											"        });\r",
+											"\r",
+											"        pm.expect(spec).to.have.property(\"specialist\");\r",
+											"    });\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Token {{access_token_sturtup2}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"title\": \"Test 3\",\r\n  \"industry_id\": 2,\r\n  \"description\": \"Test test test\",\r\n  \"stage\": \"completed\",\r\n  \"investment_needed\": 50000,\r\n  \"required_specialists\": [\r\n    {\r\n      \"profession_id\": 3,\r\n      \"skills_ids\": [3, 2]\r\n    },\r\n    {\r\n      \"profession_id\": 3,\r\n      \"skills_ids\": [3, 4]\r\n    }\r\n  ]\r\n}\r\n"
+								},
+								"url": {
+									"raw": "http://localhost:8000/startups/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"startups",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create startup by startuper Copy 3",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Checking the structure and field types of a startup\", function () {\r",
+											"    const response = pm.response.json();\r",
+											"\r",
+											"    pm.expect(response).to.have.property(\"id\").that.is.a(\"number\");\r",
+											"    pm.expect(response).to.have.property(\"title\").that.is.a(\"string\");\r",
+											"    pm.expect(response).to.have.property(\"industry\").that.is.an(\"object\");\r",
+											"    pm.expect(response).to.have.property(\"description\");\r",
+											"    pm.expect(response).to.have.property(\"stage\").that.is.a(\"string\");\r",
+											"    pm.expect(response).to.have.property(\"investment_needed\");\r",
+											"    pm.expect(response).to.have.property(\"founder\").that.is.an(\"object\");\r",
+											"    pm.expect(response).to.have.property(\"required_specialists\").that.is.an(\"array\");\r",
+											"    pm.expect(response).to.have.property(\"is_favorited\").that.is.a(\"boolean\");\r",
+											"\r",
+											"    pm.expect(response.industry).to.have.property(\"id\").that.is.a(\"number\");\r",
+											"    pm.expect(response.industry).to.have.property(\"name\").that.is.a(\"string\");\r",
+											"\r",
+											"    const founder = response.founder;\r",
+											"    pm.expect(founder).to.have.property(\"user_id\").that.is.a(\"number\");\r",
+											"    pm.expect(founder).to.have.property(\"full_name\").that.is.a(\"string\");\r",
+											"    pm.expect(founder).to.have.property(\"contact_email\").that.is.a(\"string\");\r",
+											"\r",
+											"    response.required_specialists.forEach(spec => {\r",
+											"        pm.expect(spec).to.have.property(\"id\").that.is.a(\"number\");\r",
+											"        pm.expect(spec).to.have.property(\"profession\").that.is.an(\"object\");\r",
+											"        pm.expect(spec.profession).to.have.property(\"id\").that.is.a(\"number\");\r",
+											"        pm.expect(spec.profession).to.have.property(\"name\").that.is.a(\"string\");\r",
+											"\r",
+											"        pm.expect(spec).to.have.property(\"skills\").that.is.an(\"array\");\r",
+											"        spec.skills.forEach(skill => {\r",
+											"            pm.expect(skill).to.have.property(\"id\").that.is.a(\"number\");\r",
+											"            pm.expect(skill).to.have.property(\"name\").that.is.a(\"string\");\r",
+											"        });\r",
+											"\r",
+											"        pm.expect(spec).to.have.property(\"specialist\");\r",
+											"    });\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Token {{access_token_sturtup2}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"title\": \"Test 4\",\r\n  \"industry_id\": 2,\r\n  \"description\": \"Test test test\",\r\n  \"stage\": \"in_progress\",\r\n  \"investment_needed\": 1150000,\r\n  \"required_specialists\": []\r\n}\r\n"
+								},
+								"url": {
+									"raw": "http://localhost:8000/startups/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"startups",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Specialist",
+					"item": [
+						{
+							"name": "Login correct data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"if (jsonData.auth_token) {",
+											"    pm.environment.set(\"access_token_specialist2\", jsonData.auth_token);",
+											"    console.log(\"Токен сохранён:\", jsonData.auth_token);",
+											"} else {",
+											"    console.warn(\"Токен не найден в ответе.\");",
+											"}",
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Content-Type is application/json\", function () {",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has the required field 'auth_token'\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.be.an('object');",
+											"    pm.expect(responseData.auth_token).to.exist;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Auth token is a non-empty string\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData.auth_token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Auth token should not be empty\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Verify the auth token is in a valid format\", function () {",
+											"  const responseData = pm.response.json();",
+											"  ",
+											"  pm.expect(responseData).to.be.an('object');",
+											"  pm.expect(responseData.auth_token).to.be.a('string').and.to.match(/[A-Za-z0-9]{30,}/, \"Auth token format is not valid\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"test.-specialist2@example.com\",\r\n  \"password\": \"StrongPassword123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/auth/token/login/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"token",
+										"login",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New profile 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Content-Type is application/json\", function () {\r",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+											"});\r",
+											"\r",
+											"pm.test('Validate user profile object (with nested and nullable fields)', function () {\r",
+											"    const data = pm.response.json();\r",
+											"\r",
+											"    pm.expect(data.user_id).to.be.a('number');\r",
+											"    pm.expect(data.role).to.be.a('string');\r",
+											"    if (data.full_name !== null) {\r",
+											"        pm.expect(data.full_name).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    if (data.bio !== null) {\r",
+											"        pm.expect(data.bio).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    if (data.contact_phone !== null) {\r",
+											"        pm.expect(data.contact_phone).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    if (data.contact_email !== null) {\r",
+											"        pm.expect(data.contact_email).to.be.a('string')\r",
+											"            .and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+											"    }\r",
+											"\r",
+											"    if (data.avatar !== null) {\r",
+											"        pm.expect(data.avatar).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    pm.expect(data.experience).to.be.an('array');\r",
+											"    data.experience.forEach(item => {\r",
+											"        pm.expect(item.id).to.be.a('number');\r",
+											"        pm.expect(item.organization).to.be.a('string');\r",
+											"        pm.expect(item.position).to.be.a('string');\r",
+											"        pm.expect(item.start_date).to.be.a('string');\r",
+											"        if (item.end_date !== null) {\r",
+											"            pm.expect(item.end_date).to.be.a('string');\r",
+											"        }\r",
+											"        if (item.description !== null) {\r",
+											"            pm.expect(item.description).to.be.a('string');\r",
+											"        }\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Token {{access_token_specialist2}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"full_name\": \"Sturtaper 2\",\r\n  \"profession_id\": 2,\r\n  \"bio\": \"test bio\",\r\n  \"skill_ids\": [3,4],\r\n  \"experience\": [\r\n    {\r\n      \"organization\": \"TechStars\",\r\n      \"position\": \"CEO\",\r\n      \"start_date\": \"2010-01-01\",\r\n      \"end_date\": \"2022-01-01\",\r\n      \"description\": \"Руководство командой и запуск продукта\"\r\n    },\r\n    {\r\n      \"organization\": \"YCombinator\",\r\n      \"position\": \"CTO\",\r\n      \"start_date\": \"2008-03-01\",\r\n      \"end_date\": \"2009-03-01\",\r\n      \"description\": \"Разработка MVP и управление разработкой\"\r\n    }\r\n  ]\r\n}\r\n"
+								},
+								"url": {
+									"raw": "http://localhost:8000/profile/me/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"profile",
+										"me",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login correct data Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"if (jsonData.auth_token) {",
+											"    pm.environment.set(\"access_token_specialist3\", jsonData.auth_token);",
+											"    console.log(\"Токен сохранён:\", jsonData.auth_token);",
+											"} else {",
+											"    console.warn(\"Токен не найден в ответе.\");",
+											"}",
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Content-Type is application/json\", function () {",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has the required field 'auth_token'\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.be.an('object');",
+											"    pm.expect(responseData.auth_token).to.exist;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Auth token is a non-empty string\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData.auth_token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Auth token should not be empty\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Verify the auth token is in a valid format\", function () {",
+											"  const responseData = pm.response.json();",
+											"  ",
+											"  pm.expect(responseData).to.be.an('object');",
+											"  pm.expect(responseData.auth_token).to.be.a('string').and.to.match(/[A-Za-z0-9]{30,}/, \"Auth token format is not valid\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"testspecialist3@example.com\",\r\n  \"password\": \"Strong12\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/auth/token/login/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"token",
+										"login",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New profile 2 Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Content-Type is application/json\", function () {\r",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+											"});\r",
+											"\r",
+											"pm.test('Validate user profile object (with nested and nullable fields)', function () {\r",
+											"    const data = pm.response.json();\r",
+											"\r",
+											"    pm.expect(data.user_id).to.be.a('number');\r",
+											"    pm.expect(data.role).to.be.a('string');\r",
+											"    if (data.full_name !== null) {\r",
+											"        pm.expect(data.full_name).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    if (data.bio !== null) {\r",
+											"        pm.expect(data.bio).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    if (data.contact_phone !== null) {\r",
+											"        pm.expect(data.contact_phone).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    if (data.contact_email !== null) {\r",
+											"        pm.expect(data.contact_email).to.be.a('string')\r",
+											"            .and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+											"    }\r",
+											"\r",
+											"    if (data.avatar !== null) {\r",
+											"        pm.expect(data.avatar).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    pm.expect(data.experience).to.be.an('array');\r",
+											"    data.experience.forEach(item => {\r",
+											"        pm.expect(item.id).to.be.a('number');\r",
+											"        pm.expect(item.organization).to.be.a('string');\r",
+											"        pm.expect(item.position).to.be.a('string');\r",
+											"        pm.expect(item.start_date).to.be.a('string');\r",
+											"        if (item.end_date !== null) {\r",
+											"            pm.expect(item.end_date).to.be.a('string');\r",
+											"        }\r",
+											"        if (item.description !== null) {\r",
+											"            pm.expect(item.description).to.be.a('string');\r",
+											"        }\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Token {{access_token_specialist3}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"full_name\": \"Sturtaper 3\",\r\n  \"profession_id\": 3,\r\n  \"bio\": \"test bio\",\r\n  \"skill_ids\": [1,2],\r\n  \"experience\": []\r\n}\r\n"
+								},
+								"url": {
+									"raw": "http://localhost:8000/profile/me/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"profile",
+										"me",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Investor",
+					"item": [
+						{
+							"name": "Correct registration Investor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 201\", function () {",
+											"    pm.expect(pm.response.code).to.equal(201);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has the required fields - id, email, and role\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.be.an('object');",
+											"    pm.expect(responseData).to.have.property('id');",
+											"    pm.expect(responseData).to.have.property('email');",
+											"    pm.expect(responseData).to.have.property('role');",
+											"});",
+											"",
+											"",
+											"pm.test(\"Email is in a valid format\", function () {",
+											"    const responseData = pm.response.json();",
+											"  ",
+											"    pm.expect(responseData.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/, \"Email should be in a valid format\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Role is a non-empty string\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.be.an('object');",
+											"    pm.expect(responseData.role).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Role should not be empty\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Content-Type header is application/json\", function () {",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"testinvestor2@example.com\",\r\n  \"password\": \"StrongPassword123\",\r\n  \"re_password\": \"StrongPassword123\",\r\n  \"role\": \"investor\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/auth/users/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"users",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login correct data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"if (jsonData.auth_token) {",
+											"    pm.environment.set(\"access_token_investor2\", jsonData.auth_token);",
+											"    console.log(\"Токен сохранён:\", jsonData.auth_token);",
+											"} else {",
+											"    console.warn(\"Токен не найден в ответе.\");",
+											"}",
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Content-Type is application/json\", function () {",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has the required field 'auth_token'\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.be.an('object');",
+											"    pm.expect(responseData.auth_token).to.exist;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Auth token is a non-empty string\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData.auth_token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Auth token should not be empty\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Verify the auth token is in a valid format\", function () {",
+											"  const responseData = pm.response.json();",
+											"  ",
+											"  pm.expect(responseData).to.be.an('object');",
+											"  pm.expect(responseData.auth_token).to.be.a('string').and.to.match(/[A-Za-z0-9]{30,}/, \"Auth token format is not valid\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"testinvestor2@example.com\",\r\n  \"password\": \"StrongPassword123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/auth/token/login/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"token",
+										"login",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New profile 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Content-Type is application/json\", function () {\r",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+											"});\r",
+											"\r",
+											"pm.test('Validate user profile object (with nested and nullable fields)', function () {\r",
+											"    const data = pm.response.json();\r",
+											"\r",
+											"    pm.expect(data.user_id).to.be.a('number');\r",
+											"    pm.expect(data.role).to.be.a('string');\r",
+											"    if (data.full_name !== null) {\r",
+											"        pm.expect(data.full_name).to.be.a('string');\r",
+											"    }\r",
+											"    if (data.industry !== null) {\r",
+											"        pm.expect(data.industry).to.be.a('object');\r",
+											"    }\r",
+											"\r",
+											"    pm.expect(data.industry.id).to.be.a('number');\r",
+											"    pm.expect(data.industry.name).to.be.a('string');\r",
+											"\r",
+											"    if (data.company !== null) {\r",
+											"        pm.expect(data.company).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    if (data.position !== null) {\r",
+											"        pm.expect(data.position).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    if (data.bio !== null) {\r",
+											"        pm.expect(data.bio).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    if (data.contact_phone !== null) {\r",
+											"        pm.expect(data.contact_phone).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    if (data.contact_email !== null) {\r",
+											"        pm.expect(data.contact_email).to.be.a('string')\r",
+											"            .and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+											"    }\r",
+											"\r",
+											"    if (data.avatar !== null) {\r",
+											"        pm.expect(data.avatar).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    pm.expect(data.experience).to.be.an('array');\r",
+											"    data.experience.forEach(item => {\r",
+											"        pm.expect(item.id).to.be.a('number');\r",
+											"        pm.expect(item.title).to.be.a('string');\r",
+											"        pm.expect(item.industry).to.be.a('string');\r",
+											"        if (item.stage !== null) {\r",
+											"            pm.expect(item.stage).to.be.a('string');\r",
+											"        }\r",
+											"        if (item.description !== null) {\r",
+											"            pm.expect(item.description).to.be.a('string');\r",
+											"        }\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Token {{access_token_investor2}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"full_name\": \"Investor 2\",\r\n  \"company\": \"Sber\",\r\n  \"position\": \"Svo\",\r\n  \"industry_id\": 3,\r\n  \"bio\": \"test bio\",\r\n  \"contact_phone\": \"+79999999999\",\r\n  \"contact_email\": \"ivan@startup.com\",\r\n  \"preferred_stages\": [\r\n        \"launch\",\r\n        \"in_progress\"\r\n    ],\r\n  \"investment_min\": 50000,\r\n  \"investment_max\": 100000,\r\n  \"experience\": [\r\n    {\r\n    \"title\": \"TechStars\",\r\n    \"industry\": \"rrr\",\r\n    \"stage\": \"waiting\",\r\n    \"date\": \"2022-12-31\",\r\n    \"description\": \"Руководство командой и запуск продукта\"\r\n    },\r\n    {\r\n      \"title\": \"YCombinator\",\r\n      \"industry\": \"rrr2\",\r\n      \"stage\": \"waiting\",\r\n      \"date\": \"2019-11-30\",\r\n      \"description\": \"Разработка MVP и управление разработкой\"\r\n    }\r\n  ]\r\n}\r\n"
+								},
+								"url": {
+									"raw": "http://localhost:8000/profile/me/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"profile",
+										"me",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Correct registration Investor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 201\", function () {",
+											"    pm.expect(pm.response.code).to.equal(201);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has the required fields - id, email, and role\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.be.an('object');",
+											"    pm.expect(responseData).to.have.property('id');",
+											"    pm.expect(responseData).to.have.property('email');",
+											"    pm.expect(responseData).to.have.property('role');",
+											"});",
+											"",
+											"",
+											"pm.test(\"Email is in a valid format\", function () {",
+											"    const responseData = pm.response.json();",
+											"  ",
+											"    pm.expect(responseData.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/, \"Email should be in a valid format\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Role is a non-empty string\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.be.an('object');",
+											"    pm.expect(responseData.role).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Role should not be empty\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Content-Type header is application/json\", function () {",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"testinvestor3@example.com\",\r\n  \"password\": \"StrongPassword123\",\r\n  \"re_password\": \"StrongPassword123\",\r\n  \"role\": \"investor\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/auth/users/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"users",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login correct data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"if (jsonData.auth_token) {",
+											"    pm.environment.set(\"access_token_investor3\", jsonData.auth_token);",
+											"    console.log(\"Токен сохранён:\", jsonData.auth_token);",
+											"} else {",
+											"    console.warn(\"Токен не найден в ответе.\");",
+											"}",
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Content-Type is application/json\", function () {",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has the required field 'auth_token'\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.be.an('object');",
+											"    pm.expect(responseData.auth_token).to.exist;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Auth token is a non-empty string\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData.auth_token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Auth token should not be empty\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Verify the auth token is in a valid format\", function () {",
+											"  const responseData = pm.response.json();",
+											"  ",
+											"  pm.expect(responseData).to.be.an('object');",
+											"  pm.expect(responseData.auth_token).to.be.a('string').and.to.match(/[A-Za-z0-9]{30,}/, \"Auth token format is not valid\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"testinvestor3@example.com\",\r\n  \"password\": \"StrongPassword123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/auth/token/login/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"token",
+										"login",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New profile 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Content-Type is application/json\", function () {\r",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+											"});\r",
+											"\r",
+											"pm.test('Validate user profile object (with nested and nullable fields)', function () {\r",
+											"    const data = pm.response.json();\r",
+											"\r",
+											"    pm.expect(data.user_id).to.be.a('number');\r",
+											"    pm.expect(data.role).to.be.a('string');\r",
+											"    if (data.full_name !== null) {\r",
+											"        pm.expect(data.full_name).to.be.a('string');\r",
+											"    }\r",
+											"    if (data.industry !== null) {\r",
+											"        pm.expect(data.industry).to.be.a('object');\r",
+											"    }\r",
+											"\r",
+											"    pm.expect(data.industry.id).to.be.a('number');\r",
+											"    pm.expect(data.industry.name).to.be.a('string');\r",
+											"\r",
+											"    if (data.company !== null) {\r",
+											"        pm.expect(data.company).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    if (data.position !== null) {\r",
+											"        pm.expect(data.position).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    if (data.bio !== null) {\r",
+											"        pm.expect(data.bio).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    if (data.contact_phone !== null) {\r",
+											"        pm.expect(data.contact_phone).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    if (data.contact_email !== null) {\r",
+											"        pm.expect(data.contact_email).to.be.a('string')\r",
+											"            .and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+											"    }\r",
+											"\r",
+											"    if (data.avatar !== null) {\r",
+											"        pm.expect(data.avatar).to.be.a('string');\r",
+											"    }\r",
+											"\r",
+											"    pm.expect(data.experience).to.be.an('array');\r",
+											"    data.experience.forEach(item => {\r",
+											"        pm.expect(item.id).to.be.a('number');\r",
+											"        pm.expect(item.title).to.be.a('string');\r",
+											"        pm.expect(item.industry).to.be.a('string');\r",
+											"        if (item.stage !== null) {\r",
+											"            pm.expect(item.stage).to.be.a('string');\r",
+											"        }\r",
+											"        if (item.description !== null) {\r",
+											"            pm.expect(item.description).to.be.a('string');\r",
+											"        }\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Token {{access_token_investor3}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"full_name\": \"Investor 3\",\r\n  \"company\": \"Sber\",\r\n  \"position\": \"Svo\",\r\n  \"industry_id\": 2,\r\n  \"bio\": \"test bio\",\r\n  \"contact_phone\": \"+79999999999\",\r\n  \"contact_email\": \"ivan@startup.com\",\r\n  \"preferred_stages\": [\r\n        \"analysis\",\r\n        \"completed\"\r\n    ],\r\n  \"investment_min\": 120000,\r\n  \"investment_max\": 200000,\r\n  \"experience\": [\r\n    {\r\n    \"title\": \"TechStars\",\r\n    \"industry\": \"rrr\",\r\n    \"stage\": \"waiting\",\r\n    \"date\": \"2022-12-31\",\r\n    \"description\": \"Руководство командой и запуск продукта\"\r\n    },\r\n    {\r\n      \"title\": \"YCombinator\",\r\n      \"industry\": \"rrr2\",\r\n      \"stage\": \"waiting\",\r\n      \"date\": \"2019-11-30\",\r\n      \"description\": \"Разработка MVP и управление разработкой\"\r\n    }\r\n  ]\r\n}\r\n"
+								},
+								"url": {
+									"raw": "http://localhost:8000/profile/me/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"profile",
+										"me",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Specialist",
+			"item": [
+				{
+					"name": "No filters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(3);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.user_id).to.be.a(\"number\");\r",
+									"        pm.expect(user.full_name).to.be.a(\"string\");\r",
+									"        pm.expect(user.bio === null || typeof user.bio === \"string\").to.be.true;\r",
+									"        pm.expect(user.avatar === null || typeof user.avatar === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.profession).to.be.an(\"object\");\r",
+									"        pm.expect(user.profession.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.profession.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.skills).to.be.an(\"array\");\r",
+									"        user.skills.forEach(skill => {\r",
+									"            pm.expect(skill.id).to.be.a(\"number\");\r",
+									"            pm.expect(skill.name).to.be.a(\"string\");\r",
+									"        });\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/search/specialists/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"search",
+								"specialists",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter min years",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(2);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.user_id).to.be.a(\"number\");\r",
+									"        pm.expect(user.full_name).to.be.a(\"string\");\r",
+									"        pm.expect(user.bio === null || typeof user.bio === \"string\").to.be.true;\r",
+									"        pm.expect(user.avatar === null || typeof user.avatar === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.profession).to.be.an(\"object\");\r",
+									"        pm.expect(user.profession.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.profession.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.skills).to.be.an(\"array\");\r",
+									"        user.skills.forEach(skill => {\r",
+									"            pm.expect(skill.id).to.be.a(\"number\");\r",
+									"            pm.expect(skill.name).to.be.a(\"string\");\r",
+									"        });\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/search/specialists/?min_experience_years=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"search",
+								"specialists",
+								""
+							],
+							"query": [
+								{
+									"key": "min_experience_years",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter skills",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(2);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.user_id).to.be.a(\"number\");\r",
+									"        pm.expect(user.full_name).to.be.a(\"string\");\r",
+									"        pm.expect(user.bio === null || typeof user.bio === \"string\").to.be.true;\r",
+									"        pm.expect(user.avatar === null || typeof user.avatar === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.profession).to.be.an(\"object\");\r",
+									"        pm.expect(user.profession.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.profession.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.skills).to.be.an(\"array\");\r",
+									"        user.skills.forEach(skill => {\r",
+									"            pm.expect(skill.id).to.be.a(\"number\");\r",
+									"            pm.expect(skill.name).to.be.a(\"string\");\r",
+									"        });\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/search/specialists/?skills=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"search",
+								"specialists",
+								""
+							],
+							"query": [
+								{
+									"key": "skills",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter skills wrong",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(0);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.user_id).to.be.a(\"number\");\r",
+									"        pm.expect(user.full_name).to.be.a(\"string\");\r",
+									"        pm.expect(user.bio === null || typeof user.bio === \"string\").to.be.true;\r",
+									"        pm.expect(user.avatar === null || typeof user.avatar === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.profession).to.be.an(\"object\");\r",
+									"        pm.expect(user.profession.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.profession.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.skills).to.be.an(\"array\");\r",
+									"        user.skills.forEach(skill => {\r",
+									"            pm.expect(skill.id).to.be.a(\"number\");\r",
+									"            pm.expect(skill.name).to.be.a(\"string\");\r",
+									"        });\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/search/specialists/?skills=99999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"search",
+								"specialists",
+								""
+							],
+							"query": [
+								{
+									"key": "skills",
+									"value": "99999"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter profession",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(2);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.user_id).to.be.a(\"number\");\r",
+									"        pm.expect(user.full_name).to.be.a(\"string\");\r",
+									"        pm.expect(user.bio === null || typeof user.bio === \"string\").to.be.true;\r",
+									"        pm.expect(user.avatar === null || typeof user.avatar === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.profession).to.be.an(\"object\");\r",
+									"        pm.expect(user.profession.id).to.be.eql(2);\r",
+									"        pm.expect(user.profession.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.skills).to.be.an(\"array\");\r",
+									"        user.skills.forEach(skill => {\r",
+									"            pm.expect(skill.id).to.be.a(\"number\");\r",
+									"            pm.expect(skill.name).to.be.a(\"string\");\r",
+									"        });\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/search/specialists/?profession=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"search",
+								"specialists",
+								""
+							],
+							"query": [
+								{
+									"key": "profession",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Multi filters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(1);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.user_id).to.be.a(\"number\");\r",
+									"        pm.expect(user.full_name).to.be.a(\"string\");\r",
+									"        pm.expect(user.bio === null || typeof user.bio === \"string\").to.be.true;\r",
+									"        pm.expect(user.avatar === null || typeof user.avatar === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.profession).to.be.an(\"object\");\r",
+									"        pm.expect(user.profession.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.profession.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.skills).to.be.an(\"array\");\r",
+									"        user.skills.forEach(skill => {\r",
+									"            pm.expect(skill.id).to.be.a(\"number\");\r",
+									"            pm.expect(skill.name).to.be.a(\"string\");\r",
+									"        });\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/search/specialists/?min_experience_years=5&skills=4&profession=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"search",
+								"specialists",
+								""
+							],
+							"query": [
+								{
+									"key": "min_experience_years",
+									"value": "5"
+								},
+								{
+									"key": "skills",
+									"value": "4"
+								},
+								{
+									"key": "profession",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Investor",
+			"item": [
+				{
+					"name": "No filters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(3);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.user_id).to.be.a(\"number\");\r",
+									"        pm.expect(user.full_name).to.be.a(\"string\");\r",
+									"        pm.expect(user.bio === null || typeof user.bio === \"string\").to.be.true;\r",
+									"        pm.expect(user.avatar === null || typeof user.avatar === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.industry).to.be.an(\"object\");\r",
+									"        pm.expect(user.industry.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.industry.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.investment_max).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/search/investors/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"search",
+								"investors",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter industry",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(1);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.user_id).to.be.a(\"number\");\r",
+									"        pm.expect(user.full_name).to.be.a(\"string\");\r",
+									"        pm.expect(user.bio === null || typeof user.bio === \"string\").to.be.true;\r",
+									"        pm.expect(user.avatar === null || typeof user.avatar === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.industry).to.be.an(\"object\");\r",
+									"        pm.expect(user.industry.id).to.be.eql(2);\r",
+									"        pm.expect(user.industry.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.investment_max).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/search/investors/?industry=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"search",
+								"investors",
+								""
+							],
+							"query": [
+								{
+									"key": "industry",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter preferred_stages",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(2);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.user_id).to.be.a(\"number\");\r",
+									"        pm.expect(user.full_name).to.be.a(\"string\");\r",
+									"        pm.expect(user.bio === null || typeof user.bio === \"string\").to.be.true;\r",
+									"        pm.expect(user.avatar === null || typeof user.avatar === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.industry).to.be.an(\"object\");\r",
+									"        pm.expect(user.industry.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.industry.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.investment_max).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/search/investors/?preferred_stages=in_progress",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"search",
+								"investors",
+								""
+							],
+							"query": [
+								{
+									"key": "preferred_stages",
+									"value": "in_progress"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter skills",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(1);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.user_id).to.be.a(\"number\");\r",
+									"        pm.expect(user.full_name).to.be.a(\"string\");\r",
+									"        pm.expect(user.bio === null || typeof user.bio === \"string\").to.be.true;\r",
+									"        pm.expect(user.avatar === null || typeof user.avatar === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.industry).to.be.an(\"object\");\r",
+									"        pm.expect(user.industry.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.industry.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.investment_max).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/search/investors/?investment_needed=50000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"search",
+								"investors",
+								""
+							],
+							"query": [
+								{
+									"key": "investment_needed",
+									"value": "50000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Multi filters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(1);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.user_id).to.be.a(\"number\");\r",
+									"        pm.expect(user.full_name).to.be.a(\"string\");\r",
+									"        pm.expect(user.bio === null || typeof user.bio === \"string\").to.be.true;\r",
+									"        pm.expect(user.avatar === null || typeof user.avatar === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.industry).to.be.an(\"object\");\r",
+									"        pm.expect(user.industry.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.industry.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.investment_max).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/search/investors/?preferred_stages=in_progress&industry=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"search",
+								"investors",
+								""
+							],
+							"query": [
+								{
+									"key": "min_experience_years",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "preferred_stages",
+									"value": "in_progress"
+								},
+								{
+									"key": "industry",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Startups",
+			"item": [
+				{
+					"name": "No filters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(5);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.title).to.be.a(\"string\");\r",
+									"        pm.expect(user.description === null || typeof user.description === \"string\").to.be.true;\r",
+									"        pm.expect(user.image === null || typeof user.image === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.industry).to.be.an(\"object\");\r",
+									"        pm.expect(user.industry.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.industry.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.required_specialists).to.be.an(\"array\");\r",
+									"        user.required_specialists.forEach(required_specialist => {\r",
+									"            pm.expect(required_specialist.id).to.be.a(\"number\");\r",
+									"            pm.expect(required_specialist.profession).to.be.a(\"object\");\r",
+									"            pm.expect(required_specialist.profession.id).to.be.a(\"number\");\r",
+									"            pm.expect(required_specialist.profession.name).to.be.a(\"string\");\r",
+									"            pm.expect(required_specialist.skills).to.be.an(\"array\");\r",
+									"            required_specialist.skills.forEach(skill => {\r",
+									"                pm.expect(skill.id).to.be.a(\"number\");\r",
+									"                pm.expect(skill.name).to.be.a(\"string\");\r",
+									"            });\r",
+									"            pm.expect(required_specialist.specialist === null || typeof required_specialist.specialist === \"object\").to.be.true;\r",
+									"        });\r",
+									"\r",
+									"        pm.expect(user.founder_id).to.be.a(\"number\");\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_specialist2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/startups/search/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"startups",
+								"search",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter industry",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(1);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.title).to.be.a(\"string\");\r",
+									"        pm.expect(user.description === null || typeof user.description === \"string\").to.be.true;\r",
+									"        pm.expect(user.image === null || typeof user.image === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.industry).to.be.an(\"object\");\r",
+									"        pm.expect(user.industry.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.industry.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.required_specialists).to.be.an(\"array\");\r",
+									"        user.required_specialists.forEach(required_specialist => {\r",
+									"            pm.expect(required_specialist.id).to.be.a(\"number\");\r",
+									"            pm.expect(required_specialist.profession).to.be.a(\"object\");\r",
+									"            pm.expect(required_specialist.profession.id).to.be.a(\"number\");\r",
+									"            pm.expect(required_specialist.profession.name).to.be.a(\"string\");\r",
+									"            pm.expect(required_specialist.skills).to.be.an(\"array\");\r",
+									"            required_specialist.skills.forEach(skill => {\r",
+									"                pm.expect(skill.id).to.be.a(\"number\");\r",
+									"                pm.expect(skill.name).to.be.a(\"string\");\r",
+									"            });\r",
+									"            pm.expect(required_specialist.specialist === null || typeof required_specialist.specialist === \"object\").to.be.true;\r",
+									"        });\r",
+									"\r",
+									"        pm.expect(user.founder_id).to.be.a(\"number\");\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_specialist2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/startups/search/?industry=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"startups",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "industry",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter stage",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(1);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.title).to.be.a(\"string\");\r",
+									"        pm.expect(user.description === null || typeof user.description === \"string\").to.be.true;\r",
+									"        pm.expect(user.image === null || typeof user.image === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.industry).to.be.an(\"object\");\r",
+									"        pm.expect(user.industry.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.industry.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.required_specialists).to.be.an(\"array\");\r",
+									"        user.required_specialists.forEach(required_specialist => {\r",
+									"            pm.expect(required_specialist.id).to.be.a(\"number\");\r",
+									"            pm.expect(required_specialist.profession).to.be.a(\"object\");\r",
+									"            pm.expect(required_specialist.profession.id).to.be.a(\"number\");\r",
+									"            pm.expect(required_specialist.profession.name).to.be.a(\"string\");\r",
+									"            pm.expect(required_specialist.skills).to.be.an(\"array\");\r",
+									"            required_specialist.skills.forEach(skill => {\r",
+									"                pm.expect(skill.id).to.be.a(\"number\");\r",
+									"                pm.expect(skill.name).to.be.a(\"string\");\r",
+									"            });\r",
+									"            pm.expect(required_specialist.specialist === null || typeof required_specialist.specialist === \"object\").to.be.true;\r",
+									"        });\r",
+									"\r",
+									"        pm.expect(user.founder_id).to.be.a(\"number\");\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_specialist2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/startups/search/?stage=in_progress",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"startups",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "stage",
+									"value": "in_progress"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter required_profession",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(1);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.title).to.be.a(\"string\");\r",
+									"        pm.expect(user.description === null || typeof user.description === \"string\").to.be.true;\r",
+									"        pm.expect(user.image === null || typeof user.image === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.industry).to.be.an(\"object\");\r",
+									"        pm.expect(user.industry.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.industry.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.required_specialists).to.be.an(\"array\");\r",
+									"        user.required_specialists.forEach(required_specialist => {\r",
+									"            pm.expect(required_specialist.id).to.be.a(\"number\");\r",
+									"            pm.expect(required_specialist.profession).to.be.a(\"object\");\r",
+									"            pm.expect(required_specialist.profession.id).to.be.a(\"number\");\r",
+									"            pm.expect(required_specialist.profession.name).to.be.a(\"string\");\r",
+									"            pm.expect(required_specialist.skills).to.be.an(\"array\");\r",
+									"            required_specialist.skills.forEach(skill => {\r",
+									"                pm.expect(skill.id).to.be.a(\"number\");\r",
+									"                pm.expect(skill.name).to.be.a(\"string\");\r",
+									"            });\r",
+									"            pm.expect(required_specialist.specialist === null || typeof required_specialist.specialist === \"object\").to.be.true;\r",
+									"        });\r",
+									"\r",
+									"        pm.expect(user.founder_id).to.be.a(\"number\");\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_specialist2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/startups/search/?required_profession=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"startups",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "required_profession",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter required_skills",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(4);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.title).to.be.a(\"string\");\r",
+									"        pm.expect(user.description === null || typeof user.description === \"string\").to.be.true;\r",
+									"        pm.expect(user.image === null || typeof user.image === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.industry).to.be.an(\"object\");\r",
+									"        pm.expect(user.industry.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.industry.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.required_specialists).to.be.an(\"array\");\r",
+									"        user.required_specialists.forEach(required_specialist => {\r",
+									"            pm.expect(required_specialist.id).to.be.a(\"number\");\r",
+									"            pm.expect(required_specialist.profession).to.be.a(\"object\");\r",
+									"            pm.expect(required_specialist.profession.id).to.be.a(\"number\");\r",
+									"            pm.expect(required_specialist.profession.name).to.be.a(\"string\");\r",
+									"            pm.expect(required_specialist.skills).to.be.an(\"array\");\r",
+									"            required_specialist.skills.forEach(skill => {\r",
+									"                pm.expect(skill.id).to.be.a(\"number\");\r",
+									"                pm.expect(skill.name).to.be.a(\"string\");\r",
+									"            });\r",
+									"            pm.expect(required_specialist.specialist === null || typeof required_specialist.specialist === \"object\").to.be.true;\r",
+									"        });\r",
+									"\r",
+									"        pm.expect(user.founder_id).to.be.a(\"number\");\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_specialist2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/startups/search/?required_skills=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"startups",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "required_skills",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Multi filters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(1);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.title).to.be.a(\"string\");\r",
+									"        pm.expect(user.description === null || typeof user.description === \"string\").to.be.true;\r",
+									"        pm.expect(user.image === null || typeof user.image === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.industry).to.be.an(\"object\");\r",
+									"        pm.expect(user.industry.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.industry.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.required_specialists).to.be.an(\"array\");\r",
+									"        user.required_specialists.forEach(required_specialist => {\r",
+									"            pm.expect(required_specialist.id).to.be.a(\"number\");\r",
+									"            pm.expect(required_specialist.profession).to.be.a(\"object\");\r",
+									"            pm.expect(required_specialist.profession.id).to.be.a(\"number\");\r",
+									"            pm.expect(required_specialist.profession.name).to.be.a(\"string\");\r",
+									"            pm.expect(required_specialist.skills).to.be.an(\"array\");\r",
+									"            required_specialist.skills.forEach(skill => {\r",
+									"                pm.expect(skill.id).to.be.a(\"number\");\r",
+									"                pm.expect(skill.name).to.be.a(\"string\");\r",
+									"            });\r",
+									"            pm.expect(required_specialist.specialist === null || typeof required_specialist.specialist === \"object\").to.be.true;\r",
+									"        });\r",
+									"\r",
+									"        pm.expect(user.founder_id).to.be.a(\"number\");\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_specialist2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/startups/search/?stage=waiting&industry=2&required_skills=1&required_profession=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"startups",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "min_experience_years",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "stage",
+									"value": "waiting"
+								},
+								{
+									"key": "industry",
+									"value": "2"
+								},
+								{
+									"key": "required_skills",
+									"value": "1"
+								},
+								{
+									"key": "required_profession",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Startups for investors",
+			"item": [
+				{
+					"name": "No filters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(5);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.title).to.be.a(\"string\");\r",
+									"        pm.expect(user.description === null || typeof user.description === \"string\").to.be.true;\r",
+									"        pm.expect(user.image === null || typeof user.image === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.industry).to.be.an(\"object\");\r",
+									"        pm.expect(user.industry.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.industry.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.investment_needed).to.be.a(\"string\");\r",
+									"\r",
+									"        pm.expect(user.founder_id).to.be.a(\"number\");\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_investor2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/startups/search/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"startups",
+								"search",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter industry",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(1);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.title).to.be.a(\"string\");\r",
+									"        pm.expect(user.description === null || typeof user.description === \"string\").to.be.true;\r",
+									"        pm.expect(user.image === null || typeof user.image === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.industry).to.be.an(\"object\");\r",
+									"        pm.expect(user.industry.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.industry.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.investment_needed).to.be.a(\"string\");\r",
+									"\r",
+									"        pm.expect(user.founder_id).to.be.a(\"number\");\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_investor2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/startups/search/?industry=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"startups",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "industry",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter stage",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(1);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.title).to.be.a(\"string\");\r",
+									"        pm.expect(user.description === null || typeof user.description === \"string\").to.be.true;\r",
+									"        pm.expect(user.image === null || typeof user.image === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.industry).to.be.an(\"object\");\r",
+									"        pm.expect(user.industry.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.industry.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.investment_needed).to.be.a(\"string\");\r",
+									"\r",
+									"        pm.expect(user.founder_id).to.be.a(\"number\");\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_investor2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/startups/search/?stage=in_progress",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"startups",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "stage",
+									"value": "in_progress"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter investment_needed_min",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(4);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.title).to.be.a(\"string\");\r",
+									"        pm.expect(user.description === null || typeof user.description === \"string\").to.be.true;\r",
+									"        pm.expect(user.image === null || typeof user.image === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.industry).to.be.an(\"object\");\r",
+									"        pm.expect(user.industry.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.industry.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.investment_needed).to.be.a(\"string\");\r",
+									"\r",
+									"        pm.expect(user.founder_id).to.be.a(\"number\");\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_investor2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/startups/search/?investment_needed_min=50000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"startups",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "investment_needed_min",
+									"value": "50000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter investment_needed_max",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(4);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.title).to.be.a(\"string\");\r",
+									"        pm.expect(user.description === null || typeof user.description === \"string\").to.be.true;\r",
+									"        pm.expect(user.image === null || typeof user.image === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.industry).to.be.an(\"object\");\r",
+									"        pm.expect(user.industry.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.industry.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.investment_needed).to.be.a(\"string\");\r",
+									"\r",
+									"        pm.expect(user.founder_id).to.be.a(\"number\");\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_investor2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/startups/search/?investment_needed_max=50000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"startups",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "investment_needed_max",
+									"value": "50000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter investment_needed multi",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(3);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.title).to.be.a(\"string\");\r",
+									"        pm.expect(user.description === null || typeof user.description === \"string\").to.be.true;\r",
+									"        pm.expect(user.image === null || typeof user.image === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.industry).to.be.an(\"object\");\r",
+									"        pm.expect(user.industry.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.industry.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.investment_needed).to.be.a(\"string\");\r",
+									"\r",
+									"        pm.expect(user.founder_id).to.be.a(\"number\");\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_investor2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/startups/search/?investment_needed_max=50000&investment_needed_min=45000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"startups",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "investment_needed_max",
+									"value": "50000"
+								},
+								{
+									"key": "investment_needed_min",
+									"value": "45000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Multi filters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(2);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.title).to.be.a(\"string\");\r",
+									"        pm.expect(user.description === null || typeof user.description === \"string\").to.be.true;\r",
+									"        pm.expect(user.image === null || typeof user.image === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.industry).to.be.an(\"object\");\r",
+									"        pm.expect(user.industry.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.industry.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.investment_needed).to.be.a(\"string\");\r",
+									"\r",
+									"        pm.expect(user.founder_id).to.be.a(\"number\");\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_investor2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/startups/search/?stage=waiting&industry=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"startups",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "min_experience_years",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "stage",
+									"value": "waiting"
+								},
+								{
+									"key": "industry",
+									"value": "2"
+								},
+								{
+									"key": "required_skills",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "required_profession",
+									"value": "3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter required_skills",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(4);\r",
+									"\r",
+									"    response.forEach(user => {\r",
+									"        pm.expect(user.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.title).to.be.a(\"string\");\r",
+									"        pm.expect(user.description === null || typeof user.description === \"string\").to.be.true;\r",
+									"        pm.expect(user.image === null || typeof user.image === \"string\").to.be.true;\r",
+									"        \r",
+									"        pm.expect(user.industry).to.be.an(\"object\");\r",
+									"        pm.expect(user.industry.id).to.be.a(\"number\");\r",
+									"        pm.expect(user.industry.name).to.be.a(\"string\");\r",
+									"        \r",
+									"        pm.expect(user.required_specialists).to.be.an(\"array\");\r",
+									"        user.required_specialists.forEach(required_specialist => {\r",
+									"            pm.expect(required_specialist.id).to.be.a(\"number\");\r",
+									"            pm.expect(required_specialist.profession).to.be.a(\"object\");\r",
+									"            pm.expect(required_specialist.profession.id).to.be.a(\"number\");\r",
+									"            pm.expect(required_specialist.profession.name).to.be.a(\"string\");\r",
+									"            pm.expect(required_specialist.skills).to.be.an(\"array\");\r",
+									"            required_specialist.skills.forEach(skill => {\r",
+									"                pm.expect(skill.id).to.be.a(\"number\");\r",
+									"                pm.expect(skill.name).to.be.a(\"string\");\r",
+									"            });\r",
+									"            pm.expect(required_specialist.specialist === null || typeof required_specialist.specialist === \"object\").to.be.true;\r",
+									"        });\r",
+									"\r",
+									"        pm.expect(user.founder_id).to.be.a(\"number\");\r",
+									"        \r",
+									"        pm.expect(user.is_favorited).to.be.a(\"boolean\");\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_investor2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/startups/search/?required_skills=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"startups",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "required_skills",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

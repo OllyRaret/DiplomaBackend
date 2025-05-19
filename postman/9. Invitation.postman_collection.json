@@ -1,0 +1,1346 @@
+{
+	"info": {
+		"_postman_id": "9607cf2f-c9f2-4333-9010-7b4805472243",
+		"name": "9. Invitation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44112372",
+		"_collection_link": "https://alinaobrezkova.postman.co/workspace/Diploma-tests~e4acbeed-fff8-4ec3-84d0-7292590347e4/collection/44112372-9607cf2f-c9f2-4333-9010-7b4805472243?action=share&source=collection_link&creator=44112372"
+	},
+	"item": [
+		{
+			"name": "Login correct startuper",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"if (jsonData.auth_token) {",
+							"    pm.environment.set(\"access_token_sturtup2\", jsonData.auth_token);",
+							"    console.log(\"Токен сохранён:\", jsonData.auth_token);",
+							"} else {",
+							"    console.warn(\"Токен не найден в ответе.\");",
+							"}",
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required field 'auth_token'\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.auth_token).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Auth token is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.auth_token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Auth token should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify the auth token is in a valid format\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.auth_token).to.be.a('string').and.to.match(/[A-Za-z0-9]{30,}/, \"Auth token format is not valid\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"testuserextra@example.com\",\r\n  \"password\": \"StrongPassword123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/auth/token/login/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"auth",
+						"token",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login correct specialist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"if (jsonData.auth_token) {",
+							"    pm.environment.set(\"access_token_specialist\", jsonData.auth_token);",
+							"    console.log(\"Токен сохранён:\", jsonData.auth_token);",
+							"} else {",
+							"    console.warn(\"Токен не найден в ответе.\");",
+							"}",
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required field 'auth_token'\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.auth_token).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Auth token is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.auth_token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Auth token should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify the auth token is in a valid format\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.auth_token).to.be.a('string').and.to.match(/[A-Za-z0-9]{30,}/, \"Auth token format is not valid\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"testspecialist@example.com\",\r\n  \"password\": \"StrongPassword123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/auth/token/login/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"auth",
+						"token",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login correct specialist 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"if (jsonData.auth_token) {",
+							"    pm.environment.set(\"access_token_specialist2\", jsonData.auth_token);",
+							"    console.log(\"Токен сохранён:\", jsonData.auth_token);",
+							"} else {",
+							"    console.warn(\"Токен не найден в ответе.\");",
+							"}",
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required field 'auth_token'\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.auth_token).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Auth token is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.auth_token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Auth token should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify the auth token is in a valid format\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.auth_token).to.be.a('string').and.to.match(/[A-Za-z0-9]{30,}/, \"Auth token format is not valid\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"test.-specialist2@example.com\",\r\n  \"password\": \"StrongPassword123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/auth/token/login/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"auth",
+						"token",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login correct inestor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"if (jsonData.auth_token) {",
+							"    pm.environment.set(\"access_token_investor\", jsonData.auth_token);",
+							"    console.log(\"Токен сохранён:\", jsonData.auth_token);",
+							"} else {",
+							"    console.warn(\"Токен не найден в ответе.\");",
+							"}",
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required field 'auth_token'\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.auth_token).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Auth token is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.auth_token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Auth token should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify the auth token is in a valid format\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.auth_token).to.be.a('string').and.to.match(/[A-Za-z0-9]{30,}/, \"Auth token format is not valid\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"testinvestor@example.com\",\r\n  \"password\": \"StrongPassword123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/auth/token/login/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"auth",
+						"token",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send new request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate specialist request object\", function () {\r",
+							"    const res = pm.response.json();\r",
+							"\r",
+							"    pm.expect(res.id).to.be.a(\"number\");\r",
+							"\r",
+							"    pm.expect(res.specialist).to.be.an(\"object\");\r",
+							"    pm.expect(res.specialist.user_id).to.be.a(\"number\");\r",
+							"    pm.expect(res.specialist.full_name).to.be.a(\"string\");\r",
+							"\r",
+							"    pm.expect(res.required_specialist).to.be.an(\"object\");\r",
+							"    pm.expect(res.required_specialist.id).to.be.a(\"number\");\r",
+							"\r",
+							"    pm.expect(res.required_specialist.profession).to.be.an(\"object\");\r",
+							"    pm.expect(res.required_specialist.profession.id).to.be.a(\"number\");\r",
+							"    pm.expect(res.required_specialist.profession.name).to.be.a(\"string\");\r",
+							"\r",
+							"    pm.expect(res.required_specialist.skills).to.be.an(\"array\");\r",
+							"    res.required_specialist.skills.forEach(skill => {\r",
+							"        pm.expect(skill.id).to.be.a(\"number\");\r",
+							"        pm.expect(skill.name).to.be.a(\"string\");\r",
+							"    });\r",
+							"\r",
+							"    pm.expect(\r",
+							"        res.is_accepted === null ||\r",
+							"        typeof res.is_accepted === \"boolean\"\r",
+							"    ).to.be.true;\r",
+							"\r",
+							"    pm.expect(res.created_at).to.be.a(\"string\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token {{access_token_sturtup2}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user_id\": 6,\r\n  \"required_specialist_id\": 7\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/invitations/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"invitations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send new request Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate specialist request object\", function () {\r",
+							"    const res = pm.response.json();\r",
+							"\r",
+							"    pm.expect(res.id).to.be.a(\"number\");\r",
+							"\r",
+							"    pm.expect(res.specialist).to.be.an(\"object\");\r",
+							"    pm.expect(res.specialist.user_id).to.be.a(\"number\");\r",
+							"    pm.expect(res.specialist.full_name).to.be.a(\"string\");\r",
+							"\r",
+							"    pm.expect(res.required_specialist).to.be.an(\"object\");\r",
+							"    pm.expect(res.required_specialist.id).to.be.a(\"number\");\r",
+							"\r",
+							"    pm.expect(res.required_specialist.profession).to.be.an(\"object\");\r",
+							"    pm.expect(res.required_specialist.profession.id).to.be.a(\"number\");\r",
+							"    pm.expect(res.required_specialist.profession.name).to.be.a(\"string\");\r",
+							"\r",
+							"    pm.expect(res.required_specialist.skills).to.be.an(\"array\");\r",
+							"    res.required_specialist.skills.forEach(skill => {\r",
+							"        pm.expect(skill.id).to.be.a(\"number\");\r",
+							"        pm.expect(skill.name).to.be.a(\"string\");\r",
+							"    });\r",
+							"\r",
+							"    pm.expect(\r",
+							"        res.is_accepted === null ||\r",
+							"        typeof res.is_accepted === \"boolean\"\r",
+							"    ).to.be.true;\r",
+							"\r",
+							"    pm.expect(res.created_at).to.be.a(\"string\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token {{access_token_sturtup2}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user_id\": 6,\r\n  \"required_specialist_id\": 7\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/invitations/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"invitations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send new request by specialist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token {{access_token_specialist}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user_id\": 6,\r\n  \"required_specialist_id\": 8\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/invitations/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"invitations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send new request by investor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token {{access_token_investor}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user_id\": 6,\r\n  \"required_specialist_id\": 8\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/invitations/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"invitations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get invitatiation by startuper",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate array of specialist requests\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response).to.be.an(\"array\");\r",
+							"\r",
+							"    response.forEach(res => {\r",
+							"        pm.expect(res.id).to.be.a(\"number\");\r",
+							"\r",
+							"        pm.expect(res.specialist).to.be.an(\"object\");\r",
+							"        pm.expect(res.specialist.user_id).to.be.a(\"number\");\r",
+							"        pm.expect(res.specialist.full_name).to.be.a(\"string\");\r",
+							"\r",
+							"        pm.expect(res.required_specialist).to.be.an(\"object\");\r",
+							"        pm.expect(res.required_specialist.id).to.be.a(\"number\");\r",
+							"\r",
+							"        pm.expect(res.required_specialist.profession).to.be.an(\"object\");\r",
+							"        pm.expect(res.required_specialist.profession.id).to.be.a(\"number\");\r",
+							"        pm.expect(res.required_specialist.profession.name).to.be.a(\"string\");\r",
+							"\r",
+							"        pm.expect(res.required_specialist.skills).to.be.an(\"array\");\r",
+							"        res.required_specialist.skills.forEach(skill => {\r",
+							"            pm.expect(skill.id).to.be.a(\"number\");\r",
+							"            pm.expect(skill.name).to.be.a(\"string\");\r",
+							"        });\r",
+							"\r",
+							"        pm.expect(\r",
+							"            res.required_specialist.specialist === null ||\r",
+							"            typeof res.required_specialist.specialist === 'object'\r",
+							"        ).to.be.true;\r",
+							"\r",
+							"        pm.expect(\r",
+							"            res.is_accepted === null ||\r",
+							"            typeof res.is_accepted === \"boolean\"\r",
+							"        ).to.be.true;\r",
+							"\r",
+							"        pm.expect(res.created_at).to.be.a(\"string\");\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token {{access_token_sturtup2}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/invitations/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"invitations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get invitatiation by specialist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate array of specialist requests\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response).to.be.an(\"array\");\r",
+							"\r",
+							"    response.forEach(res => {\r",
+							"        pm.expect(res.id).to.be.a(\"number\");\r",
+							"\r",
+							"        pm.expect(res.specialist).to.be.an(\"object\");\r",
+							"        pm.expect(res.specialist.user_id).to.be.a(\"number\");\r",
+							"        pm.expect(res.specialist.full_name).to.be.a(\"string\");\r",
+							"\r",
+							"        pm.expect(res.required_specialist).to.be.an(\"object\");\r",
+							"        pm.expect(res.required_specialist.id).to.be.a(\"number\");\r",
+							"\r",
+							"        pm.expect(res.required_specialist.profession).to.be.an(\"object\");\r",
+							"        pm.expect(res.required_specialist.profession.id).to.be.a(\"number\");\r",
+							"        pm.expect(res.required_specialist.profession.name).to.be.a(\"string\");\r",
+							"\r",
+							"        pm.expect(res.required_specialist.skills).to.be.an(\"array\");\r",
+							"        res.required_specialist.skills.forEach(skill => {\r",
+							"            pm.expect(skill.id).to.be.a(\"number\");\r",
+							"            pm.expect(skill.name).to.be.a(\"string\");\r",
+							"        });\r",
+							"\r",
+							"        pm.expect(\r",
+							"            res.required_specialist.specialist === null ||\r",
+							"            typeof res.required_specialist.specialist === 'object'\r",
+							"        ).to.be.true;\r",
+							"\r",
+							"        pm.expect(\r",
+							"            res.is_accepted === null ||\r",
+							"            typeof res.is_accepted === \"boolean\"\r",
+							"        ).to.be.true;\r",
+							"\r",
+							"        pm.expect(res.created_at).to.be.a(\"string\");\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token {{access_token_specialist}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/invitations/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"invitations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get invitatiation by investor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate array of specialist requests\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response).to.be.an(\"array\");\r",
+							"\r",
+							"    response.forEach(res => {\r",
+							"        pm.expect(res.id).to.be.a(\"number\");\r",
+							"\r",
+							"        pm.expect(res.specialist).to.be.an(\"object\");\r",
+							"        pm.expect(res.specialist.user_id).to.be.a(\"number\");\r",
+							"        pm.expect(res.specialist.full_name).to.be.a(\"string\");\r",
+							"\r",
+							"        pm.expect(res.required_specialist).to.be.an(\"object\");\r",
+							"        pm.expect(res.required_specialist.id).to.be.a(\"number\");\r",
+							"\r",
+							"        pm.expect(res.required_specialist.profession).to.be.an(\"object\");\r",
+							"        pm.expect(res.required_specialist.profession.id).to.be.a(\"number\");\r",
+							"        pm.expect(res.required_specialist.profession.name).to.be.a(\"string\");\r",
+							"\r",
+							"        pm.expect(res.required_specialist.skills).to.be.an(\"array\");\r",
+							"        res.required_specialist.skills.forEach(skill => {\r",
+							"            pm.expect(skill.id).to.be.a(\"number\");\r",
+							"            pm.expect(skill.name).to.be.a(\"string\");\r",
+							"        });\r",
+							"\r",
+							"        pm.expect(\r",
+							"            res.required_specialist.specialist === null ||\r",
+							"            typeof res.required_specialist.specialist === 'object'\r",
+							"        ).to.be.true;\r",
+							"\r",
+							"        pm.expect(\r",
+							"            res.is_accepted === null ||\r",
+							"            typeof res.is_accepted === \"boolean\"\r",
+							"        ).to.be.true;\r",
+							"\r",
+							"        pm.expect(res.created_at).to.be.a(\"string\");\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token {{access_token_investor}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/invitations/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"invitations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Accept invitation startuper",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 403\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token {{access_token_sturtup2}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/invitations/2/accept/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"invitations",
+						"2",
+						"accept",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Accept invitation specialist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token {{access_token_specialist}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/invitations/2/accept/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"invitations",
+						"2",
+						"accept",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send request taken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token {{access_token_sturtup2}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user_id\": 6,\r\n  \"required_specialist_id\": 7\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/invitations/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"invitations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send new request to taken specialist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token {{access_token_sturtup2}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user_id\": 6,\r\n  \"required_specialist_id\": 8\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/invitations/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"invitations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send new request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate specialist request object\", function () {\r",
+							"    const res = pm.response.json();\r",
+							"\r",
+							"    pm.expect(res.id).to.be.a(\"number\");\r",
+							"\r",
+							"    pm.expect(res.specialist).to.be.an(\"object\");\r",
+							"    pm.expect(res.specialist.user_id).to.be.a(\"number\");\r",
+							"    pm.expect(res.specialist.full_name).to.be.a(\"string\");\r",
+							"\r",
+							"    pm.expect(res.required_specialist).to.be.an(\"object\");\r",
+							"    pm.expect(res.required_specialist.id).to.be.a(\"number\");\r",
+							"\r",
+							"    pm.expect(res.required_specialist.profession).to.be.an(\"object\");\r",
+							"    pm.expect(res.required_specialist.profession.id).to.be.a(\"number\");\r",
+							"    pm.expect(res.required_specialist.profession.name).to.be.a(\"string\");\r",
+							"\r",
+							"    pm.expect(res.required_specialist.skills).to.be.an(\"array\");\r",
+							"    res.required_specialist.skills.forEach(skill => {\r",
+							"        pm.expect(skill.id).to.be.a(\"number\");\r",
+							"        pm.expect(skill.name).to.be.a(\"string\");\r",
+							"    });\r",
+							"\r",
+							"    pm.expect(\r",
+							"        res.is_accepted === null ||\r",
+							"        typeof res.is_accepted === \"boolean\"\r",
+							"    ).to.be.true;\r",
+							"\r",
+							"    pm.expect(res.created_at).to.be.a(\"string\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token {{access_token_sturtup2}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user_id\": 7,\r\n  \"required_specialist_id\": 8\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/invitations/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"invitations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Decline invitation specialist 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token {{access_token_specialist2}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/invitations/3/decline/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"invitations",
+						"3",
+						"decline",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send new request wrong id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token {{access_token_sturtup2}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user_id\": 9999,\r\n  \"required_specialist_id\": 9999\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/invitations/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"invitations",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

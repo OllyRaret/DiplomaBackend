@@ -1,0 +1,2382 @@
+{
+	"info": {
+		"_postman_id": "c02fefeb-4708-4674-a05c-d611cea3908c",
+		"name": "5. Messages",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44112372",
+		"_collection_link": "https://alinaobrezkova.postman.co/workspace/Diploma-tests~e4acbeed-fff8-4ec3-84d0-7292590347e4/collection/44112372-c02fefeb-4708-4674-a05c-d611cea3908c?action=share&source=collection_link&creator=44112372"
+	},
+	"item": [
+		{
+			"name": "Happy path",
+			"item": [
+				{
+					"name": "Login correct data Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"if (jsonData.auth_token) {",
+									"    pm.environment.set(\"access_token_sturtup\", jsonData.auth_token);",
+									"    console.log(\"Токен сохранён:\", jsonData.auth_token);",
+									"} else {",
+									"    console.warn(\"Токен не найден в ответе.\");",
+									"}",
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required field 'auth_token'\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.auth_token).to.exist;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Auth token is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.auth_token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Auth token should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify the auth token is in a valid format\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.auth_token).to.be.a('string').and.to.match(/[A-Za-z0-9]{30,}/, \"Auth token format is not valid\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"testuser@example.com\",\r\n  \"password\": \"StrongPassword123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/auth/token/login/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"token",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login correct data Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"if (jsonData.auth_token) {",
+									"    pm.environment.set(\"access_token_specialist\", jsonData.auth_token);",
+									"    console.log(\"Токен сохранён:\", jsonData.auth_token);",
+									"} else {",
+									"    console.warn(\"Токен не найден в ответе.\");",
+									"}",
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required field 'auth_token'\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.auth_token).to.exist;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Auth token is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.auth_token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Auth token should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify the auth token is in a valid format\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.auth_token).to.be.a('string').and.to.match(/[A-Za-z0-9]{30,}/, \"Auth token format is not valid\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"testspecialist@example.com\",\r\n  \"password\": \"StrongPassword123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/auth/token/login/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"token",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login correct data Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"if (jsonData.auth_token) {",
+									"    pm.environment.set(\"access_token_investor\", jsonData.auth_token);",
+									"    console.log(\"Токен сохранён:\", jsonData.auth_token);",
+									"} else {",
+									"    console.warn(\"Токен не найден в ответе.\");",
+									"}",
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required field 'auth_token'\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.auth_token).to.exist;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Auth token is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.auth_token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Auth token should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify the auth token is in a valid format\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.auth_token).to.be.a('string').and.to.match(/[A-Za-z0-9]{30,}/, \"Auth token format is not valid\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"testinvestor@example.com\",\r\n  \"password\": \"StrongPassword123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/auth/token/login/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"token",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send startup(2) to spesialist(6)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"if (jsonData && jsonData.id) {",
+									"    pm.environment.set(\"message_id1\", jsonData.id);",
+									"    console.log(\"✅ ID сообщения сохранён:\", jsonData.id);",
+									"} else {",
+									"    console.log(\"❌ ID сообщения не найден в ответе\");",
+									"}",
+									"",
+									"pm.test('Response status code is 201', function () {",
+									"    pm.expect(pm.response.code).to.equal(201);",
+									"})",
+									"",
+									"pm.test('Validate the sender object', function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.sender).to.exist.and.to.be.an('object');",
+									"    pm.expect(responseData.sender.id).to.be.a('number');",
+									"    pm.expect(responseData.sender.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"   ",
+									"    if (responseData.sender.role !== null) {",
+									"        pm.expect(responseData.sender.role).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.sender.full_name !== null) {",
+									"        pm.expect(responseData.sender.full_name).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.sender.bio !== null) {",
+									"        pm.expect(responseData.sender.bio).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.sender.contact_phone !== null) {",
+									"        pm.expect(responseData.sender.contact_phone).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.sender.contact_email !== null) {",
+									"        pm.expect(responseData.sender.contact_email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"    }",
+									"",
+									"    if (responseData.sender.avatar !== null) {",
+									"        pm.expect(responseData.sender.avatar).to.be.a('string');",
+									"    }",
+									"})",
+									"",
+									"pm.test('Validate the recipient object', function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.recipient).to.exist.and.to.be.an('object');",
+									"    pm.expect(responseData.recipient.id).to.be.a('number');",
+									"    pm.expect(responseData.recipient.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"   ",
+									"    if (responseData.recipient.role !== null) {",
+									"        pm.expect(responseData.recipient.role).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.recipient.full_name !== null) {",
+									"        pm.expect(responseData.recipient.full_name).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.recipient.bio !== null) {",
+									"        pm.expect(responseData.recipient.bio).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.recipient.contact_phone !== null) {",
+									"        pm.expect(responseData.recipient.contact_phone).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.recipient.contact_email !== null) {",
+									"        pm.expect(responseData.recipient.contact_email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"    }",
+									"",
+									"    if (responseData.recipient.avatar !== null) {",
+									"        pm.expect(responseData.recipient.avatar).to.be.a('string');",
+									"    }",
+									"})",
+									"",
+									"pm.test('Text field is a non-empty string', function () {",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData.text).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Text field should not be empty');",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"recipient_id\": 6,\r\n  \"text\": \"Привет! Это тестовое сообщение.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/messages/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"messages",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send spesialist(6) to startup(2)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"if (jsonData && jsonData.id) {",
+									"    pm.environment.set(\"message_id3\", jsonData.id);",
+									"    console.log(\"✅ ID сообщения сохранён:\", jsonData.id);",
+									"} else {",
+									"    console.log(\"❌ ID сообщения не найден в ответе\");",
+									"}",
+									"",
+									"pm.test('Response status code is 201', function () {",
+									"    pm.expect(pm.response.code).to.equal(201);",
+									"})",
+									"",
+									"pm.test('Validate the sender object', function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.sender).to.exist.and.to.be.an('object');",
+									"    pm.expect(responseData.sender.id).to.be.a('number');",
+									"    pm.expect(responseData.sender.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"   ",
+									"    if (responseData.sender.role !== null) {",
+									"        pm.expect(responseData.sender.role).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.sender.full_name !== null) {",
+									"        pm.expect(responseData.sender.full_name).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.sender.bio !== null) {",
+									"        pm.expect(responseData.sender.bio).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.sender.contact_phone !== null) {",
+									"        pm.expect(responseData.sender.contact_phone).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.sender.contact_email !== null) {",
+									"        pm.expect(responseData.sender.contact_email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"    }",
+									"",
+									"    if (responseData.sender.avatar !== null) {",
+									"        pm.expect(responseData.sender.avatar).to.be.a('string');",
+									"    }",
+									"})",
+									"",
+									"pm.test('Validate the recipient object', function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.recipient).to.exist.and.to.be.an('object');",
+									"    pm.expect(responseData.recipient.id).to.be.a('number');",
+									"    pm.expect(responseData.recipient.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"   ",
+									"    if (responseData.recipient.role !== null) {",
+									"        pm.expect(responseData.recipient.role).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.recipient.full_name !== null) {",
+									"        pm.expect(responseData.recipient.full_name).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.recipient.bio !== null) {",
+									"        pm.expect(responseData.recipient.bio).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.recipient.contact_phone !== null) {",
+									"        pm.expect(responseData.recipient.contact_phone).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.recipient.contact_email !== null) {",
+									"        pm.expect(responseData.recipient.contact_email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"    }",
+									"",
+									"    if (responseData.recipient.avatar !== null) {",
+									"        pm.expect(responseData.recipient.avatar).to.be.a('string');",
+									"    }",
+									"})",
+									"",
+									"pm.test('Text field should not be empty', function () {",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData.text).to.exist.and.to.have.lengthOf.at.least(1, 'Text field should not be empty');",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_specialist}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"recipient_id\": 2,\r\n  \"text\": \"Привет! Это тестовое сообщение 3.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/messages/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"messages",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send investor(5) to startup(2)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"if (jsonData && jsonData.id) {",
+									"    pm.environment.set(\"message_id4\", jsonData.id);",
+									"    console.log(\"✅ ID сообщения сохранён:\", jsonData.id);",
+									"} else {",
+									"    console.log(\"❌ ID сообщения не найден в ответе\");",
+									"}",
+									"",
+									"pm.test('Response status code is 201', function () {",
+									"    pm.expect(pm.response.to.have.status(201));",
+									"})",
+									"",
+									"pm.test('Validate the sender object', function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.sender).to.exist.and.to.be.an('object');",
+									"    pm.expect(responseData.sender.id).to.be.a('number');",
+									"    pm.expect(responseData.sender.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"   ",
+									"    if (responseData.sender.role !== null) {",
+									"        pm.expect(responseData.sender.role).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.sender.full_name !== null) {",
+									"        pm.expect(responseData.sender.full_name).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.sender.bio !== null) {",
+									"        pm.expect(responseData.sender.bio).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.sender.contact_phone !== null) {",
+									"        pm.expect(responseData.sender.contact_phone).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.sender.contact_email !== null) {",
+									"        pm.expect(responseData.sender.contact_email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"    }",
+									"",
+									"    if (responseData.sender.avatar !== null) {",
+									"        pm.expect(responseData.sender.avatar).to.be.a('string');",
+									"    }",
+									"})",
+									"",
+									"pm.test('Validate the recipient object', function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.recipient).to.exist.and.to.be.an('object');",
+									"    pm.expect(responseData.recipient.id).to.be.a('number');",
+									"    pm.expect(responseData.recipient.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"   ",
+									"    if (responseData.recipient.role !== null) {",
+									"        pm.expect(responseData.recipient.role).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.recipient.full_name !== null) {",
+									"        pm.expect(responseData.recipient.full_name).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.recipient.bio !== null) {",
+									"        pm.expect(responseData.recipient.bio).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.recipient.contact_phone !== null) {",
+									"        pm.expect(responseData.recipient.contact_phone).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.recipient.contact_email !== null) {",
+									"        pm.expect(responseData.recipient.contact_email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"    }",
+									"",
+									"    if (responseData.recipient.avatar !== null) {",
+									"        pm.expect(responseData.recipient.avatar).to.be.a('string');",
+									"    }",
+									"})",
+									"",
+									"pm.test('Text field is not empty', function () {",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData.text).to.exist.and.to.have.lengthOf.at.least(1, 'Text field should not be empty');",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_investor}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"recipient_id\": 2,\r\n  \"text\": \"Привет! Это тестовое сообщение 4.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/messages/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"messages",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "See all last messages in dialogs startup(2)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content type is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Validate the sender object\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(message) {",
+									"        pm.expect(message.sender).to.exist.and.to.be.an('object');",
+									"        pm.expect(message.sender.id).to.be.a('number');",
+									"        pm.expect(message.sender.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"   ",
+									"        if (message.sender.role !== null) {",
+									"            pm.expect(message.sender.role).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.sender.full_name !== null) {",
+									"            pm.expect(message.sender.full_name).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.sender.bio !== null) {",
+									"            pm.expect(message.sender.bio).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.sender.contact_phone !== null) {",
+									"            pm.expect(message.sender.contact_phone).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.sender.contact_email !== null) {",
+									"            pm.expect(message.sender.contact_email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"        }",
+									"",
+									"        if (message.sender.avatar !== null) {",
+									"            pm.expect(message.sender.avatar).to.be.a('string');",
+									"        }",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Recipient object structure is valid\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(message) {",
+									"        pm.expect(message.recipient).to.exist.and.to.be.an('object');",
+									"        pm.expect(message.recipient.id).to.be.a('number');",
+									"        pm.expect(message.recipient.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"   ",
+									"        if (message.recipient.role !== null) {",
+									"            pm.expect(message.recipient.role).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.recipient.full_name !== null) {",
+									"            pm.expect(message.recipient.full_name).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.recipient.bio !== null) {",
+									"            pm.expect(message.recipient.bio).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.recipient.contact_phone !== null) {",
+									"            pm.expect(message.recipient.contact_phone).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.recipient.contact_email !== null) {",
+									"            pm.expect(message.recipient.contact_email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"        }",
+									"",
+									"        if (message.recipient.avatar !== null) {",
+									"            pm.expect(message.recipient.avatar).to.be.a('string');",
+									"        }",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Text is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    responseData.forEach(function(message) {",
+									"        pm.expect(message.text).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Text should not be empty\");",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/messages/dialogs/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"messages",
+								"dialogs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "See dialog with specialist(6) and startup(2)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test('Response status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"})",
+									"",
+									"pm.test('Content type is application/json', function () {",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+									"})",
+									"",
+									"pm.test(\"Validate the sender object\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(message) {",
+									"        pm.expect(message.sender).to.exist.and.to.be.an('object');",
+									"        pm.expect(message.sender.id).to.be.a('number');",
+									"        pm.expect(message.sender.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"   ",
+									"        if (message.sender.role !== null) {",
+									"            pm.expect(message.sender.role).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.sender.full_name !== null) {",
+									"            pm.expect(message.sender.full_name).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.sender.bio !== null) {",
+									"            pm.expect(message.sender.bio).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.sender.contact_phone !== null) {",
+									"            pm.expect(message.sender.contact_phone).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.sender.contact_email !== null) {",
+									"            pm.expect(message.sender.contact_email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"        }",
+									"",
+									"        if (message.sender.avatar !== null) {",
+									"            pm.expect(message.sender.avatar).to.be.a('string');",
+									"        }",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Recipient object structure is valid\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(message) {",
+									"        pm.expect(message.recipient).to.exist.and.to.be.an('object');",
+									"        pm.expect(message.recipient.id).to.be.a('number');",
+									"        pm.expect(message.recipient.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"   ",
+									"        if (message.recipient.role !== null) {",
+									"            pm.expect(message.recipient.role).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.recipient.full_name !== null) {",
+									"            pm.expect(message.recipient.full_name).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.recipient.bio !== null) {",
+									"            pm.expect(message.recipient.bio).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.recipient.contact_phone !== null) {",
+									"            pm.expect(message.recipient.contact_phone).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.recipient.contact_email !== null) {",
+									"            pm.expect(message.recipient.contact_email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"        }",
+									"",
+									"        if (message.recipient.avatar !== null) {",
+									"            pm.expect(message.recipient.avatar).to.be.a('string');",
+									"        }",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/messages/6/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"messages",
+								"6",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "See all last messages in dialogs specialist(6)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test('Response status code is 200', function () {",
+									"    pm.expect(pm.response.code).to.equal(200);",
+									"})",
+									"",
+									"pm.test('Content type is application/json', function () {",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+									"})",
+									"",
+									"pm.test(\"Validate the sender object\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(message) {",
+									"        pm.expect(message.sender).to.exist.and.to.be.an('object');",
+									"        pm.expect(message.sender.id).to.be.a('number');",
+									"        pm.expect(message.sender.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"   ",
+									"        if (message.sender.role !== null) {",
+									"            pm.expect(message.sender.role).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.sender.full_name !== null) {",
+									"            pm.expect(message.sender.full_name).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.sender.bio !== null) {",
+									"            pm.expect(message.sender.bio).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.sender.contact_phone !== null) {",
+									"            pm.expect(message.sender.contact_phone).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.sender.contact_email !== null) {",
+									"            pm.expect(message.sender.contact_email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"        }",
+									"",
+									"        if (message.sender.avatar !== null) {",
+									"            pm.expect(message.sender.avatar).to.be.a('string');",
+									"        }",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Recipient object structure is valid\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(message) {",
+									"        pm.expect(message.recipient).to.exist.and.to.be.an('object');",
+									"        pm.expect(message.recipient.id).to.be.a('number');",
+									"        pm.expect(message.recipient.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"   ",
+									"        if (message.recipient.role !== null) {",
+									"            pm.expect(message.recipient.role).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.recipient.full_name !== null) {",
+									"            pm.expect(message.recipient.full_name).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.recipient.bio !== null) {",
+									"            pm.expect(message.recipient.bio).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.recipient.contact_phone !== null) {",
+									"            pm.expect(message.recipient.contact_phone).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.recipient.contact_email !== null) {",
+									"            pm.expect(message.recipient.contact_email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"        }",
+									"",
+									"        if (message.recipient.avatar !== null) {",
+									"            pm.expect(message.recipient.avatar).to.be.a('string');",
+									"        }",
+									"    });",
+									"});",
+									"",
+									"pm.test('Text is present and is a non-empty string', function () {",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function (dialog) {",
+									"        pm.expect(dialog.text).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, 'Text should not be empty');",
+									"    });",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_specialist}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/messages/dialogs/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"messages",
+								"dialogs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "See all last messages in dialogs investor(5)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.equal(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type header is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Validate the sender object\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(message) {",
+									"        pm.expect(message.sender).to.exist.and.to.be.an('object');",
+									"        pm.expect(message.sender.id).to.be.a('number');",
+									"        pm.expect(message.sender.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"   ",
+									"        if (message.sender.role !== null) {",
+									"            pm.expect(message.sender.role).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.sender.full_name !== null) {",
+									"            pm.expect(message.sender.full_name).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.sender.bio !== null) {",
+									"            pm.expect(message.sender.bio).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.sender.contact_phone !== null) {",
+									"            pm.expect(message.sender.contact_phone).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.sender.contact_email !== null) {",
+									"            pm.expect(message.sender.contact_email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"        }",
+									"",
+									"        if (message.sender.avatar !== null) {",
+									"            pm.expect(message.sender.avatar).to.be.a('string');",
+									"        }",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Recipient object structure is valid\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(message) {",
+									"        pm.expect(message.recipient).to.exist.and.to.be.an('object');",
+									"        pm.expect(message.recipient.id).to.be.a('number');",
+									"        pm.expect(message.recipient.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"   ",
+									"        if (message.recipient.role !== null) {",
+									"            pm.expect(message.recipient.role).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.recipient.full_name !== null) {",
+									"            pm.expect(message.recipient.full_name).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.recipient.bio !== null) {",
+									"            pm.expect(message.recipient.bio).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.recipient.contact_phone !== null) {",
+									"            pm.expect(message.recipient.contact_phone).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.recipient.contact_email !== null) {",
+									"            pm.expect(message.recipient.contact_email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"        }",
+									"",
+									"        if (message.recipient.avatar !== null) {",
+									"            pm.expect(message.recipient.avatar).to.be.a('string');",
+									"        }",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Text is a non-empty string\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  responseData.forEach(function(dialog) {",
+									"    pm.expect(dialog.text).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Text should not be empty\");",
+									"  });",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_investor}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/messages/dialogs/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"messages",
+								"dialogs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send startup(2) to spesialist(6)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"if (jsonData && jsonData.id) {",
+									"    pm.environment.set(\"message_id7\", jsonData.id);",
+									"    console.log(\"✅ ID сообщения сохранён:\", jsonData.id);",
+									"} else {",
+									"    console.log(\"❌ ID сообщения не найден в ответе\");",
+									"}",
+									"",
+									"pm.test('Response status code is 201', function () {",
+									"    pm.expect(pm.response.code).to.equal(201);",
+									"})",
+									"",
+									"pm.test('Validate the sender object', function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.sender).to.exist.and.to.be.an('object');",
+									"    pm.expect(responseData.sender.id).to.be.a('number');",
+									"    pm.expect(responseData.sender.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"   ",
+									"    if (responseData.sender.role !== null) {",
+									"        pm.expect(responseData.sender.role).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.sender.full_name !== null) {",
+									"        pm.expect(responseData.sender.full_name).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.sender.bio !== null) {",
+									"        pm.expect(responseData.sender.bio).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.sender.contact_phone !== null) {",
+									"        pm.expect(responseData.sender.contact_phone).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.sender.contact_email !== null) {",
+									"        pm.expect(responseData.sender.contact_email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"    }",
+									"",
+									"    if (responseData.sender.avatar !== null) {",
+									"        pm.expect(responseData.sender.avatar).to.be.a('string');",
+									"    }",
+									"})",
+									"",
+									"pm.test('Validate the recipient object', function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.recipient).to.exist.and.to.be.an('object');",
+									"    pm.expect(responseData.recipient.id).to.be.a('number');",
+									"    pm.expect(responseData.recipient.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"   ",
+									"    if (responseData.recipient.role !== null) {",
+									"        pm.expect(responseData.recipient.role).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.recipient.full_name !== null) {",
+									"        pm.expect(responseData.recipient.full_name).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.recipient.bio !== null) {",
+									"        pm.expect(responseData.recipient.bio).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.recipient.contact_phone !== null) {",
+									"        pm.expect(responseData.recipient.contact_phone).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.recipient.contact_email !== null) {",
+									"        pm.expect(responseData.recipient.contact_email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"    }",
+									"",
+									"    if (responseData.recipient.avatar !== null) {",
+									"        pm.expect(responseData.recipient.avatar).to.be.a('string');",
+									"    }",
+									"})",
+									"",
+									"pm.test('Text field should not be empty', function () {",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData.text).to.exist.and.to.have.lengthOf.at.least(1, 'Text field should not be empty');",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"recipient_id\": 6,\r\n  \"text\": \"Привет! Это тестовое сообщение для проверки прочтения.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/messages/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"messages",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "See dialog with specialist(6) and startup(2) Copy 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test('Response status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"})",
+									"",
+									"pm.test('Content-Type header is application/json', function () {",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+									"})",
+									"",
+									"pm.test(\"Validate the sender object\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(message) {",
+									"        pm.expect(message.sender).to.exist.and.to.be.an('object');",
+									"        pm.expect(message.sender.id).to.be.a('number');",
+									"        pm.expect(message.sender.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"   ",
+									"        if (message.sender.role !== null) {",
+									"            pm.expect(message.sender.role).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.sender.full_name !== null) {",
+									"            pm.expect(message.sender.full_name).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.sender.bio !== null) {",
+									"            pm.expect(message.sender.bio).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.sender.contact_phone !== null) {",
+									"            pm.expect(message.sender.contact_phone).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.sender.contact_email !== null) {",
+									"            pm.expect(message.sender.contact_email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"        }",
+									"",
+									"        if (message.sender.avatar !== null) {",
+									"            pm.expect(message.sender.avatar).to.be.a('string');",
+									"        }",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Recipient object structure is valid\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(message) {",
+									"        pm.expect(message.recipient).to.exist.and.to.be.an('object');",
+									"        pm.expect(message.recipient.id).to.be.a('number');",
+									"        pm.expect(message.recipient.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"   ",
+									"        if (message.recipient.role !== null) {",
+									"            pm.expect(message.recipient.role).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.recipient.full_name !== null) {",
+									"            pm.expect(message.recipient.full_name).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.recipient.bio !== null) {",
+									"            pm.expect(message.recipient.bio).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.recipient.contact_phone !== null) {",
+									"            pm.expect(message.recipient.contact_phone).to.be.a('string');",
+									"        }",
+									"",
+									"        if (message.recipient.contact_email !== null) {",
+									"            pm.expect(message.recipient.contact_email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"        }",
+									"",
+									"        if (message.recipient.avatar !== null) {",
+									"            pm.expect(message.recipient.avatar).to.be.a('string');",
+									"        }",
+									"    });",
+									"});",
+									"",
+									"pm.test('Text should not be empty', function () {",
+									"    const responseData = pm.response.json();",
+									"    responseData.forEach(function (message) {",
+									"        pm.expect(message.text).to.exist.and.to.not.be.empty;",
+									"    });",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/messages/6/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"messages",
+								"6",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send big message startup(2) to spesialist(6)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"if (jsonData && jsonData.id) {",
+									"    pm.environment.set(\"message_id8\", jsonData.id);",
+									"    console.log(\"✅ ID сообщения сохранён:\", jsonData.id);",
+									"} else {",
+									"    console.log(\"❌ ID сообщения не найден в ответе\");",
+									"}",
+									"",
+									"pm.test('Response status code is 201', function () {",
+									"    pm.response.to.have.status(201);",
+									"})",
+									"",
+									"pm.test('Validate the sender object', function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.sender).to.exist.and.to.be.an('object');",
+									"    pm.expect(responseData.sender.id).to.be.a('number');",
+									"    pm.expect(responseData.sender.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"   ",
+									"    if (responseData.sender.role !== null) {",
+									"        pm.expect(responseData.sender.role).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.sender.full_name !== null) {",
+									"        pm.expect(responseData.sender.full_name).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.sender.bio !== null) {",
+									"        pm.expect(responseData.sender.bio).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.sender.contact_phone !== null) {",
+									"        pm.expect(responseData.sender.contact_phone).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.sender.contact_email !== null) {",
+									"        pm.expect(responseData.sender.contact_email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"    }",
+									"",
+									"    if (responseData.sender.avatar !== null) {",
+									"        pm.expect(responseData.sender.avatar).to.be.a('string');",
+									"    }",
+									"})",
+									"",
+									"pm.test('Validate the recipient object', function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.recipient).to.exist.and.to.be.an('object');",
+									"    pm.expect(responseData.recipient.id).to.be.a('number');",
+									"    pm.expect(responseData.recipient.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"   ",
+									"    if (responseData.recipient.role !== null) {",
+									"        pm.expect(responseData.recipient.role).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.recipient.full_name !== null) {",
+									"        pm.expect(responseData.recipient.full_name).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.recipient.bio !== null) {",
+									"        pm.expect(responseData.recipient.bio).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.recipient.contact_phone !== null) {",
+									"        pm.expect(responseData.recipient.contact_phone).to.be.a('string');",
+									"    }",
+									"",
+									"    if (responseData.recipient.contact_email !== null) {",
+									"        pm.expect(responseData.recipient.contact_email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"    }",
+									"",
+									"    if (responseData.recipient.avatar !== null) {",
+									"        pm.expect(responseData.recipient.avatar).to.be.a('string');",
+									"    }",
+									"})",
+									"pm.test('Text is a non-empty string', function () {",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.text).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, 'Text should be a non-empty string');",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"recipient_id\": 6,\r\n  \"text\": \"Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.Привет! Это большое тестовое сообщение.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/messages/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"messages",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Negative path",
+			"item": [
+				{
+					"name": "Send startup(2) to startup(2)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"if (jsonData && jsonData.id) {\r",
+									"    pm.environment.set(\"message_id_wrong\", jsonData.id);\r",
+									"    console.log(\"✅ ID сообщения сохранён:\", jsonData.id);\r",
+									"} else {\r",
+									"    console.log(\"❌ ID сообщения не найден в ответе\");\r",
+									"}\r",
+									"",
+									"",
+									"pm.test('Response status code is 400', function () {",
+									"    pm.expect(pm.response.code).to.equal(400);",
+									"})",
+									"",
+									"pm.test('Content-Type header is application/json', function () {",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+									"})",
+									"",
+									"pm.test('Non_field_errors array is present in the response', function () {",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData).to.have.property('non_field_errors').that.is.an('array');",
+									"})",
+									"",
+									"pm.test('Non field errors array should not be empty', function () {",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.non_field_errors).to.be.an('array').and.to.have.lengthOf.at.least(1, 'Non field errors array should not be empty');",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"recipient_id\": 2,\r\n  \"text\": \"Привет! Это тестовое сообщение 2.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/messages/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"messages",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Empty message startup(2) to specialist(6)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"if (jsonData && jsonData.id) {\r",
+									"    pm.environment.set(\"message_id_wrong\", jsonData.id);\r",
+									"    console.log(\"✅ ID сообщения сохранён:\", jsonData.id);\r",
+									"} else {\r",
+									"    console.log(\"❌ ID сообщения не найден в ответе\");\r",
+									"}\r",
+									"",
+									"pm.test('Response status code is 400', function () {",
+									"    pm.expect(pm.response.code).to.equal(400);",
+									"})",
+									"",
+									"pm.test('Response has the required Content-Type header', function () {",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+									"})",
+									"",
+									"pm.test('Text field is present in the response', function () {",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData).to.have.property('text');",
+									"})",
+									"",
+									"pm.test('Response time is less than 500ms', function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"recipient_id\": 6,\r\n  \"text\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/messages/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"messages",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send message unauthorization user to specialist(6) Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"if (jsonData && jsonData.id) {\r",
+									"    pm.environment.set(\"message_id_wrong\", jsonData.id);\r",
+									"    console.log(\"✅ ID сообщения сохранён:\", jsonData.id);\r",
+									"} else {\r",
+									"    console.log(\"❌ ID сообщения не найден в ответе\");\r",
+									"}\r",
+									"",
+									"pm.test(\"Response status code is 401\", function () {",
+									"  pm.expect(pm.response.code).to.equal(401);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.detail).to.exist;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Detail field should not be empty\", function () {",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData.detail).to.exist.and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify Content-Type is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response message is descriptive and user-friendly\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.detail).to.exist.and.to.be.a('string');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"recipient_id\": 6,\r\n  \"text\": \"test unathorization\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/messages/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"messages",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send message wrong id resiver",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"if (jsonData && jsonData.id) {\r",
+									"    pm.environment.set(\"message_id_wrong\", jsonData.id);\r",
+									"    console.log(\"✅ ID сообщения сохранён:\", jsonData.id);\r",
+									"} else {\r",
+									"    console.log(\"❌ ID сообщения не найден в ответе\");\r",
+									"}\r",
+									"",
+									"",
+									"pm.test(\"Response status code is 400\", function () {",
+									"    pm.expect(pm.response.code).to.equal(400);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required Content-Type header set to application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Ensure that the response contains the recipient_id field\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.have.property('recipient_id');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Recipient ID should be a non-empty array\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.recipient_id).to.be.an('array').and.to.have.lengthOf.at.least(1, \"Recipient ID should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"  pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"recipient_id\": 999999,\r\n  \"text\": \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/messages/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"messages",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "See all last messages in dialogs without authorization",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test('Response status code is 401', function () {",
+									"    pm.expect(pm.response.code).to.equal(401);",
+									"})",
+									"",
+									"pm.test('Response has the required field - detail', function () {",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.detail).to.exist;",
+									"})",
+									"",
+									"pm.test('Content-Type header is application/json', function () {",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+									"})",
+									"",
+									"pm.test('Detail is a non-empty string', function () {",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.detail).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Value should not be empty');",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/messages/dialogs/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"messages",
+								"dialogs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "See all last messages in dialogs wrong token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test('Response status code is 401', function () {",
+									"    pm.expect(pm.response.code).to.equal(401);",
+									"})",
+									"",
+									"pm.test('Content type is application/json', function () {",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+									"})",
+									"",
+									"pm.test('Response has the required field \\'detail\\'', function () {",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.detail).to.exist;",
+									"})",
+									"",
+									"pm.test('Detail field is a non-empty string', function () {",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData.detail).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Detail field should not be empty');",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_wrong}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/messages/dialogs/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"messages",
+								"dialogs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "See dialog with specialist(6) and wrong id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/messages/999999/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"messages",
+								"999999",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "See unaithirization dialog with startup(2)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'Учетные данные не были предоставлены.'\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.detail).to.eql(\"Учетные данные не были предоставлены.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/messages/2/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"messages",
+								"2",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "See unaithirization dialog with spesialist(6)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'Учетные данные не были предоставлены.'\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.detail).to.eql(\"Учетные данные не были предоставлены.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/messages/6/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"messages",
+								"6",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "See unaithirization dialog with investor(5)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'Учетные данные не были предоставлены.'\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.detail).to.eql(\"Учетные данные не были предоставлены.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/messages/6/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"messages",
+								"6",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

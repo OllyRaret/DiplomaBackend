@@ -1,0 +1,2643 @@
+{
+	"info": {
+		"_postman_id": "44e3eb53-c1e8-4ad2-8120-0bf426bad947",
+		"name": "4. Profile",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44112372",
+		"_collection_link": "https://alinaobrezkova.postman.co/workspace/Diploma-tests~e4acbeed-fff8-4ec3-84d0-7292590347e4/collection/44112372-44e3eb53-c1e8-4ad2-8120-0bf426bad947?action=share&source=collection_link&creator=44112372"
+	},
+	"item": [
+		{
+			"name": "Startup",
+			"item": [
+				{
+					"name": "Login correct data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"if (jsonData.auth_token) {",
+									"    pm.environment.set(\"access_token_sturtup\", jsonData.auth_token);",
+									"    console.log(\"Токен сохранён:\", jsonData.auth_token);",
+									"} else {",
+									"    console.warn(\"Токен не найден в ответе.\");",
+									"}",
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required field 'auth_token'\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.auth_token).to.exist;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Auth token is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.auth_token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Auth token should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify the auth token is in a valid format\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.auth_token).to.be.a('string').and.to.match(/[A-Za-z0-9]{30,}/, \"Auth token format is not valid\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"testuser@example.com\",\r\n  \"password\": \"StrongPassword123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/auth/token/login/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"token",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "Ivan Ivanov",
+									"type": "text"
+								},
+								{
+									"key": "industry_id",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "bio",
+									"value": "Мы создаем инновации в области ИИ.",
+									"type": "text"
+								},
+								{
+									"key": "contact_phone",
+									"value": "+79999999999",
+									"type": "text"
+								},
+								{
+									"key": "contact_email",
+									"value": "ivan@startup.com",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "postman-cloud:///1f01ab95-1a33-4dd0-a417-e08cb58f333b"
+								},
+								{
+									"key": "experience",
+									"value": "[{\"organization\": \"TechStars\",    \"position\": \"CEO\",\"start_date\": \"2020-01-01\",\"end_date\": \"2022-12-31\",\"description\": \"Руководство командой и запуск продукта\"},{\"organization\": \"YCombinator\",\"position\": \"CTO\",\"start_date\": \"2018-03-01\",\"end_date\": \"2019-11-30\",\"description\": \"Разработка MVP и управление разработкой\"}]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New profile 2 Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Content-Type is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test('Validate user profile object (with nested and nullable fields)', function () {\r",
+									"    const data = pm.response.json();\r",
+									"\r",
+									"    pm.expect(data.user_id).to.be.a('number');\r",
+									"    pm.expect(data.role).to.be.a('string');\r",
+									"    if (data.full_name !== null) {\r",
+									"        pm.expect(data.full_name).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    pm.expect(data.industry).to.be.an('object');\r",
+									"    pm.expect(data.industry.id).to.be.a('number');\r",
+									"    pm.expect(data.industry.name).to.be.a('string');\r",
+									"\r",
+									"    if (data.bio !== null) {\r",
+									"        pm.expect(data.bio).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.contact_phone !== null) {\r",
+									"        pm.expect(data.contact_phone).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.contact_email !== null) {\r",
+									"        pm.expect(data.contact_email).to.be.a('string')\r",
+									"            .and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+									"    }\r",
+									"\r",
+									"    if (data.avatar !== null) {\r",
+									"        pm.expect(data.avatar).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    pm.expect(data.experience).to.be.an('array');\r",
+									"    data.experience.forEach(item => {\r",
+									"        pm.expect(item.id).to.be.a('number');\r",
+									"        pm.expect(item.organization).to.be.a('string');\r",
+									"        pm.expect(item.position).to.be.a('string');\r",
+									"        pm.expect(item.start_date).to.be.a('string');\r",
+									"        if (item.end_date !== null) {\r",
+									"            pm.expect(item.end_date).to.be.a('string');\r",
+									"        }\r",
+									"        if (item.description !== null) {\r",
+									"            pm.expect(item.description).to.be.a('string');\r",
+									"        }\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"industry_id\": 2,\r\n  \"experience\": [\r\n    {\r\n      \"organization\": \"TechStars\",\r\n      \"position\": \"CEO\",\r\n      \"start_date\": \"2020-01-01\",\r\n      \"end_date\": \"2022-12-31\",\r\n      \"description\": \"Руководство командой и запуск продукта\"\r\n    },\r\n    {\r\n      \"organization\": \"YCombinator\",\r\n      \"position\": \"CTO\",\r\n      \"start_date\": \"2018-03-01\",\r\n      \"end_date\": \"2019-11-30\",\r\n      \"description\": \"Разработка MVP и управление разработкой\"\r\n    }\r\n  ]\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "avatar 138 kb",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Validate user profile object (with nested and nullable fields)', function () {\r",
+									"    const data = pm.response.json();\r",
+									"\r",
+									"    pm.expect(data.user_id).to.be.a('number');\r",
+									"    pm.expect(data.role).to.be.a('string');\r",
+									"    if (data.full_name !== null) {\r",
+									"        pm.expect(data.full_name).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    pm.expect(data.industry).to.be.an('object');\r",
+									"    pm.expect(data.industry.id).to.be.a('number');\r",
+									"    pm.expect(data.industry.name).to.be.a('string');\r",
+									"\r",
+									"    if (data.bio !== null) {\r",
+									"        pm.expect(data.bio).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.contact_phone !== null) {\r",
+									"        pm.expect(data.contact_phone).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.contact_email !== null) {\r",
+									"        pm.expect(data.contact_email).to.be.a('string')\r",
+									"            .and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+									"    }\r",
+									"\r",
+									"    if (data.avatar !== null) {\r",
+									"        pm.expect(data.avatar).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    pm.expect(data.experience).to.be.an('array');\r",
+									"    data.experience.forEach(item => {\r",
+									"        pm.expect(item.id).to.be.a('number');\r",
+									"        pm.expect(item.organization).to.be.a('string');\r",
+									"        pm.expect(item.position).to.be.a('string');\r",
+									"        pm.expect(item.start_date).to.be.a('string');\r",
+									"        if (item.end_date !== null) {\r",
+									"            pm.expect(item.end_date).to.be.a('string');\r",
+									"        }\r",
+									"        if (item.description !== null) {\r",
+									"            pm.expect(item.description).to.be.a('string');\r",
+									"        }\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "Ivan Ivanov",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "industry_id",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "bio",
+									"value": "Мы создаем инновации в области ИИ.",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "contact_phone",
+									"value": "+79999999999",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "contact_email",
+									"value": "ivan@startup.com",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "postman-cloud:///1f01c4ad-7640-47a0-acf0-b4d30f729e59"
+								},
+								{
+									"key": "experience",
+									"value": "[{\"organization\": \"TechStars\",    \"position\": \"CEO\",\"start_date\": \"2020-01-01\",\"end_date\": \"2022-12-31\",\"description\": \"Руководство командой и запуск продукта\"},{\"organization\": \"YCombinator\",\"position\": \"CTO\",\"start_date\": \"2018-03-01\",\"end_date\": \"2019-11-30\",\"description\": \"Разработка MVP и управление разработкой\"}]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "avatar 618 kb",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Validate user profile object (with nested and nullable fields)', function () {\r",
+									"    const data = pm.response.json();\r",
+									"\r",
+									"    pm.expect(data.user_id).to.be.a('number');\r",
+									"    pm.expect(data.role).to.be.a('string');\r",
+									"    if (data.full_name !== null) {\r",
+									"        pm.expect(data.full_name).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    pm.expect(data.industry).to.be.an('object');\r",
+									"    pm.expect(data.industry.id).to.be.a('number');\r",
+									"    pm.expect(data.industry.name).to.be.a('string');\r",
+									"\r",
+									"    if (data.bio !== null) {\r",
+									"        pm.expect(data.bio).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.contact_phone !== null) {\r",
+									"        pm.expect(data.contact_phone).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.contact_email !== null) {\r",
+									"        pm.expect(data.contact_email).to.be.a('string')\r",
+									"            .and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+									"    }\r",
+									"\r",
+									"    if (data.avatar !== null) {\r",
+									"        pm.expect(data.avatar).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"\r",
+									"    pm.expect(data.experience).to.be.an('array');\r",
+									"    data.experience.forEach(item => {\r",
+									"        pm.expect(item.id).to.be.a('number');\r",
+									"        pm.expect(item.organization).to.be.a('string');\r",
+									"        pm.expect(item.position).to.be.a('string');\r",
+									"        pm.expect(item.start_date).to.be.a('string');\r",
+									"        if (item.end_date !== null) {\r",
+									"            pm.expect(item.end_date).to.be.a('string');\r",
+									"        }\r",
+									"        if (item.description !== null) {\r",
+									"            pm.expect(item.description).to.be.a('string');\r",
+									"        }\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "Ivan Ivanov",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "industry_id",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "bio",
+									"value": "Мы создаем инновации в области ИИ.",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "contact_phone",
+									"value": "+79999999999",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "contact_email",
+									"value": "ivan@startup.com",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "postman-cloud:///1f01c4b1-0da1-4ce0-9898-31b958cd8f83"
+								},
+								{
+									"key": "experience",
+									"value": "[{\"organization\": \"TechStars\",    \"position\": \"CEO\",\"start_date\": \"2020-01-01\",\"end_date\": \"2022-12-31\",\"description\": \"Руководство командой и запуск продукта\"},{\"organization\": \"YCombinator\",\"position\": \"CTO\",\"start_date\": \"2018-03-01\",\"end_date\": \"2019-11-30\",\"description\": \"Разработка MVP и управление разработкой\"}]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "avatar 3 mb",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Validate user profile object (with nested and nullable fields)', function () {\r",
+									"    const data = pm.response.json();\r",
+									"\r",
+									"    pm.expect(data.user_id).to.be.a('number');\r",
+									"    pm.expect(data.role).to.be.a('string');\r",
+									"    if (data.full_name !== null) {\r",
+									"        pm.expect(data.full_name).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    pm.expect(data.industry).to.be.an('object');\r",
+									"    pm.expect(data.industry.id).to.be.a('number');\r",
+									"    pm.expect(data.industry.name).to.be.a('string');\r",
+									"\r",
+									"    if (data.bio !== null) {\r",
+									"        pm.expect(data.bio).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.contact_phone !== null) {\r",
+									"        pm.expect(data.contact_phone).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.contact_email !== null) {\r",
+									"        pm.expect(data.contact_email).to.be.a('string')\r",
+									"            .and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+									"    }\r",
+									"\r",
+									"    if (data.avatar !== null) {\r",
+									"        pm.expect(data.avatar).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    pm.expect(data.experience).to.be.an('array');\r",
+									"    data.experience.forEach(item => {\r",
+									"        pm.expect(item.id).to.be.a('number');\r",
+									"        pm.expect(item.organization).to.be.a('string');\r",
+									"        pm.expect(item.position).to.be.a('string');\r",
+									"        pm.expect(item.start_date).to.be.a('string');\r",
+									"        if (item.end_date !== null) {\r",
+									"            pm.expect(item.end_date).to.be.a('string');\r",
+									"        }\r",
+									"        if (item.description !== null) {\r",
+									"            pm.expect(item.description).to.be.a('string');\r",
+									"        }\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "Ivan Ivanov",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "industry_id",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "bio",
+									"value": "Мы создаем инновации в области ИИ.",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "contact_phone",
+									"value": "+79999999999",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "contact_email",
+									"value": "ivan@startup.com",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "postman-cloud:///1f01c4cd-87cb-48b0-bbde-dfe0d85ebbe0"
+								},
+								{
+									"key": "experience",
+									"value": "[{\"organization\": \"TechStars\",    \"position\": \"CEO\",\"start_date\": \"2020-01-01\",\"end_date\": \"2022-12-31\",\"description\": \"Руководство командой и запуск продукта\"},{\"organization\": \"YCombinator\",\"position\": \"CTO\",\"start_date\": \"2018-03-01\",\"end_date\": \"2019-11-30\",\"description\": \"Разработка MVP и управление разработкой\"}]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "avatar pdf",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "Ivan Ivanov",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "industry_id",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "bio",
+									"value": "Мы создаем инновации в области ИИ.",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "contact_phone",
+									"value": "+79999999999",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "contact_email",
+									"value": "ivan@startup.com",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "postman-cloud:///1f01c509-82c8-4020-9145-954881c0e07e"
+								},
+								{
+									"key": "experience",
+									"value": "[{\"organization\": \"TechStars\",    \"position\": \"CEO\",\"start_date\": \"2020-01-01\",\"end_date\": \"2022-12-31\",\"description\": \"Руководство командой и запуск продукта\"},{\"organization\": \"YCombinator\",\"position\": \"CTO\",\"start_date\": \"2018-03-01\",\"end_date\": \"2019-11-30\",\"description\": \"Разработка MVP и управление разработкой\"}]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change profile unauthorized",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 401\", function () {\r",
+									"  pm.expect(pm.response.code).to.equal(401);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has the required fields\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.detail).to.exist;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Detail field should not be empty\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    pm.expect(responseData.detail).to.exist.and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "Ivan Ivanov",
+									"type": "text"
+								},
+								{
+									"key": "industry_id",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "bio",
+									"value": "Мы создаем инновации в области ИИ.",
+									"type": "text"
+								},
+								{
+									"key": "contact_phone",
+									"value": "+79999999999",
+									"type": "text"
+								},
+								{
+									"key": "contact_email",
+									"value": "ivan@startup.com",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "postman-cloud:///1f01ab95-1a33-4dd0-a417-e08cb58f333b"
+								},
+								{
+									"key": "experience",
+									"value": "[{\"organization\": \"TechStars\",    \"position\": \"CEO\",\"start_date\": \"2020-01-01\",\"end_date\": \"2022-12-31\",\"description\": \"Руководство командой и запуск продукта\"},{\"organization\": \"YCombinator\",\"position\": \"CTO\",\"start_date\": \"2018-03-01\",\"end_date\": \"2019-11-30\",\"description\": \"Разработка MVP и управление разработкой\"}]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change profile wrong token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 401\", function () {\r",
+									"  pm.expect(pm.response.code).to.equal(401);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has the required fields\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.detail).to.exist;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Detail field should not be empty\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    pm.expect(responseData.detail).to.exist.and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_wrong}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "Ivan Ivanov",
+									"type": "text"
+								},
+								{
+									"key": "industry_id",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "bio",
+									"value": "Мы создаем инновации в области ИИ.",
+									"type": "text"
+								},
+								{
+									"key": "contact_phone",
+									"value": "+79999999999",
+									"type": "text"
+								},
+								{
+									"key": "contact_email",
+									"value": "ivan@startup.com",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "postman-cloud:///1f01ab95-1a33-4dd0-a417-e08cb58f333b"
+								},
+								{
+									"key": "experience",
+									"value": "[{\"organization\": \"TechStars\",    \"position\": \"CEO\",\"start_date\": \"2020-01-01\",\"end_date\": \"2022-12-31\",\"description\": \"Руководство командой и запуск продукта\"},{\"organization\": \"YCombinator\",\"position\": \"CTO\",\"start_date\": \"2018-03-01\",\"end_date\": \"2019-11-30\",\"description\": \"Разработка MVP и управление разработкой\"}]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Validate user profile object (with nested and nullable fields)', function () {\r",
+									"    const data = pm.response.json();\r",
+									"\r",
+									"    pm.expect(data.user_id).to.be.a('number');\r",
+									"    pm.expect(data.role).to.be.a('string');\r",
+									"    if (data.full_name !== null) {\r",
+									"        pm.expect(data.full_name).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    pm.expect(data.industry).to.be.an('object');\r",
+									"    pm.expect(data.industry.id).to.be.a('number');\r",
+									"    pm.expect(data.industry.name).to.be.a('string');\r",
+									"\r",
+									"    if (data.bio !== null) {\r",
+									"        pm.expect(data.bio).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.contact_phone !== null) {\r",
+									"        pm.expect(data.contact_phone).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.contact_email !== null) {\r",
+									"        pm.expect(data.contact_email).to.be.a('string')\r",
+									"            .and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+									"    }\r",
+									"\r",
+									"    if (data.avatar !== null) {\r",
+									"        pm.expect(data.avatar).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"\r",
+									"    pm.expect(data.experience).to.be.an('array');\r",
+									"    data.experience.forEach(item => {\r",
+									"        pm.expect(item.id).to.be.a('number');\r",
+									"        pm.expect(item.organization).to.be.a('string');\r",
+									"        pm.expect(item.position).to.be.a('string');\r",
+									"        pm.expect(item.start_date).to.be.a('string');\r",
+									"        if (item.end_date !== null) {\r",
+									"            pm.expect(item.end_date).to.be.a('string');\r",
+									"        }\r",
+									"        if (item.description !== null) {\r",
+									"            pm.expect(item.description).to.be.a('string');\r",
+									"        }\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "Ванька Иванов",
+									"type": "text"
+								},
+								{
+									"key": "industry_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "bio",
+									"value": "Мы ничего н есоздаем",
+									"type": "text"
+								},
+								{
+									"key": "contact_phone",
+									"value": "+79999999998",
+									"type": "text"
+								},
+								{
+									"key": "contact_email",
+									"value": "ivano4ka@startup.com",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "postman-cloud:///1f01c4b1-0da1-4ce0-9898-31b958cd8f83"
+								},
+								{
+									"key": "experience",
+									"value": "[{\"organization\": \"TechStars\",    \"position\": \"CEO\",\"start_date\": \"2020-01-01\",\"end_date\": \"2022-12-31\",\"description\": \"Руководство командой и запуск продукта\"},{\"organization\": \"YCombinator\",\"position\": \"CTO\",\"start_date\": \"2018-03-01\",\"end_date\": \"2019-11-30\",\"description\": \"Разработка MVP и управление разработкой\"}]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change profile wrong industry_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 400\", function () {\r",
+									"  pm.expect(pm.response.code).to.equal(400);\r",
+									"});\r",
+									"\r",
+									"pm.test('Response has the required fields', function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.have.property('industry_id');\r",
+									"    pm.expect(response.industry_id).to.be.an('array');\r",
+									"    pm.expect(response.industry_id[0]).to.include('объект не существует');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "Ванька Иванов",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "industry_id",
+									"value": "9999",
+									"type": "text"
+								},
+								{
+									"key": "bio",
+									"value": "Мы ничего н есоздаем",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "contact_phone",
+									"value": "+79999999998",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "contact_email",
+									"value": "ivano4ka@startup.com",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "postman-cloud:///1f01c4b1-0da1-4ce0-9898-31b958cd8f83",
+									"disabled": true
+								},
+								{
+									"key": "experience",
+									"value": "[{\"organization\": \"TechStars\",    \"position\": \"CEO\",\"start_date\": \"2020-01-01\",\"end_date\": \"2022-12-31\",\"description\": \"Руководство командой и запуск продукта\"},{\"organization\": \"YCombinator\",\"position\": \"CTO\",\"start_date\": \"2018-03-01\",\"end_date\": \"2019-11-30\",\"description\": \"Разработка MVP и управление разработкой\"}]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change profile clear",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Validate user profile object (with nested and nullable fields)', function () {\r",
+									"    const data = pm.response.json();\r",
+									"\r",
+									"    pm.expect(data.user_id).to.be.a('number');\r",
+									"    pm.expect(data.role).to.be.a('string');\r",
+									"    if (data.full_name !== null) {\r",
+									"        pm.expect(data.full_name).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    pm.expect(data.industry).to.be.an('object');\r",
+									"    pm.expect(data.industry.id).to.be.a('number');\r",
+									"    pm.expect(data.industry.name).to.be.a('string');\r",
+									"\r",
+									"    if (data.bio !== null) {\r",
+									"        pm.expect(data.bio).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.contact_phone !== null) {\r",
+									"        pm.expect(data.contact_phone).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.contact_email !== null) {\r",
+									"        pm.expect(data.contact_email).to.be.a('string')\r",
+									"            .and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+									"    }\r",
+									"\r",
+									"    if (data.avatar !== null) {\r",
+									"        pm.expect(data.avatar).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"\r",
+									"    pm.expect(data.experience).to.be.an('array');\r",
+									"    data.experience.forEach(item => {\r",
+									"        pm.expect(item.id).to.be.a('number');\r",
+									"        pm.expect(item.organization).to.be.a('string');\r",
+									"        pm.expect(item.position).to.be.a('string');\r",
+									"        pm.expect(item.start_date).to.be.a('string');\r",
+									"        if (item.end_date !== null) {\r",
+									"            pm.expect(item.end_date).to.be.a('string');\r",
+									"        }\r",
+									"        if (item.description !== null) {\r",
+									"            pm.expect(item.description).to.be.a('string');\r",
+									"        }\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "industry_id",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "bio",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "contact_phone",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "contact_email",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "experience",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change profile experience",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Validate user profile object (with nested and nullable fields)', function () {\r",
+									"    const data = pm.response.json();\r",
+									"\r",
+									"    pm.expect(data.user_id).to.be.a('number');\r",
+									"    pm.expect(data.role).to.be.a('string');\r",
+									"    if (data.full_name !== null) {\r",
+									"        pm.expect(data.full_name).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    pm.expect(data.industry).to.be.an('object');\r",
+									"    pm.expect(data.industry.id).to.be.a('number');\r",
+									"    pm.expect(data.industry.name).to.be.a('string');\r",
+									"\r",
+									"    if (data.bio !== null) {\r",
+									"        pm.expect(data.bio).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.contact_phone !== null) {\r",
+									"        pm.expect(data.contact_phone).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.contact_email !== null) {\r",
+									"        pm.expect(data.contact_email).to.be.a('string')\r",
+									"            .and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+									"    }\r",
+									"\r",
+									"    if (data.avatar !== null) {\r",
+									"        pm.expect(data.avatar).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"\r",
+									"    pm.expect(data.experience).to.be.an('array');\r",
+									"    data.experience.forEach(item => {\r",
+									"        pm.expect(item.id).to.be.a('number');\r",
+									"        pm.expect(item.organization).to.be.a('string');\r",
+									"        pm.expect(item.position).to.be.a('string');\r",
+									"        pm.expect(item.start_date).to.be.a('string');\r",
+									"        if (item.end_date !== null) {\r",
+									"            pm.expect(item.end_date).to.be.a('string');\r",
+									"        }\r",
+									"        if (item.description !== null) {\r",
+									"            pm.expect(item.description).to.be.a('string');\r",
+									"        }\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"experience\": [\r\n    {\r\n      \"organization\": \"TechStars\",\r\n      \"position\": \"CEO\",\r\n      \"start_date\": \"2020-01-01\",\r\n      \"end_date\": \"2022-12-31\",\r\n      \"description\": \"Руководство командой и запуск продукта\"\r\n    },\r\n    {\r\n      \"organization\": \"YCombinator\",\r\n      \"position\": \"CTO\",\r\n      \"start_date\": \"2018-03-01\",\r\n      \"end_date\": \"2019-11-30\",\r\n      \"description\": \"Разработка MVP и управление разработкой\"\r\n    },\r\n    {\r\n      \"organization\": \"TechStars2\",\r\n      \"position\": \"CEO2\",\r\n      \"start_date\": \"2020-01-01\",\r\n      \"end_date\": \"2022-12-31\",\r\n      \"description\": \"Руководство командой и запуск продукта2\"\r\n    },\r\n    {\r\n      \"organization\": \"TechStars3\",\r\n      \"position\": \"CEO3\",\r\n      \"start_date\": \"2020-01-01\",\r\n      \"end_date\": \"2022-12-31\",\r\n      \"description\": \"Руководство командой и запуск продукта3\"\r\n    }\r\n  ]\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Wrong contact_phone",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 400\", function () {\r",
+									"  pm.expect(pm.response.code).to.equal(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "Ванька Иванов",
+									"type": "text"
+								},
+								{
+									"key": "industry_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "bio",
+									"value": "Мы ничего н есоздаем",
+									"type": "text"
+								},
+								{
+									"key": "contact_phone",
+									"value": "+7",
+									"type": "text"
+								},
+								{
+									"key": "contact_email",
+									"value": "ivano4ka@startup.com",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "postman-cloud:///1f01c4b1-0da1-4ce0-9898-31b958cd8f83"
+								},
+								{
+									"key": "experience",
+									"value": "[{\"organization\": \"TechStars\",    \"position\": \"CEO\",\"start_date\": \"2020-01-01\",\"end_date\": \"2022-12-31\",\"description\": \"Руководство командой и запуск продукта\"},{\"organization\": \"YCombinator\",\"position\": \"CTO\",\"start_date\": \"2018-03-01\",\"end_date\": \"2019-11-30\",\"description\": \"Разработка MVP и управление разработкой\"}]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Wrong contact_email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 400\", function () {\r",
+									"  pm.expect(pm.response.code).to.equal(400);\r",
+									"});\r",
+									"\r",
+									"pm.test('Response has the required fields', function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.have.property('contact_email');\r",
+									"    pm.expect(response.contact_email).to.be.an('array');\r",
+									"    pm.expect(response.contact_email[0]).to.eql('Введите правильный адрес электронной почты.');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "Ванька Иванов",
+									"type": "text"
+								},
+								{
+									"key": "industry_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "bio",
+									"value": "Мы ничего н есоздаем",
+									"type": "text"
+								},
+								{
+									"key": "contact_phone",
+									"value": "+79999999998",
+									"type": "text"
+								},
+								{
+									"key": "contact_email",
+									"value": "ivano4ka@.com",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "postman-cloud:///1f01c4b1-0da1-4ce0-9898-31b958cd8f83"
+								},
+								{
+									"key": "experience",
+									"value": "[{\"organization\": \"TechStars\",    \"position\": \"CEO\",\"start_date\": \"2020-01-01\",\"end_date\": \"2022-12-31\",\"description\": \"Руководство командой и запуск продукта\"},{\"organization\": \"YCombinator\",\"position\": \"CTO\",\"start_date\": \"2018-03-01\",\"end_date\": \"2019-11-30\",\"description\": \"Разработка MVP и управление разработкой\"}]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Wrong date in experience",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 400\", function () {\r",
+									"  pm.expect(pm.response.code).to.equal(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"experience\": [\r\n    {\r\n      \"organization\": \"TechStars\",\r\n      \"position\": \"CEO\",\r\n      \"start_date\": \"2022-12-31\",\r\n      \"end_date\": \"2020-12-31\",\r\n      \"description\": \"Руководство командой и запуск продукта\"\r\n    },\r\n    {\r\n      \"organization\": \"YCombinator\",\r\n      \"position\": \"CTO\",\r\n      \"start_date\": \"2019-11-30\",\r\n      \"end_date\": \"2019-11-30\",\r\n      \"description\": \"Разработка MVP и управление разработкой\"\r\n    },\r\n    {\r\n      \"organization\": \"TechStars2\",\r\n      \"position\": \"CEO2\",\r\n      \"start_date\": \"20202-012-021\",\r\n      \"end_date\": \"2022-12-31\",\r\n      \"description\": \"Руководство командой и запуск продукта2\"\r\n    },\r\n    {\r\n      \"organization\": \"TechStars3\",\r\n      \"position\": \"CEO3\",\r\n      \"start_date\": \"\",\r\n      \"end_date\": \"2022-12-31\",\r\n      \"description\": \"Руководство командой и запуск продукта3\"\r\n    }\r\n  ]\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change profile experience without organization or position",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 400\", function () {\r",
+									"  pm.expect(pm.response.code).to.equal(400);\r",
+									"});\r",
+									"\r",
+									"pm.test('Проверка ошибок в полях experience', function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.have.property('experience');\r",
+									"    pm.expect(response.experience).to.be.an('array');\r",
+									"\r",
+									"    pm.expect(response.experience[0]).to.have.property('position');\r",
+									"    pm.expect(response.experience[0].position[0]).to.eql('Обязательное поле.');\r",
+									"\r",
+									"    pm.expect(response.experience[1]).to.have.property('organization');\r",
+									"    pm.expect(response.experience[1].organization[0]).to.eql('Обязательное поле.');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_sturtup}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"experience\": [\r\n    {\r\n      \"organization\": \"TechStars3\",\r\n      \"start_date\": \"2020-01-01\",\r\n      \"description\": \"Руководство командой и запуск продукта3\"\r\n    },\r\n    {\r\n      \"position\": \"CEO4\",\r\n      \"start_date\": \"2020-01-01\",\r\n      \"end_date\": \"2022-12-31\"\r\n    }\r\n  ]\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Specialist",
+			"item": [
+				{
+					"name": "Login correct data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"if (jsonData.auth_token) {",
+									"    pm.environment.set(\"access_token_specialist\", jsonData.auth_token);",
+									"    console.log(\"Токен сохранён:\", jsonData.auth_token);",
+									"} else {",
+									"    console.warn(\"Токен не найден в ответе.\");",
+									"}",
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required field 'auth_token'\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.auth_token).to.exist;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Auth token is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.auth_token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Auth token should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify the auth token is in a valid format\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.auth_token).to.be.a('string').and.to.match(/[A-Za-z0-9]{30,}/, \"Auth token format is not valid\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"testspecialist@example.com\",\r\n  \"password\": \"StrongPassword123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/auth/token/login/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"token",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Validate user profile object (with nested and nullable fields)', function () {\r",
+									"    const data = pm.response.json();\r",
+									"\r",
+									"    pm.expect(data.user_id).to.be.a('number');\r",
+									"    pm.expect(data.role).to.be.a('string');\r",
+									"    if (data.full_name !== null) {\r",
+									"        pm.expect(data.full_name).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.bio !== null) {\r",
+									"        pm.expect(data.bio).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.contact_phone !== null) {\r",
+									"        pm.expect(data.contact_phone).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.contact_email !== null) {\r",
+									"        pm.expect(data.contact_email).to.be.a('string')\r",
+									"            .and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+									"    }\r",
+									"\r",
+									"    if (data.avatar !== null) {\r",
+									"        pm.expect(data.avatar).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    pm.expect(data.experience).to.be.an('array');\r",
+									"    data.experience.forEach(item => {\r",
+									"        pm.expect(item.id).to.be.a('number');\r",
+									"        pm.expect(item.organization).to.be.a('string');\r",
+									"        pm.expect(item.position).to.be.a('string');\r",
+									"        pm.expect(item.start_date).to.be.a('string');\r",
+									"        if (item.end_date !== null) {\r",
+									"            pm.expect(item.end_date).to.be.a('string');\r",
+									"        }\r",
+									"        if (item.description !== null) {\r",
+									"            pm.expect(item.description).to.be.a('string');\r",
+									"        }\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_specialist}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "Петр Петров",
+									"type": "text"
+								},
+								{
+									"key": "profession",
+									"value": "[1, 2]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "bio",
+									"value": "Мы создаем инновации в области ИИ.",
+									"type": "text"
+								},
+								{
+									"key": "contact_phone",
+									"value": "+79999999999",
+									"type": "text"
+								},
+								{
+									"key": "contact_email",
+									"value": "ivan@startup.com",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "postman-cloud:///1f01ab95-1a33-4dd0-a417-e08cb58f333b"
+								},
+								{
+									"key": "skill_ids ",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "experience",
+									"value": "[{\"organization\": \"TechStars\",    \"position\": \"CEO\",\"start_date\": \"2020-01-01\",\"end_date\": \"2022-12-31\",\"description\": \"Руководство командой и запуск продукта\"},{\"organization\": \"YCombinator\",\"position\": \"CTO\",\"start_date\": \"2018-03-01\",\"end_date\": \"2019-11-30\",\"description\": \"Разработка MVP и управление разработкой\"}]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New profile 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Content-Type is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test('Validate user profile object (with nested and nullable fields)', function () {\r",
+									"    const data = pm.response.json();\r",
+									"\r",
+									"    pm.expect(data.user_id).to.be.a('number');\r",
+									"    pm.expect(data.role).to.be.a('string');\r",
+									"    if (data.full_name !== null) {\r",
+									"        pm.expect(data.full_name).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.bio !== null) {\r",
+									"        pm.expect(data.bio).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.contact_phone !== null) {\r",
+									"        pm.expect(data.contact_phone).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.contact_email !== null) {\r",
+									"        pm.expect(data.contact_email).to.be.a('string')\r",
+									"            .and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+									"    }\r",
+									"\r",
+									"    if (data.avatar !== null) {\r",
+									"        pm.expect(data.avatar).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    pm.expect(data.experience).to.be.an('array');\r",
+									"    data.experience.forEach(item => {\r",
+									"        pm.expect(item.id).to.be.a('number');\r",
+									"        pm.expect(item.organization).to.be.a('string');\r",
+									"        pm.expect(item.position).to.be.a('string');\r",
+									"        pm.expect(item.start_date).to.be.a('string');\r",
+									"        if (item.end_date !== null) {\r",
+									"            pm.expect(item.end_date).to.be.a('string');\r",
+									"        }\r",
+									"        if (item.description !== null) {\r",
+									"            pm.expect(item.description).to.be.a('string');\r",
+									"        }\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_specialist}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"profession_id\": 2,\r\n  \"skill_ids\": [1,2],\r\n  \"experience\": [\r\n    {\r\n      \"organization\": \"TechStars\",\r\n      \"position\": \"CEO\",\r\n      \"start_date\": \"2020-01-01\",\r\n      \"end_date\": \"2022-01-01\",\r\n      \"description\": \"Руководство командой и запуск продукта\"\r\n    },\r\n    {\r\n      \"organization\": \"YCombinator\",\r\n      \"position\": \"CTO\",\r\n      \"start_date\": \"2016-03-01\",\r\n      \"end_date\": \"2019-03-01\",\r\n      \"description\": \"Разработка MVP и управление разработкой\"\r\n    }\r\n  ]\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Wrong skills id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 400\", function () {\r",
+									"  pm.expect(pm.response.code).to.equal(400);\r",
+									"});\r",
+									"\r",
+									"pm.test('Response has the required fields', function () {\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).to.have.property('skill_ids');\r",
+									"    pm.expect(response.skill_ids).to.be.an('array');\r",
+									"    pm.expect(response.skill_ids[0]).to.include('объект не существует');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_specialist}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"profession_id\": 2,\r\n  \"skill_ids\": [1,2,9999],\r\n  \"experience\": [\r\n    {\r\n      \"organization\": \"TechStars\",\r\n      \"position\": \"CEO\",\r\n      \"start_date\": \"2020-01-01\",\r\n      \"end_date\": \"2022-12-31\",\r\n      \"description\": \"Руководство командой и запуск продукта\"\r\n    },\r\n    {\r\n      \"organization\": \"YCombinator\",\r\n      \"position\": \"CTO\",\r\n      \"start_date\": \"2018-03-01\",\r\n      \"end_date\": \"2019-11-30\",\r\n      \"description\": \"Разработка MVP и управление разработкой\"\r\n    }\r\n  ]\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Invesor Copy",
+			"item": [
+				{
+					"name": "Login correct data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"if (jsonData.auth_token) {",
+									"    pm.environment.set(\"access_token_investor\", jsonData.auth_token);",
+									"    console.log(\"Токен сохранён:\", jsonData.auth_token);",
+									"} else {",
+									"    console.warn(\"Токен не найден в ответе.\");",
+									"}",
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required field 'auth_token'\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.auth_token).to.exist;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Auth token is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.auth_token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Auth token should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify the auth token is in a valid format\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.auth_token).to.be.a('string').and.to.match(/[A-Za-z0-9]{30,}/, \"Auth token format is not valid\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"testinvestor@example.com\",\r\n  \"password\": \"StrongPassword123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/auth/token/login/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"token",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_investor}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "Виктор Викторов",
+									"type": "text"
+								},
+								{
+									"key": "Industry_id",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "company",
+									"value": "Sber",
+									"type": "text"
+								},
+								{
+									"key": "position",
+									"value": "Svo",
+									"type": "text"
+								},
+								{
+									"key": "bio",
+									"value": "Мы создаем инновации в области ИИ.",
+									"type": "text"
+								},
+								{
+									"key": "contact_phone",
+									"value": "+79999999999",
+									"type": "text"
+								},
+								{
+									"key": "contact_email",
+									"value": "ivan@startup.com",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "postman-cloud:///1f01ab95-1a33-4dd0-a417-e08cb58f333b"
+								},
+								{
+									"key": "preferred_stages",
+									"value": "'waiting'",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "investment_min",
+									"value": "10000",
+									"type": "text"
+								},
+								{
+									"key": "investment_max\n",
+									"value": "20000",
+									"type": "text"
+								},
+								{
+									"key": "experience",
+									"value": "[{\"title\": \"TechStars\",\"industry_id\": 1,\"stage\": \"done\",\"date\": \"2022-12-31\",\"description\": \"Руководство командой и запуск продукта\"}]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New profile 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Content-Type is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test('Validate user profile object (with nested and nullable fields)', function () {\r",
+									"    const data = pm.response.json();\r",
+									"\r",
+									"    pm.expect(data.user_id).to.be.a('number');\r",
+									"    pm.expect(data.role).to.be.a('string');\r",
+									"    if (data.full_name !== null) {\r",
+									"        pm.expect(data.full_name).to.be.a('string');\r",
+									"    }\r",
+									"    if (data.industry !== null) {\r",
+									"        pm.expect(data.industry).to.be.a('object');\r",
+									"    }\r",
+									"\r",
+									"    pm.expect(data.industry.id).to.be.a('number');\r",
+									"    pm.expect(data.industry.name).to.be.a('string');\r",
+									"\r",
+									"    if (data.company !== null) {\r",
+									"        pm.expect(data.company).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.position !== null) {\r",
+									"        pm.expect(data.position).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.bio !== null) {\r",
+									"        pm.expect(data.bio).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.contact_phone !== null) {\r",
+									"        pm.expect(data.contact_phone).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    if (data.contact_email !== null) {\r",
+									"        pm.expect(data.contact_email).to.be.a('string')\r",
+									"            .and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+									"    }\r",
+									"\r",
+									"    if (data.avatar !== null) {\r",
+									"        pm.expect(data.avatar).to.be.a('string');\r",
+									"    }\r",
+									"\r",
+									"    pm.expect(data.experience).to.be.an('array');\r",
+									"    data.experience.forEach(item => {\r",
+									"        pm.expect(item.id).to.be.a('number');\r",
+									"        pm.expect(item.title).to.be.a('string');\r",
+									"        pm.expect(item.industry).to.be.a('string');\r",
+									"        if (item.stage !== null) {\r",
+									"            pm.expect(item.stage).to.be.a('string');\r",
+									"        }\r",
+									"        if (item.description !== null) {\r",
+									"            pm.expect(item.description).to.be.a('string');\r",
+									"        }\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{access_token_investor}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"industry_id\": 1,\r\n  \"preferred_stages\": [\r\n        \"waiting\",\r\n        \"in_progress\"\r\n    ],\r\n  \"experience\": [\r\n    {\r\n    \"title\": \"TechStars\",\r\n    \"industry\": \"rrr\",\r\n    \"stage\": \"waiting\",\r\n    \"date\": \"2022-12-31\",\r\n    \"description\": \"Руководство командой и запуск продукта\"\r\n    },\r\n    {\r\n      \"title\": \"YCombinator\",\r\n      \"industry\": \"rrr2\",\r\n      \"stage\": \"waiting\",\r\n      \"date\": \"2019-11-30\",\r\n      \"description\": \"Разработка MVP и управление разработкой\"\r\n    }\r\n  ]\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get profile strtup(2)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('Validate user profile object (with nested and nullable fields)', function () {\r",
+							"    const data = pm.response.json();\r",
+							"\r",
+							"    pm.expect(data.user_id).to.be.a('number');\r",
+							"    pm.expect(data.role).to.be.a('string');\r",
+							"    if (data.full_name !== null) {\r",
+							"        pm.expect(data.full_name).to.be.a('string');\r",
+							"    }\r",
+							"    if (data.industry !== null) {\r",
+							"        pm.expect(data.industry).to.be.a('object');\r",
+							"    }\r",
+							"\r",
+							"    pm.expect(data.industry.id).to.be.a('number');\r",
+							"    pm.expect(data.industry.name).to.be.a('string');\r",
+							"\r",
+							"    if (data.bio !== null) {\r",
+							"        pm.expect(data.bio).to.be.a('string');\r",
+							"    }\r",
+							"\r",
+							"    if (data.contact_phone !== null) {\r",
+							"        pm.expect(data.contact_phone).to.be.a('string');\r",
+							"    }\r",
+							"\r",
+							"    if (data.contact_email !== null) {\r",
+							"        pm.expect(data.contact_email).to.be.a('string')\r",
+							"            .and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+							"    }\r",
+							"\r",
+							"    if (data.avatar !== null) {\r",
+							"        pm.expect(data.avatar).to.be.a('string');\r",
+							"    }\r",
+							"\r",
+							"\r",
+							"    pm.expect(data.experience).to.be.an('array');\r",
+							"    data.experience.forEach(item => {\r",
+							"        pm.expect(item.id).to.be.a('number');\r",
+							"        pm.expect(item.organization).to.be.a('string');\r",
+							"        pm.expect(item.position).to.be.a('string');\r",
+							"        pm.expect(item.start_date).to.be.a('string');\r",
+							"        if (item.end_date !== null) {\r",
+							"            pm.expect(item.end_date).to.be.a('string');\r",
+							"        }\r",
+							"        if (item.description !== null) {\r",
+							"            pm.expect(item.description).to.be.a('string');\r",
+							"        }\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/profile/2/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"profile",
+						"2",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get profile specialist(6)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('Validate user profile object (with nested and nullable fields)', function () {\r",
+							"    const data = pm.response.json();\r",
+							"\r",
+							"    pm.expect(data.user_id).to.be.a('number');\r",
+							"    pm.expect(data.role).to.be.a('string');\r",
+							"    if (data.full_name !== null) {\r",
+							"        pm.expect(data.full_name).to.be.a('string');\r",
+							"    }\r",
+							"\r",
+							"    if (data.bio !== null) {\r",
+							"        pm.expect(data.bio).to.be.a('string');\r",
+							"    }\r",
+							"\r",
+							"    if (data.contact_phone !== null) {\r",
+							"        pm.expect(data.contact_phone).to.be.a('string');\r",
+							"    }\r",
+							"\r",
+							"    if (data.contact_email !== null) {\r",
+							"        pm.expect(data.contact_email).to.be.a('string')\r",
+							"            .and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+							"    }\r",
+							"\r",
+							"    if (data.avatar !== null) {\r",
+							"        pm.expect(data.avatar).to.be.a('string');\r",
+							"    }\r",
+							"\r",
+							"    pm.expect(data.experience).to.be.an('array');\r",
+							"    data.experience.forEach(item => {\r",
+							"        pm.expect(item.id).to.be.a('number');\r",
+							"        pm.expect(item.organization).to.be.a('string');\r",
+							"        pm.expect(item.position).to.be.a('string');\r",
+							"        pm.expect(item.start_date).to.be.a('string');\r",
+							"        if (item.end_date !== null) {\r",
+							"            pm.expect(item.end_date).to.be.a('string');\r",
+							"        }\r",
+							"        if (item.description !== null) {\r",
+							"            pm.expect(item.description).to.be.a('string');\r",
+							"        }\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/profile/6/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"profile",
+						"6",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get profile investor(5)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('Validate user profile object (with nested and nullable fields)', function () {\r",
+							"    const data = pm.response.json();\r",
+							"\r",
+							"    pm.expect(data.user_id).to.be.a('number');\r",
+							"    pm.expect(data.role).to.be.a('string');\r",
+							"    if (data.full_name !== null) {\r",
+							"        pm.expect(data.full_name).to.be.a('string');\r",
+							"    }\r",
+							"    if (data.industry !== null) {\r",
+							"        pm.expect(data.industry).to.be.a('object');\r",
+							"    }\r",
+							"\r",
+							"    pm.expect(data.industry.id).to.be.a('number');\r",
+							"    pm.expect(data.industry.name).to.be.a('string');\r",
+							"\r",
+							"    if (data.company !== null) {\r",
+							"        pm.expect(data.company).to.be.a('string');\r",
+							"    }\r",
+							"\r",
+							"    if (data.position !== null) {\r",
+							"        pm.expect(data.position).to.be.a('string');\r",
+							"    }\r",
+							"\r",
+							"    if (data.bio !== null) {\r",
+							"        pm.expect(data.bio).to.be.a('string');\r",
+							"    }\r",
+							"\r",
+							"    if (data.contact_phone !== null) {\r",
+							"        pm.expect(data.contact_phone).to.be.a('string');\r",
+							"    }\r",
+							"\r",
+							"    if (data.contact_email !== null) {\r",
+							"        pm.expect(data.contact_email).to.be.a('string')\r",
+							"            .and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+							"    }\r",
+							"\r",
+							"    if (data.avatar !== null) {\r",
+							"        pm.expect(data.avatar).to.be.a('string');\r",
+							"    }\r",
+							"\r",
+							"    pm.expect(data.experience).to.be.an('array');\r",
+							"    data.experience.forEach(item => {\r",
+							"        pm.expect(item.id).to.be.a('number');\r",
+							"        pm.expect(item.title).to.be.a('string');\r",
+							"        pm.expect(item.industry).to.be.a('string');\r",
+							"        if (item.stage !== null) {\r",
+							"            pm.expect(item.stage).to.be.a('string');\r",
+							"        }\r",
+							"        if (item.description !== null) {\r",
+							"            pm.expect(item.description).to.be.a('string');\r",
+							"        }\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/profile/5/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"profile",
+						"5",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
