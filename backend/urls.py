@@ -11,8 +11,11 @@ from favorite.views import FavoriteViewSet
 from messaging.views import MessageViewSet, InvitationViewSet
 from reference.views import ProfessionListView, IndustryListView, SkillListView
 from startups.views import StartupViewSet
-from users.views import CurrentUserProfileView, PublicUserProfileView, SpecialistSearchView, InvestorSearchView, \
+from users.views import (
+    CurrentUserProfileView, PublicUserProfileView,
+    SpecialistSearchView, InvestorSearchView,
     RecommendedSpecialistsView
+)
 
 # Для swagger
 schema_view = get_schema_view(
@@ -39,22 +42,49 @@ urlpatterns = [
     path('auth/', include('djoser.urls.authtoken')),
 
     path('profile/me/', CurrentUserProfileView.as_view(), name='user-profile'),
-    path('profile/<int:id>/', PublicUserProfileView.as_view(), name='public-user-profile'),
+    path(
+        'profile/<int:id>/',
+        PublicUserProfileView.as_view(),
+        name='public-user-profile'
+    ),
 
     path('professions/', ProfessionListView.as_view(), name='profession-list'),
     path('skills/', SkillListView.as_view(), name='skill-list'),
     path('industries/', IndustryListView.as_view(), name='industry-list'),
 
-    path('search/specialists/', SpecialistSearchView.as_view(), name='specialist-search'),
-    path('search/investors/', InvestorSearchView.as_view(), name='investor-search'),
+    path(
+        'search/specialists/',
+        SpecialistSearchView.as_view(),
+        name='specialist-search'
+    ),
+    path(
+        'search/investors/',
+        InvestorSearchView.as_view(),
+        name='investor-search'
+    ),
 
-    path('specialists/recommendations/', RecommendedSpecialistsView.as_view(), name='specialist-recommendations'),
+    path(
+        'specialists/recommendations/',
+        RecommendedSpecialistsView.as_view(),
+        name='specialist-recommendations'
+    ),
 
     path('', include(router.urls)),
 
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path(
+        'swagger/',
+        schema_view.with_ui('swagger', cache_timeout=0),
+        name='schema-swagger-ui'
+    ),
+    path(
+        'redoc/',
+        schema_view.with_ui('redoc', cache_timeout=0),
+        name='schema-redoc'
+    ),
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )

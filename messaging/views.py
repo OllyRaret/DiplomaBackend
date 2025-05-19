@@ -13,11 +13,11 @@ class MessageViewSet(viewsets.ModelViewSet):
     serializer_class = MessageSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-
     def get_queryset(self):
         user = self.request.user
-        return Message.objects.filter(Q(sender=user) | Q(recipient=user)).order_by('-timestamp')
-
+        return Message.objects.filter(
+            Q(sender=user) | Q(recipient=user)
+        ).order_by('-timestamp')
 
     def get_object(self):
         """ Получаем другого пользователя по ID """
@@ -26,10 +26,8 @@ class MessageViewSet(viewsets.ModelViewSet):
         except User.DoesNotExist:
             raise NotFound('Пользователь не найден.')
 
-
     def perform_create(self, serializer):
         serializer.save(sender=self.request.user)
-
 
     def destroy(self, request, pk=None):
         """ Удаление диалога с пользователем /messages/{id}/ """
@@ -37,12 +35,14 @@ class MessageViewSet(viewsets.ModelViewSet):
         user = request.user
 
         messages = Message.objects.filter(
-            Q(sender=user, recipient=recipient) | Q(sender=recipient, recipient=user)
+            Q(sender=user, recipient=recipient) |
+            Q(sender=recipient, recipient=user)
         )
         deleted_count = messages.count()
         messages.delete()
-        return Response({'status': f'Удалено {deleted_count} сообщений.'}, status=204)
-
+        return Response({
+            'status': f'Удалено {deleted_count} сообщений.'
+        }, status=204)
 
     def retrieve(self, request, pk=None):
         """ Получить диалог с конкретным пользователем (по его id) """
@@ -65,7 +65,6 @@ class MessageViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(messages, many=True)
         return Response(serializer.data)
 
-
     @action(detail=False, methods=['get'])
     def inbox(self, request):
         """ Получить полученные пользователем сообщения """
@@ -73,14 +72,12 @@ class MessageViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(messages, many=True)
         return Response(serializer.data)
 
-
     @action(detail=False, methods=['get'])
     def sent(self, request):
         """ Получить отправленные пользователем сообщения """
         messages = Message.objects.filter(sender=request.user)
         serializer = self.get_serializer(messages, many=True)
         return Response(serializer.data)
-
 
     @action(detail=False, methods=['get'])
     def dialogs(self, request):
@@ -96,13 +93,17 @@ class MessageViewSet(viewsets.ModelViewSet):
             .values_list('latest_id', flat=True)
         )
 
-        # Убираем дубли из-за того, что (sender=A, recipient=B) и (sender=B, recipient=A) — это один диалог
+        # Убираем дубли из-за того, что (sender=A, recipient=B)
+        # и (sender=B, recipient=A) — это один диалог
         unique_dialogs = {}
         for m in Message.objects.filter(id__in=latest_ids):
             user1 = min(m.sender.id, m.recipient.id)
             user2 = max(m.sender.id, m.recipient.id)
             key = (user1, user2)
-            if key not in unique_dialogs or unique_dialogs[key].timestamp < m.timestamp:
+            if (
+                    key not in unique_dialogs
+                    or unique_dialogs[key].timestamp < m.timestamp
+            ):
                 unique_dialogs[key] = m
 
         serializer = self.get_serializer(unique_dialogs.values(), many=True)
@@ -110,7 +111,9 @@ class MessageViewSet(viewsets.ModelViewSet):
 
 
 class InvitationViewSet(viewsets.ModelViewSet):
-    queryset = Invitation.objects.select_related('specialist__user', 'required_specialist', 'startup')
+    queryset = Invitation.objects.select_related(
+        'specialist__user', 'required_specialist', 'startup'
+    )
     serializer_class = InvitationSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -131,7 +134,9 @@ class InvitationViewSet(viewsets.ModelViewSet):
             raise PermissionDenied("Вы не можете принять это приглашение.")
 
         if invitation.is_accepted is not None:
-            return Response({'detail': 'Приглашение уже обработано.'}, status=400)
+            return Response({
+                'detail': 'Приглашение уже обработано.'
+            }, status=400)
 
         # Назначаем специалиста на вакансию
         invitation.required_specialist.specialist = invitation.specialist
@@ -143,7 +148,8 @@ class InvitationViewSet(viewsets.ModelViewSet):
         Message.objects.create(
             sender=None,
             recipient=invitation.startup.founder.user,
-            text=f"Специалист {user.full_name} принял приглашение в стартап '{invitation.startup.title}'."
+            text=f'Специалист {user.full_name} принял приглашение '
+                 f'в стартап "{invitation.startup.title}".'
         )
 
         return Response({'detail': 'Приглашение принято.'})
@@ -157,7 +163,9 @@ class InvitationViewSet(viewsets.ModelViewSet):
             raise PermissionDenied("Вы не можете отклонить это приглашение.")
 
         if invitation.is_accepted is not None:
-            return Response({'detail': 'Приглашение уже обработано.'}, status=400)
+            return Response({
+                'detail': 'Приглашение уже обработано.'
+            }, status=400)
 
         invitation.is_accepted = False
         invitation.save()
@@ -166,7 +174,8 @@ class InvitationViewSet(viewsets.ModelViewSet):
         Message.objects.create(
             sender=None,
             recipient=invitation.startup.founder.user,
-            text=f"Специалист {user.full_name} отклонил приглашение в стартап '{invitation.startup.title}'."
+            text=f'Специалист {user.full_name} отклонил '
+                 f'приглашение в стартап "{invitation.startup.title}".'
         )
 
         return Response({'detail': 'Приглашение отклонено.'})

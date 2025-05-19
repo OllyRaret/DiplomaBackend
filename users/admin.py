@@ -1,13 +1,20 @@
 from django.contrib import admin
 
 from .forms import InvestorProfileForm
-from .models import WorkExperience, InvestorPreviousInvestment, User, SpecialistProfile, FounderProfile, InvestorProfile
+from .models import (
+    WorkExperience, InvestorPreviousInvestment,
+    User, SpecialistProfile, FounderProfile,
+    InvestorProfile
+)
 
 
 class WorkExperienceInline(admin.TabularInline):
     model = WorkExperience
     extra = 1
-    fields = ('organization', 'position', 'start_date', 'end_date', 'description')
+    fields = (
+        'organization', 'position',
+        'start_date', 'end_date', 'description'
+    )
     show_change_link = True
 
 

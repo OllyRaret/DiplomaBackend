@@ -3,9 +3,9 @@ from rest_framework.exceptions import PermissionDenied
 
 from startups.models import RequiredSpecialist
 from startups.serializers import RequiredSpecialistSerializer
-from users.models import User, SpecialistProfile
+from users.models import User
+from users.serializers import CustomUserSerializer, SpecialistShortSerializer
 from .models import Message, Invitation
-from users.serializers import CustomUserSerializer, SpecialistProfileSerializer, SpecialistShortSerializer
 
 
 class MessageSerializer(serializers.ModelSerializer):
@@ -17,7 +17,10 @@ class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Message
-        fields = ['id', 'sender', 'recipient', 'recipient_id', 'text', 'timestamp', 'is_read']
+        fields = [
+            'id', 'sender', 'recipient', 'recipient_id',
+            'text', 'timestamp', 'is_read'
+        ]
         read_only_fields = ['id', 'sender', 'timestamp', 'is_read']
 
     def validate(self, data):
@@ -26,7 +29,9 @@ class MessageSerializer(serializers.ModelSerializer):
 
         # Проверка на отправку самому себе
         if sender.id == recipient.id:
-            raise serializers.ValidationError('Нельзя отправить сообщение самому себе.')
+            raise serializers.ValidationError(
+                'Нельзя отправить сообщение самому себе.'
+            )
 
         return data
 
@@ -38,7 +43,9 @@ class InvitationSerializer(serializers.ModelSerializer):
     specialist = SpecialistShortSerializer(read_only=True)
 
     required_specialist_id = serializers.PrimaryKeyRelatedField(
-        queryset=RequiredSpecialist.objects.all(), source='required_specialist', write_only=True
+        queryset=RequiredSpecialist.objects.all(),
+        source='required_specialist',
+        write_only=True
     )
     required_specialist = RequiredSpecialistSerializer(read_only=True)
 
@@ -55,26 +62,35 @@ class InvitationSerializer(serializers.ModelSerializer):
     def validate(self, data):
         user = self.context['request'].user
         if not hasattr(user, 'founder_profile'):
-            raise serializers.ValidationError("Только стартаперы могут отправлять приглашения.")
+            raise serializers.ValidationError(
+                'Только стартаперы могут отправлять приглашения.'
+            )
 
         invited_user = data['user_id']
         if not hasattr(invited_user, 'specialist_profile'):
-            raise serializers.ValidationError("Указанный пользователь не является специалистом.")
+            raise serializers.ValidationError(
+                'Указанный пользователь не является специалистом.'
+            )
 
         required_specialist = data['required_specialist']
         specialist = invited_user.specialist_profile
         startup = required_specialist.startup
 
         if required_specialist.specialist is not None:
-            raise serializers.ValidationError("Эта вакансия уже занята.")
+            raise serializers.ValidationError('Эта вакансия уже занята.')
 
-        if Invitation.objects.filter(required_specialist=required_specialist, is_accepted=None).exists():
-            raise serializers.ValidationError("Уже есть активное приглашение на эту вакансию.")
+        if Invitation.objects.filter(
+                required_specialist=required_specialist,
+                is_accepted=None
+        ).exists():
+            raise serializers.ValidationError(
+                'Уже есть активное приглашение на эту вакансию.'
+            )
 
         if specialist.user == user:
-            raise serializers.ValidationError("Нельзя приглашать самого себя.")
+            raise serializers.ValidationError('Нельзя приглашать самого себя.')
 
-        # Нельзя пригласить или назначить специалиста на другую вакансию в том же стартапе
+        # Нельзя пригласить специалиста на другую вакансию в том же стартапе
         already_invited = Invitation.objects.filter(
             startup=startup,
             specialist=specialist,
@@ -87,7 +103,10 @@ class InvitationSerializer(serializers.ModelSerializer):
         ).exists()
 
         if already_invited or already_assigned:
-            raise serializers.ValidationError("Этот специалист уже приглашён или назначен на другую вакансию в этом стартапе.")
+            raise serializers.ValidationError(
+                'Этот специалист уже приглашён '
+                'или назначен на другую вакансию в этом стартапе.'
+            )
 
         data['specialist'] = specialist
         data.pop('user_id')
@@ -101,13 +120,17 @@ class InvitationSerializer(serializers.ModelSerializer):
         if startup.founder != founder:
             raise PermissionDenied("Вы не владелец стартапа.")
 
-        invitation = Invitation.objects.create(startup=startup, **validated_data)
+        invitation = Invitation.objects.create(
+            startup=startup, **validated_data
+        )
 
         # Отправка системного сообщения специалисту
         Message.objects.create(
             sender=None,
             recipient=invitation.specialist.user,
-            text=f"Вы были приглашены в стартап '{startup.title}' на вакансию {invitation.required_specialist.profession.name}."
+            text=f'Вы были приглашены в стартап "{startup.title}" '
+                 f'на вакансию '
+                 f'{invitation.required_specialist.profession.name}.'
         )
 
         return invitation

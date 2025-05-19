@@ -19,15 +19,27 @@ class Startup(models.Model):
         verbose_name='Фото стартапа'
     )
     title = models.CharField(max_length=255, verbose_name='Название')
-    industry = models.ForeignKey(Industry, on_delete=models.SET_NULL, null=True, verbose_name='Сфера')
+    industry = models.ForeignKey(
+        Industry,
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name='Сфера'
+    )
     description = models.TextField(verbose_name='Описание')
-    stage = models.CharField(max_length=20, choices=StartupStage.CHOICES, verbose_name='Стадия')
+    stage = models.CharField(
+        max_length=20,
+        choices=StartupStage.CHOICES,
+        verbose_name='Стадия'
+    )
     investment_needed = models.DecimalField(
         max_digits=12,
         decimal_places=2,
         verbose_name='Необходимые инвестиции'
     )
-    views = models.PositiveIntegerField(default=0, verbose_name='Количество просмотров')
+    views = models.PositiveIntegerField(
+        default=0,
+        verbose_name='Количество просмотров'
+    )
 
     def __str__(self):
         return self.title

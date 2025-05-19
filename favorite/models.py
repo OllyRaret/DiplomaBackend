@@ -5,11 +5,35 @@ from users.models import User, SpecialistProfile, InvestorProfile
 
 
 class Favorite(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favorites', verbose_name='Пользователь')
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='favorites',
+        verbose_name='Пользователь'
+    )
 
-    specialist = models.ForeignKey(SpecialistProfile, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Специалист')
-    startup = models.ForeignKey(Startup, related_name='favorited_by', on_delete=models.CASCADE, null=True, blank=True, verbose_name='Стартап')
-    investor = models.ForeignKey(InvestorProfile, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Инвестор')
+    specialist = models.ForeignKey(
+        SpecialistProfile,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        verbose_name='Специалист'
+    )
+    startup = models.ForeignKey(
+        Startup,
+        related_name='favorited_by',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        verbose_name='Стартап'
+    )
+    investor = models.ForeignKey(
+        InvestorProfile,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        verbose_name='Инвестор'
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
 

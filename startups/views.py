@@ -7,20 +7,34 @@ from rest_framework.response import Response
 from messaging.models import Invitation
 from reference.permissions import IsFounderOrReadOnly, IsStartupFounder
 from users.models import User
-from .filters import filter_startups_for_specialist, filter_startups_for_investor
+from .filters import (
+    filter_startups_for_specialist,
+    filter_startups_for_investor
+)
 from .models import Startup
-from .serializers import StartupSerializer, StartupForSpecialistSearchSerializer, StartupForInvestorSearchSerializer, \
-    StartupForFounderShortSerializer, StartupForSpecialistShortSerializer
+from .serializers import (
+    StartupSerializer, StartupForSpecialistSearchSerializer,
+    StartupForInvestorSearchSerializer,
+    StartupForFounderShortSerializer,
+    StartupForSpecialistShortSerializer
+)
 
 
 class StartupViewSet(viewsets.ModelViewSet):
-    queryset = Startup.objects.all().select_related('founder__user', 'industry').prefetch_related('required_specialists__skills')
+    queryset = Startup.objects.all().select_related(
+        'founder__user', 'industry'
+    ).prefetch_related('required_specialists__skills')
     serializer_class = StartupSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsFounderOrReadOnly]
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly,
+        IsFounderOrReadOnly
+    ]
 
     def perform_create(self, serializer):
         if not hasattr(self.request.user, 'founder_profile'):
-            raise PermissionDenied('Только основатели могут создавать стартапы')
+            raise PermissionDenied(
+                'Только основатели могут создавать стартапы'
+            )
         serializer.save(founder=self.request.user.founder_profile)
 
     def retrieve(self, request, *args, **kwargs):
@@ -35,7 +49,7 @@ class StartupViewSet(viewsets.ModelViewSet):
         ) or not user.is_authenticated:
             instance.views = F('views') + 1
             instance.save(update_fields=['views'])
-            instance.refresh_from_db(fields=['views'])  # получить новое значение views
+            instance.refresh_from_db(fields=['views'])
 
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
@@ -57,8 +71,14 @@ class StartupViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
 
         elif user.role == User.Role.SPECIALIST:
-            queryset = Startup.objects.filter(required_specialists__specialist=user.specialist_profile).distinct()
-            serializer = StartupForSpecialistShortSerializer(queryset, many=True, context={'request': request})
+            queryset = Startup.objects.filter(
+                required_specialists__specialist=user.specialist_profile
+            ).distinct()
+            serializer = StartupForSpecialistShortSerializer(
+                queryset,
+                many=True,
+                context={'request': request}
+            )
             return Response(serializer.data)
 
         return Response([], status=204)
@@ -98,13 +118,30 @@ class StartupViewSet(viewsets.ModelViewSet):
         queryset = self.get_queryset()
 
         if user.role == User.Role.SPECIALIST:
-            filtered = filter_startups_for_specialist(queryset, request.query_params)
-            serializer = StartupForSpecialistSearchSerializer(filtered, many=True, context={'request': request})
+            filtered = filter_startups_for_specialist(
+                queryset,
+                request.query_params
+            )
+            serializer = StartupForSpecialistSearchSerializer(
+                filtered,
+                many=True,
+                context={'request': request}
+            )
         elif user.role == User.Role.INVESTOR:
-            filtered = filter_startups_for_investor(queryset, request.query_params)
-            serializer = StartupForInvestorSearchSerializer(filtered, many=True, context={'request': request})
+            filtered = filter_startups_for_investor(
+                queryset,
+                request.query_params
+            )
+            serializer = StartupForInvestorSearchSerializer(
+                filtered,
+                many=True,
+                context={'request': request}
+            )
         else:
-            return Response({"detail": "Только специалисты и инвесторы могут искать стартапы."}, status=403)
+            return Response({
+                'detail':
+                    'Только специалисты и инвесторы могут искать стартапы.'
+            }, status=403)
 
         return Response(serializer.data)
 
@@ -120,11 +157,13 @@ class StartupViewSet(viewsets.ModelViewSet):
         except (TypeError, ValueError):
             limit = 5  # значение по умолчанию
 
-        queryset = Startup.objects.all().select_related('founder__user', 'industry') \
-            .prefetch_related('required_specialists__skills') \
-            .annotate(
-                favorites_count=Count('favorited_by'),
-            ).order_by('-favorites_count', '-views')  # популярные выше
+        queryset = Startup.objects.all().select_related(
+            'founder__user', 'industry'
+        ).prefetch_related(
+            'required_specialists__skills'
+        ).annotate(
+            favorites_count=Count('favorited_by'),
+        ).order_by('-favorites_count', '-views')  # популярные выше
 
         if user.role == User.Role.SPECIALIST:
             profile = user.specialist_profile
@@ -138,7 +177,11 @@ class StartupViewSet(viewsets.ModelViewSet):
                 required_specialists__specialist__isnull=True,
             ).distinct()[:limit]
 
-            serializer = StartupForSpecialistSearchSerializer(queryset, many=True, context={'request': request})
+            serializer = StartupForSpecialistSearchSerializer(
+                queryset,
+                many=True,
+                context={'request': request}
+            )
             return Response(serializer.data)
 
         elif user.role == User.Role.INVESTOR:
@@ -155,7 +198,15 @@ class StartupViewSet(viewsets.ModelViewSet):
                 investment_needed__lte=max_inv
             )[:limit]
 
-            serializer = StartupForInvestorSearchSerializer(queryset, many=True, context={'request': request})
+            serializer = StartupForInvestorSearchSerializer(
+                queryset,
+                many=True,
+                context={'request': request}
+            )
             return Response(serializer.data)
 
-        return Response({"detail": "Только специалисты и инвесторы получают рекомендации стартапов."}, status=403)
+        return Response({
+            'detail':
+                'Только специалисты и инвесторы '
+                'получают рекомендации стартапов.'
+        }, status=403)

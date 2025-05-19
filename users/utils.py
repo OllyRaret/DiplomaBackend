@@ -21,7 +21,9 @@ def update_user_fields(user, data):
         if os.path.isfile(avatar_path):
             os.remove(avatar_path)
 
-    for field in ['full_name', 'bio', 'contact_phone', 'contact_email', 'avatar']:
+    for field in [
+        'full_name', 'bio', 'contact_phone', 'contact_email', 'avatar'
+    ]:
         setattr(user, field, user_data.get(field, getattr(user, field)))
     user.save()
 

@@ -7,6 +7,7 @@ from .models import Message, Invitation
 class MessageAdmin(admin.ModelAdmin):
     list_display = ('sender', 'recipient', 'timestamp', 'is_read')
 
+
 @admin.register(Invitation)
 class InvitationAdmin(admin.ModelAdmin):
     list_display = ('startup', 'specialist', 'is_accepted')

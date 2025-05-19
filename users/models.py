@@ -14,9 +14,18 @@ class User(AbstractUser):
         INVESTOR = 'investor', 'Инвестор'
         SPECIALIST = 'specialist', 'Специалист'
 
-    username = models.TextField(blank=True, verbose_name='Имя пользователя', help_text='Не используется')
+    username = models.TextField(
+        blank=True,
+        verbose_name='Имя пользователя',
+        help_text='Не используется'
+    )
     email = models.EmailField(unique=True, verbose_name='Электронная почта')
-    role = models.CharField(max_length=20, choices=Role.choices, verbose_name='Роль', blank=True)
+    role = models.CharField(
+        max_length=20,
+        choices=Role.choices,
+        verbose_name='Роль',
+        blank=True
+    )
 
     objects = NoUsernameUserManager()  # Создание пользователя без username
 
@@ -24,11 +33,30 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     # Общие поля профиля
-    full_name = models.CharField(max_length=200, verbose_name='Полное имя', blank=True, null=True)
+    full_name = models.CharField(
+        max_length=200,
+        verbose_name='Полное имя',
+        blank=True,
+        null=True
+    )
     bio = models.TextField(blank=True, null=True, verbose_name='Описание')
-    contact_phone = models.CharField(max_length=20, blank=True, null=True, verbose_name='Контактный телефон')
-    contact_email = models.EmailField(blank=True, null=True, verbose_name='Контактная электронная почта')
-    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True, verbose_name='Аватар')
+    contact_phone = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        verbose_name='Контактный телефон'
+    )
+    contact_email = models.EmailField(
+        blank=True,
+        null=True,
+        verbose_name='Контактная электронная почта'
+    )
+    avatar = models.ImageField(
+        upload_to='avatars/',
+        blank=True,
+        null=True,
+        verbose_name='Аватар'
+    )
 
     def __str__(self):
         return f"{self.email} ({self.get_role_display()})"
@@ -71,7 +99,13 @@ class FounderProfile(models.Model):
         related_name='founder_profile',
         verbose_name='Пользователь'
     )
-    industry = models.ForeignKey(Industry, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Сфера')
+    industry = models.ForeignKey(
+        Industry,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name='Сфера'
+    )
 
     def __str__(self):
         return f'Основатель: {self.user.full_name}'
@@ -104,7 +138,11 @@ class WorkExperience(models.Model):
     organization = models.CharField(max_length=200, verbose_name='Организация')
     position = models.CharField(max_length=100, verbose_name='Должность')
     start_date = models.DateField(verbose_name='Дата начала')
-    end_date = models.DateField(blank=True, null=True, verbose_name='Дата окончания')
+    end_date = models.DateField(
+        blank=True,
+        null=True,
+        verbose_name='Дата окончания'
+    )
     description = models.TextField(blank=True, verbose_name='Описание')
 
     def __str__(self):
@@ -125,9 +163,23 @@ class InvestorProfile(models.Model):
         verbose_name='Пользователь'
     )
 
-    industry = models.ForeignKey(Industry, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Сфера')
-    company = models.CharField(max_length=255, verbose_name='Компания', blank=True)
-    position = models.CharField(max_length=255, verbose_name='Должность', blank=True)
+    industry = models.ForeignKey(
+        Industry,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        verbose_name='Сфера'
+    )
+    company = models.CharField(
+        max_length=255,
+        verbose_name='Компания',
+        blank=True
+    )
+    position = models.CharField(
+        max_length=255,
+        verbose_name='Должность',
+        blank=True
+    )
 
     preferred_stages = JSONField(
         default=list,
@@ -136,8 +188,18 @@ class InvestorProfile(models.Model):
         blank=True
     )
 
-    investment_min = models.DecimalField(max_digits=12, decimal_places=2, null=True, verbose_name='Минимальная инвестиция')
-    investment_max = models.DecimalField(max_digits=12, decimal_places=2, null=True, verbose_name='Максимальная инвестиция')
+    investment_min = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        verbose_name='Минимальная инвестиция'
+    )
+    investment_max = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        verbose_name='Максимальная инвестиция'
+    )
 
     def __str__(self):
         return f'Инвестор: {self.user.full_name}'
@@ -156,7 +218,11 @@ class InvestorPreviousInvestment(models.Model):
     )
     title = models.CharField(max_length=255, verbose_name='Название')
     industry = models.CharField(max_length=255, verbose_name='Сфера')
-    stage = models.CharField(max_length=20, choices=StartupStage.CHOICES, verbose_name='Стадия')
+    stage = models.CharField(
+        max_length=20,
+        choices=StartupStage.CHOICES,
+        verbose_name='Стадия'
+    )
     date = models.DateField(verbose_name='Дата')
     description = models.TextField(blank=True, verbose_name='Описание')
 

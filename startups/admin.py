@@ -11,7 +11,10 @@ class RequiredSpecialistInline(admin.TabularInline):
 
 @admin.register(Startup)
 class StartupAdmin(admin.ModelAdmin):
-    list_display = ('title', 'founder', 'industry', 'stage', 'investment_needed', 'views')
+    list_display = (
+        'title', 'founder', 'industry',
+        'stage', 'investment_needed', 'views'
+    )
     search_fields = ('title', 'description', 'founder__user__full_name')
     list_filter = ('industry', 'stage')
     inlines = [RequiredSpecialistInline]

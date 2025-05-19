@@ -1,6 +1,9 @@
 from rest_framework import generics
 from .models import Profession, Skill, Industry
-from .serializers import ProfessionSerializer, SkillSerializer, IndustrySerializer
+from .serializers import (
+    ProfessionSerializer, SkillSerializer,
+    IndustrySerializer
+)
 
 
 class ProfessionListView(generics.ListAPIView):

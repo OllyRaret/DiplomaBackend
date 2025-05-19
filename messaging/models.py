@@ -5,10 +5,23 @@ from users.models import User
 
 
 class Message(models.Model):
-    sender = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='sent_messages', verbose_name='Отправитель')
-    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages', verbose_name='Получатель')
+    sender = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True, related_name='sent_messages',
+        verbose_name='Отправитель'
+    )
+    recipient = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='received_messages',
+        verbose_name='Получатель'
+    )
     text = models.TextField(verbose_name='Текст сообщения')
-    timestamp = models.DateTimeField(auto_now_add=True, verbose_name='Время отправки')
+    timestamp = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Время отправки'
+    )
     is_read = models.BooleanField(default=False, verbose_name='Прочитано')
 
     def __str__(self):
@@ -21,11 +34,33 @@ class Message(models.Model):
 
 
 class Invitation(models.Model):
-    startup = models.ForeignKey('startups.Startup', on_delete=models.CASCADE, related_name='invitations', verbose_name='Стартап')
-    required_specialist = models.ForeignKey('startups.RequiredSpecialist', on_delete=models.CASCADE, related_name='invitations', verbose_name='Вакансия')
-    specialist = models.ForeignKey('users.SpecialistProfile', on_delete=models.CASCADE, related_name='invitations', verbose_name='Специалист')
-    is_accepted = models.BooleanField(null=True, default=None, verbose_name='Принято')  # None — в ожидании
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Время отправки')
+    startup = models.ForeignKey(
+        'startups.Startup',
+        on_delete=models.CASCADE,
+        related_name='invitations',
+        verbose_name='Стартап'
+    )
+    required_specialist = models.ForeignKey(
+        'startups.RequiredSpecialist',
+        on_delete=models.CASCADE,
+        related_name='invitations',
+        verbose_name='Вакансия'
+    )
+    specialist = models.ForeignKey(
+        'users.SpecialistProfile',
+        on_delete=models.CASCADE,
+        related_name='invitations',
+        verbose_name='Специалист'
+    )
+    is_accepted = models.BooleanField(
+        null=True,
+        default=None,
+        verbose_name='Принято'
+    )  # None — в ожидании
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Время отправки'
+    )
 
     class Meta:
         verbose_name = 'Приглашение'
@@ -39,4 +74,5 @@ class Invitation(models.Model):
         ]
 
     def __str__(self):
-        return f'{self.specialist} пригласил {self.required_specialist} в {self.startup}'
+        return (f'{self.specialist} пригласил '
+                f'{self.required_specialist} в {self.startup}')

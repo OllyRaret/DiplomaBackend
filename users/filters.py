@@ -33,7 +33,9 @@ class SpecialistFilter(filters.FilterSet):
 
 
 class InvestorFilter(filters.FilterSet):
-    investment_needed = filters.NumberFilter(method='filter_by_investment_range')
+    investment_needed = filters.NumberFilter(
+        method='filter_by_investment_range'
+    )
     industry = filters.NumberFilter(field_name='industry')
     preferred_stages = filters.CharFilter(method='filter_by_stage')
 
@@ -42,7 +44,10 @@ class InvestorFilter(filters.FilterSet):
         fields = ['industry', 'preferred_stages', 'investment_needed']
 
     def filter_by_investment_range(self, queryset, name, value):
-        return queryset.filter(investment_min__lte=value, investment_max__gte=value)
+        return queryset.filter(
+            investment_min__lte=value,
+            investment_max__gte=value
+        )
 
     def filter_by_stage(self, queryset, name, value):
         """

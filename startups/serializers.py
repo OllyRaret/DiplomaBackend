@@ -6,7 +6,10 @@ from rest_framework.exceptions import ValidationError
 
 from favorite.models import Favorite
 from reference.models import Industry, Profession, Skill
-from reference.serializers import ProfessionSerializer, IndustrySerializer, SkillSerializer
+from reference.serializers import (
+    ProfessionSerializer, IndustrySerializer,
+    SkillSerializer
+)
 from users.serializers import SpecialistShortSerializer, FounderShortSerializer
 from .models import Startup, RequiredSpecialist
 
@@ -42,7 +45,6 @@ class RequiredSpecialistSerializer(serializers.ModelSerializer):
             'profession_id', 'skills_ids', 'specialist_user_id'
         ]
 
-
     def validate_specialist_user_id(self, value):
         if value is None:
             return None
@@ -50,10 +52,12 @@ class RequiredSpecialistSerializer(serializers.ModelSerializer):
         try:
             user = User.objects.get(id=value)
         except User.DoesNotExist:
-            raise ValidationError("Пользователь с указанным ID не найден")
+            raise ValidationError('Пользователь с указанным ID не найден')
 
         if not hasattr(user, 'specialist_profile'):
-            raise ValidationError("Указанный пользователь не является специалистом")
+            raise ValidationError(
+                'Указанный пользователь не является специалистом'
+            )
 
         return user.specialist_profile
 
@@ -63,9 +67,12 @@ class StartupSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(required=False, allow_null=True)
     industry = IndustrySerializer(read_only=True)
     industry_id = serializers.PrimaryKeyRelatedField(
-        queryset=Industry.objects.all(), source='industry', write_only=True, required=True
+        queryset=Industry.objects.all(),
+        source='industry',
+        write_only=True,
+        required=True
     )
-    required_specialists = RequiredSpecialistSerializer(many=True) # ToDo
+    required_specialists = RequiredSpecialistSerializer(many=True)
     is_favorited = serializers.SerializerMethodField()
     views = serializers.IntegerField(read_only=True)
     favorites_count = serializers.SerializerMethodField()
@@ -78,42 +85,49 @@ class StartupSerializer(serializers.ModelSerializer):
             'is_favorited', 'views', 'favorites_count'
         ]
 
-
     def get_is_favorited(self, obj):
         request = self.context.get('request')
         if not request or not request.user.is_authenticated:
             return False
         return Favorite.objects.filter(user=request.user, startup=obj).exists()
 
-
     def get_favorites_count(self, obj):
         return Favorite.objects.filter(startup=obj).count()
-
 
     def validate(self, attrs):
         # Проверка на отрицательную инвестицию
         investment = attrs.get('investment_needed')
         if investment is not None and investment < 0:
-            raise ValidationError({'investment_needed': 'Сумма инвестиций не может быть отрицательной.'})
+            raise ValidationError({
+                'investment_needed':
+                    'Сумма инвестиций не может быть отрицательной.'
+            })
 
         return attrs
 
-
     def create(self, validated_data):
-        required_specialists_data = validated_data.pop('required_specialists', [])
+        required_specialists_data = validated_data.pop(
+            'required_specialists', []
+        )
         startup = Startup.objects.create(**validated_data)
 
         for specialist_data in required_specialists_data:
             skills = specialist_data.pop('skills', [])
             specialist = specialist_data.pop('specialist_user_id', None)
-            required_specialist = RequiredSpecialist.objects.create(startup=startup, specialist=specialist, **specialist_data)
+            required_specialist = RequiredSpecialist.objects.create(
+                startup=startup,
+                specialist=specialist,
+                **specialist_data
+            )
             required_specialist.skills.set(skills)
 
         return startup
 
-
     def update(self, instance, validated_data):
-        required_specialists_data = validated_data.pop('required_specialists', None)
+        required_specialists_data = validated_data.pop(
+            'required_specialists',
+            None
+        )
 
         old_image = instance.image
         new_image = validated_data.get('image', None)
@@ -136,20 +150,27 @@ class StartupSerializer(serializers.ModelSerializer):
             updated_specialists = []
 
             for new_data in required_specialists_data:
-                new_skills_ids = set([new_skill.id for new_skill in new_data.get('skills', [])])
+                new_skills_ids = set(
+                    [new_skill.id for new_skill in new_data.get('skills', [])]
+                )
                 new_profession = new_data.get('profession')
                 new_specialist = new_data.get('specialist_user_id', None)
 
                 match_found = False
 
                 for existing in existing_specialists:
-                    existing_skills_ids = set(existing.skills.values_list('id', flat=True))
+                    existing_skills_ids = set(
+                        existing.skills.values_list('id', flat=True)
+                    )
                     if (
                         existing_skills_ids == new_skills_ids and
                         existing.profession == new_profession
                     ):
                         # Совпали по skills и профессии — проверяем specialist
-                        if 'specialist_user_id' in new_data and existing.specialist != new_specialist:
+                        if (
+                                'specialist_user_id' in new_data
+                                and existing.specialist != new_specialist
+                        ):
                             existing.specialist = new_specialist
                             existing.save()
                         updated_specialists.append(existing.id)
@@ -167,20 +188,32 @@ class StartupSerializer(serializers.ModelSerializer):
                     updated_specialists.append(required_specialist.id)
 
             # Удаляем все записи, которые не вошли в updated_specialists
-            instance.required_specialists.exclude(id__in=updated_specialists).delete()
+            instance.required_specialists.exclude(
+                id__in=updated_specialists
+            ).delete()
 
         return instance
 
 
 class StartupForSpecialistSearchSerializer(serializers.ModelSerializer):
-    required_specialists = RequiredSpecialistSerializer(many=True, read_only=True)
+    required_specialists = RequiredSpecialistSerializer(
+        many=True,
+        read_only=True
+    )
     industry = IndustrySerializer(read_only=True)
-    founder_id = serializers.PrimaryKeyRelatedField(source='founder.user', read_only=True)
+    founder_id = serializers.PrimaryKeyRelatedField(
+        source='founder.user',
+        read_only=True
+    )
     is_favorited = serializers.SerializerMethodField()
 
     class Meta:
         model = Startup
-        fields = ['id', 'title', 'industry', 'description', 'required_specialists', 'founder_id', 'image', 'is_favorited']
+        fields = [
+            'id', 'title', 'industry',
+            'description', 'required_specialists',
+            'founder_id', 'image', 'is_favorited'
+        ]
 
     def get_is_favorited(self, obj):
         request = self.context.get('request')
@@ -202,18 +235,27 @@ class StartupForSpecialistShortSerializer(serializers.ModelSerializer):
             return invited_roles.get(obj.id)
 
         specialist_profile = self.context['request'].user.specialist_profile
-        required = obj.required_specialists.filter(specialist=specialist_profile).first()
+        required = obj.required_specialists.filter(
+            specialist=specialist_profile
+        ).first()
         return required.profession.name if required else None
 
 
 class StartupForInvestorSearchSerializer(serializers.ModelSerializer):
     industry = IndustrySerializer(read_only=True)
-    founder_id = serializers.PrimaryKeyRelatedField(source='founder.user', read_only=True)
+    founder_id = serializers.PrimaryKeyRelatedField(
+        source='founder.user',
+        read_only=True
+    )
     is_favorited = serializers.SerializerMethodField()
 
     class Meta:
         model = Startup
-        fields = ['id', 'title', 'industry', 'description', 'investment_needed', 'image', 'founder_id', 'is_favorited']
+        fields = [
+            'id', 'title', 'industry',
+            'description', 'investment_needed',
+            'image', 'founder_id', 'is_favorited'
+        ]
 
     def get_is_favorited(self, obj):
         request = self.context.get('request')

@@ -9,8 +9,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from reference.swagger_docs import get_current_user_profile_doc, put_current_user_profile_doc, \
-    get_public_user_profile_doc
+from reference.swagger_docs import get_current_user_profile_doc, \
+    put_current_user_profile_doc, get_public_user_profile_doc
 from startups.models import RequiredSpecialist
 from .filters import SpecialistFilter, InvestorFilter
 from .models import User, SpecialistProfile, InvestorProfile
@@ -90,7 +90,11 @@ class PublicUserProfileView(RetrieveAPIView):
 
 
 class SpecialistSearchView(generics.ListAPIView):
-    queryset = SpecialistProfile.objects.select_related('user', 'profession').prefetch_related('skills', 'experiences')
+    queryset = SpecialistProfile.objects.select_related(
+        'user', 'profession'
+    ).prefetch_related(
+        'skills', 'experiences'
+    )
     serializer_class = SpecialistCardSerializer
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
@@ -138,7 +142,9 @@ class RecommendedSpecialistsView(APIView):
         required_skill_ids = set()
         for vacancy in vacancies:
             required_profession_ids.add(vacancy.profession_id)
-            required_skill_ids.update(vacancy.skills.values_list('id', flat=True))
+            required_skill_ids.update(
+                vacancy.skills.values_list('id', flat=True)
+            )
 
         # Базовый фильтр специалистов
         specialists = SpecialistProfile.objects.filter(
@@ -146,7 +152,9 @@ class RecommendedSpecialistsView(APIView):
             skills__id__in=required_skill_ids
         ).annotate(
             skill_matches=Count('skills')
-        ).prefetch_related('skills', 'experiences', 'user', 'profession').distinct()
+        ).prefetch_related(
+            'skills', 'experiences', 'user', 'profession'
+        ).distinct()
 
         # Оцениваем опыт работы
         specialist_data = []
@@ -165,5 +173,9 @@ class RecommendedSpecialistsView(APIView):
         sorted_specialists = [s[0] for s in specialist_data[:limit]]
 
         # Сериализуем результат
-        serializer = SpecialistCardSerializer(sorted_specialists, many=True, context={'request': request})
+        serializer = SpecialistCardSerializer(
+            sorted_specialists,
+            many=True,
+            context={'request': request}
+        )
         return Response(serializer.data)
