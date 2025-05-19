@@ -8,7 +8,7 @@ class InvestorProfileForm(forms.ModelForm):
     preferred_stages = forms.MultipleChoiceField(
         choices=StartupStage.CHOICES,
         widget=forms.CheckboxSelectMultiple,
-        label="Предпочтительные стадии инвестирования",
+        label='Предпочтительные стадии инвестирования',
         required=False,
     )
 

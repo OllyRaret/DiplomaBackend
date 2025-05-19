@@ -20,9 +20,9 @@ from users.views import (
 # Для swagger
 schema_view = get_schema_view(
    openapi.Info(
-      title="API для платформы стартапов",
+      title='API для платформы стартапов',
       default_version='v1',
-      description="Документация API",
+      description='Документация API',
    ),
    public=True,
    permission_classes=(permissions.AllowAny,),

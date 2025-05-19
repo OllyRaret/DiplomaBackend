@@ -50,9 +50,9 @@ class InvestorFilter(filters.FilterSet):
         )
 
     def filter_by_stage(self, queryset, name, value):
-        """
+        '''
         value может быть одной стадией или через запятую: 'launch,in_progress'
-        """
+        '''
         stages = value.split(',')
         q = Q()
         for stage in stages:

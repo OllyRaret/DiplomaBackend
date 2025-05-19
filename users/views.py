@@ -42,8 +42,8 @@ class CurrentUserProfileView(RetrieveUpdateAPIView):
                 return FounderProfileSerializer
             elif user.role == User.Role.INVESTOR:
                 return InvestorProfileSerializer
-            raise NotFound("Профиль не найден")
-        raise NotAuthenticated("Неавторизован")
+            raise NotFound('Профиль не найден')
+        raise NotAuthenticated('Неавторизован')
 
     def get_object(self):
         user = self.request.user
@@ -54,8 +54,8 @@ class CurrentUserProfileView(RetrieveUpdateAPIView):
                 return user.founder_profile
             elif user.role == User.Role.INVESTOR:
                 return user.investor_profile
-            raise NotFound("Профиль не найден")
-        raise NotAuthenticated("Неавторизован")
+            raise NotFound('Профиль не найден')
+        raise NotAuthenticated('Неавторизован')
 
 
 @method_decorator(get_public_user_profile_doc, name='get')
@@ -70,7 +70,7 @@ class PublicUserProfileView(RetrieveAPIView):
             return FounderProfileSerializer
         elif user.role == User.Role.INVESTOR:
             return InvestorProfileSerializer
-        raise NotFound("Профиль не найден")
+        raise NotFound('Профиль не найден')
 
     def get_object(self):
         user = self.get_user()
@@ -80,13 +80,13 @@ class PublicUserProfileView(RetrieveAPIView):
             return user.founder_profile
         elif user.role == User.Role.INVESTOR:
             return user.investor_profile
-        raise NotFound("Профиль не найден")
+        raise NotFound('Профиль не найден')
 
     def get_user(self):
         try:
             return User.objects.get(pk=self.kwargs['id'])
         except User.DoesNotExist:
-            raise NotFound("Пользователь не найден")
+            raise NotFound('Пользователь не найден')
 
 
 class SpecialistSearchView(generics.ListAPIView):

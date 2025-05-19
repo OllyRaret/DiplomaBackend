@@ -118,7 +118,7 @@ class InvitationSerializer(serializers.ModelSerializer):
         startup = validated_data['required_specialist'].startup
 
         if startup.founder != founder:
-            raise PermissionDenied("Вы не владелец стартапа.")
+            raise PermissionDenied('Вы не владелец стартапа.')
 
         invitation = Invitation.objects.create(
             startup=startup, **validated_data

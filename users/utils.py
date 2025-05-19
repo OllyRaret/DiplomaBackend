@@ -31,4 +31,4 @@ def update_user_fields(user, data):
 def validate_phone_format(phone):
     phone_regex = r'^\+?[\d\s\-()]{7,20}$'
     if phone and not re.match(phone_regex, phone):
-        raise serializers.ValidationError("Введите корректный номер телефона.")
+        raise serializers.ValidationError('Введите корректный номер телефона.')

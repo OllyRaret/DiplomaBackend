@@ -40,7 +40,7 @@ get_public_user_profile_doc = swagger_auto_schema(
                           'Только для чтения. '
                           'В зависимости от роли — разная структура данных.',
     responses={
-        200: openapi.Response(description="Успешно"),
+        200: openapi.Response(description='Успешно'),
         404: 'Профиль не найден'
     }
 )

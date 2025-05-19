@@ -20,7 +20,7 @@ class MessageViewSet(viewsets.ModelViewSet):
         ).order_by('-timestamp')
 
     def get_object(self):
-        """ Получаем другого пользователя по ID """
+        ''' Получаем другого пользователя по ID '''
         try:
             return User.objects.get(pk=self.kwargs['pk'])
         except User.DoesNotExist:
@@ -30,7 +30,7 @@ class MessageViewSet(viewsets.ModelViewSet):
         serializer.save(sender=self.request.user)
 
     def destroy(self, request, pk=None):
-        """ Удаление диалога с пользователем /messages/{id}/ """
+        ''' Удаление диалога с пользователем /messages/{id}/ '''
         recipient = self.get_object()
         user = request.user
 
@@ -45,7 +45,7 @@ class MessageViewSet(viewsets.ModelViewSet):
         }, status=204)
 
     def retrieve(self, request, pk=None):
-        """ Получить диалог с конкретным пользователем (по его id) """
+        ''' Получить диалог с конкретным пользователем (по его id) '''
         other_user = self.get_object()
         user = request.user
 
@@ -67,21 +67,21 @@ class MessageViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'])
     def inbox(self, request):
-        """ Получить полученные пользователем сообщения """
+        ''' Получить полученные пользователем сообщения '''
         messages = Message.objects.filter(recipient=request.user)
         serializer = self.get_serializer(messages, many=True)
         return Response(serializer.data)
 
     @action(detail=False, methods=['get'])
     def sent(self, request):
-        """ Получить отправленные пользователем сообщения """
+        ''' Получить отправленные пользователем сообщения '''
         messages = Message.objects.filter(sender=request.user)
         serializer = self.get_serializer(messages, many=True)
         return Response(serializer.data)
 
     @action(detail=False, methods=['get'])
     def dialogs(self, request):
-        """ Получить диалоги авторизованного пользователя """
+        ''' Получить диалоги авторизованного пользователя '''
         user = request.user
         messages = Message.objects.filter(Q(sender=user) | Q(recipient=user))
 
@@ -131,7 +131,7 @@ class InvitationViewSet(viewsets.ModelViewSet):
         user = request.user
 
         if invitation.specialist.user != user:
-            raise PermissionDenied("Вы не можете принять это приглашение.")
+            raise PermissionDenied('Вы не можете принять это приглашение.')
 
         if invitation.is_accepted is not None:
             return Response({
@@ -160,7 +160,7 @@ class InvitationViewSet(viewsets.ModelViewSet):
         user = request.user
 
         if invitation.specialist.user != user:
-            raise PermissionDenied("Вы не можете отклонить это приглашение.")
+            raise PermissionDenied('Вы не можете отклонить это приглашение.')
 
         if invitation.is_accepted is not None:
             return Response({

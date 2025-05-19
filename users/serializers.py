@@ -481,8 +481,8 @@ class InvestorProfileSerializer(serializers.ModelSerializer):
         if invalid_stages:
             raise serializers.ValidationError({
                 'preferred_stages':
-                    f"Недопустимые значения: {invalid_stages}. "
-                    f"Допустимые: {valid_stages}"
+                    f'Недопустимые значения: {invalid_stages}. '
+                    f'Допустимые: {valid_stages}'
             })
 
         return data
