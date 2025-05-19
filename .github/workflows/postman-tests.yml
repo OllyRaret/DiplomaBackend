@@ -14,13 +14,43 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install flake8
+
+      - name: Run flake8
+        run: flake8 .
+
+      - name: Run migrations
+        run: |
+          python manage.py makemigrations
+          python manage.py migrate
+
+      - name: Seed database
+        run: python manage.py seed_reference_data
+
+      - name: Start Django server
+        run: |
+          python manage.py runserver 0.0.0.0:8000 &
+
+      - name: Wait for server
+        run: npx wait-on http://localhost:8000
+
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      - name: Install Newman
-        run: npm install -g newman
+      - name: Install Newman and wait-on
+        run: |
+          npm install -g newman wait-on
 
       - name: Create folder for reports
         run: mkdir -p newman
@@ -29,7 +59,6 @@ jobs:
         run: |
           for collection in ./postman/*.postman_collection.json; do
             name=$(basename "$collection" .postman_collection.json | tr ' ' '_' | tr -d '[:punct:]')
-            echo "Running $name"
             newman run "$collection" \
               --environment ./postman/Localhost.postman_environment.json \
               --reporters cli,html \
@@ -41,4 +70,3 @@ jobs:
         with:
           name: postman-html-reports
           path: newman/
-
