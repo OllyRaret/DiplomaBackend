@@ -9,8 +9,11 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from reference.swagger_docs import get_current_user_profile_doc, \
-    put_current_user_profile_doc, get_public_user_profile_doc
+from reference.swagger_docs import (
+    get_current_user_profile_doc,
+    put_current_user_profile_doc,
+    get_public_user_profile_doc
+)
 from startups.models import RequiredSpecialist
 from .filters import SpecialistFilter, InvestorFilter
 from .models import User, SpecialistProfile, InvestorProfile
