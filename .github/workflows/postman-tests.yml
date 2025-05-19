@@ -37,7 +37,7 @@ jobs:
           done
 
       - name: Upload Newman reports
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: postman-html-reports
           path: newman/
