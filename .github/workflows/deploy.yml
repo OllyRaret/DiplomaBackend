@@ -53,7 +53,7 @@ jobs:
           EOL
 
           cd /app
-          docker compose -f docker-compose.yml down || true
-          docker compose -f docker-compose.yml pull || true
-          docker compose -f docker-compose.yml up -d --build
+          docker compose down || true
+          docker compose pull || true
+          docker compose up -d
           EOF
