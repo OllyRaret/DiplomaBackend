@@ -25,6 +25,12 @@ jobs:
           pip install -r requirements.txt
           pip install flake8
 
+      - name: Create .env file
+        run: |
+          echo "SECRET_KEY=${{ secrets.ENV_SECRET_KEY }}" > .env
+          echo "DEBUG=True" >> .env
+          echo "ALLOWED_HOSTS=${{ secrets.ENV_ALLOWED_HOSTS }}" >> .env
+
       - name: Run flake8
         run: flake8 .
 
