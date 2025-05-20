@@ -33,7 +33,7 @@ jobs:
 
       - name: Copy .env to server
         run: |
-          sshpass -p "${{ secrets.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} << 'EOF'
+          sshpass -p "${{ secrets.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} << 'EOF'
           cat > /app/.env << EOL
           SECRET_KEY=${{ secrets.ENV_SECRET_KEY }}
           DEBUG=${{ secrets.ENV_DEBUG }}
