@@ -14,7 +14,7 @@ services:
 
   web:
     image: USERNAME_FROM_SECRETS/diplomabackend:latest
-    container_name: diplomabackend
+    container_name: web
     command: >
       sh -c "python manage.py migrate &&
              python manage.py collectstatic --noinput &&
