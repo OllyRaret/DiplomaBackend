@@ -53,7 +53,7 @@ jobs:
           EOL
 
           cd /app
-          docker compose down || true
-          docker compose pull || true
+          docker compose down
+          docker compose pull --quiet
           docker compose up -d
           EOF
