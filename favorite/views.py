@@ -98,7 +98,7 @@ class FavoriteViewSet(viewsets.ModelViewSet):
         )
         return Response(serializer.data)
 
-    @action(detail=False, methods=['delete'])
+    @action(detail=False, methods=['post'])
     def remove(self, request):
         user = request.user
         user_id = request.data.get('user_id')
