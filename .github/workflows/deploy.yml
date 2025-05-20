@@ -26,17 +26,13 @@ jobs:
         run: |
           sed -i "s|USERNAME_FROM_SECRETS|${{ secrets.DOCKER_USERNAME }}|g" docker-compose.yml
 
-      - name: Copy files to server
+      - name: Create nginx directory on server
         run: |
-          sshpass -p "${{ secrets.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} << 'EOF'
-          mkdir -p /app/nginx
-          EOF
+          sshpass -p "${{ secrets.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} "mkdir -p /app/nginx"
 
-          sshpass -p "${{ secrets.SERVER_PASSWORD }}" scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/app/
-          sshpass -p "${{ secrets.SERVER_PASSWORD }}" scp -o StrictHostKeyChecking=no nginx/nginx.conf ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/app/nginx/nginx.conf
-          
-          sshpass -p "${{ secrets.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} << 'EOF'
-          cat > /app/.env << EOL
+      - name: Create .env file on server
+        run: |
+          sshpass -p "${{ secrets.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} "cat > /app/.env << EOL
           SECRET_KEY=${{ secrets.ENV_SECRET_KEY }}
           DEBUG=${{ secrets.ENV_DEBUG }}
           ALLOWED_HOSTS=${{ secrets.ENV_ALLOWED_HOSTS }}
@@ -50,10 +46,13 @@ jobs:
           DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }}
           DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL }}
           DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }}
-          EOL
+          EOL"
 
-          cd /app
-          docker compose down
-          docker compose pull --quiet
-          docker compose up -d
-          EOF
+      - name: Copy docker-compose and nginx config to server
+        run: |
+          sshpass -p "${{ secrets.SERVER_PASSWORD }}" scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/app/
+          sshpass -p "${{ secrets.SERVER_PASSWORD }}" scp -o StrictHostKeyChecking=no nginx/nginx.conf ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/app/nginx/nginx.conf
+
+      - name: Restart containers on server
+        run: |
+          sshpass -p "${{ secrets.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} "cd /app && docker compose down && docker compose pull --quiet && docker compose up -d"
