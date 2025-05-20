@@ -829,7 +829,7 @@
 						}
 					],
 					"request": {
-						"method": "DELETE",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -884,7 +884,7 @@
 						}
 					],
 					"request": {
-						"method": "DELETE",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -939,7 +939,7 @@
 						}
 					],
 					"request": {
-						"method": "DELETE",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -994,7 +994,7 @@
 						}
 					],
 					"request": {
-						"method": "DELETE",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -1049,7 +1049,7 @@
 						}
 					],
 					"request": {
-						"method": "DELETE",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -1104,7 +1104,7 @@
 						}
 					],
 					"request": {
-						"method": "DELETE",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
