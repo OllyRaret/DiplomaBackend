@@ -114,10 +114,12 @@ class CustomTokenCreateSerializer(DjoserTokenCreateSerializer):
 
 
 class CustomUserSerializer(BaseUserSerializer):
+    user_id = serializers.IntegerField(source='id')
+
     class Meta:
         model = User
         fields = [
-            'id', 'email', 'role',
+            'user_id', 'email', 'role',
             'full_name', 'bio',
             'contact_phone', 'contact_email',
             'avatar'

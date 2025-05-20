@@ -22,17 +22,15 @@ jobs:
       - name: Push image to Docker Hub
         run: docker push ${{ secrets.DOCKER_USERNAME }}/diplomabackend:latest
 
-      - name: Deploy on remote server
+      - name: Copy files to server
         run: |
           sshpass -p "${{ secrets.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} << 'EOF'
-            docker pull ${{ secrets.DOCKER_USERNAME }}/diplomabackend:latest
-            docker stop diplomabackend || true
-            docker rm diplomabackend || true
-            docker run -d --name diplomabackend --env-file /app/.env -p 8000:8000 ${{ secrets.DOCKER_USERNAME }}/diplomabackend:latest
+          mkdir -p /app/nginx
           EOF
 
-      - name: Copy .env to server
-        run: |
+          sshpass -p "${{ secrets.SERVER_PASSWORD }}" scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/app/
+          sshpass -p "${{ secrets.SERVER_PASSWORD }}" scp -o StrictHostKeyChecking=no nginx/nginx.conf ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/app/nginx/nginx.conf
+          
           sshpass -p "${{ secrets.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} << 'EOF'
           cat > /app/.env << EOL
           SECRET_KEY=${{ secrets.ENV_SECRET_KEY }}
@@ -49,4 +47,9 @@ jobs:
           DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL }}
           DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }}
           EOL
+
+          cd /app
+          docker compose -f docker-compose.yml down || true
+          docker compose -f docker-compose.yml pull || true
+          docker compose -f docker-compose.yml up -d --build
           EOF
