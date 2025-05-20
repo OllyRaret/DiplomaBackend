@@ -22,6 +22,10 @@ jobs:
       - name: Push image to Docker Hub
         run: docker push ${{ secrets.DOCKER_USERNAME }}/diplomabackend:latest
 
+      - name: Replace Docker username in docker-compose.yml
+        run: |
+          sed -i "s|USERNAME_FROM_SECRETS|${{ secrets.DOCKER_USERNAME }}|g" docker-compose.yml
+
       - name: Copy files to server
         run: |
           sshpass -p "${{ secrets.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} << 'EOF'

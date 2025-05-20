@@ -13,7 +13,7 @@ services:
       - "5432:5432"
 
   web:
-    build: .
+    image: USERNAME_FROM_SECRETS/diplomabackend:latest
     container_name: diplomabackend
     command: >
       sh -c "python manage.py migrate &&
