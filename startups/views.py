@@ -98,6 +98,10 @@ class StartupViewSet(viewsets.ModelViewSet):
             is_accepted=None
         ).select_related('startup', 'required_specialist__profession')
 
+        invitation_ids = {
+            inv.startup.id: inv.id for inv in pending_invitations
+        }
+
         role_by_startup_id = {
             inv.startup.id: inv.required_specialist.profession.name
             for inv in pending_invitations
@@ -108,7 +112,11 @@ class StartupViewSet(viewsets.ModelViewSet):
         serializer = StartupForSpecialistShortSerializer(
             startups,
             many=True,
-            context={'request': request, 'invited_roles': role_by_startup_id}
+            context={
+                'request': request,
+                'invited_roles': role_by_startup_id,
+                'invitation_ids': invitation_ids
+            }
         )
         return Response(serializer.data)
 

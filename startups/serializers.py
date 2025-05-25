@@ -224,6 +224,7 @@ class StartupForSpecialistSearchSerializer(serializers.ModelSerializer):
 
 class StartupForSpecialistShortSerializer(serializers.ModelSerializer):
     role = serializers.SerializerMethodField()
+    invitation_id = serializers.SerializerMethodField()
 
     class Meta:
         model = Startup
@@ -239,6 +240,10 @@ class StartupForSpecialistShortSerializer(serializers.ModelSerializer):
             specialist=specialist_profile
         ).first()
         return required.profession.name if required else None
+
+    def get_invitation_id(self, obj):
+        invitation_ids = self.context.get('invitation_ids')
+        return invitation_ids.get(obj.id) if invitation_ids else None
 
 
 class StartupForInvestorSearchSerializer(serializers.ModelSerializer):
