@@ -2,10 +2,13 @@ name: Deploy Django Backend
 
 
 on:
-  workflow_run:
-    workflows: ["Run Postman Collections"]
-    types:
-      - completed
+  push:
+    branches:
+      - master
+#  workflow_run:
+#    workflows: ["Run Postman Collections"]
+#    types:
+#      - completed
 
 jobs:
   build-and-deploy:
