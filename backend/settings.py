@@ -169,13 +169,16 @@ SWAGGER_SETTINGS = {
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    "http://prostarter.publicvm.com",
+    "https://prostarter.publicvm.com",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
-    'http://91.197.96.34:8080',
+    "http://prostarter.publicvm.com",
+    "https://prostarter.publicvm.com",
 ]
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http')
