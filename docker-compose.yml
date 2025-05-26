@@ -30,6 +30,15 @@ services:
     env_file:
       - .env
 
+  frontend:
+    image: USERNAME_FROM_SECRETS/diplomafrontend:latest
+    container_name: frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - web
+
   nginx:
     image: nginx:latest
     container_name: diplomanginx

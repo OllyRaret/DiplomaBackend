@@ -38,38 +38,42 @@ router.register(r'invitations', InvitationViewSet, basename='invitations')
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.authtoken')),
+    path('api/auth/', include('djoser.urls')),
+    path('api/auth/', include('djoser.urls.authtoken')),
 
-    path('profile/me/', CurrentUserProfileView.as_view(), name='user-profile'),
     path(
-        'profile/<int:id>/',
+        'api/profile/me/',
+        CurrentUserProfileView.as_view(),
+        name='user-profile'
+    ),
+    path(
+        'api/profile/<int:id>/',
         PublicUserProfileView.as_view(),
         name='public-user-profile'
     ),
 
-    path('professions/', ProfessionListView.as_view(), name='profession-list'),
-    path('skills/', SkillListView.as_view(), name='skill-list'),
-    path('industries/', IndustryListView.as_view(), name='industry-list'),
+    path('api/professions/', ProfessionListView.as_view(), name='profession-list'),
+    path('api/skills/', SkillListView.as_view(), name='skill-list'),
+    path('api/industries/', IndustryListView.as_view(), name='industry-list'),
 
     path(
-        'search/specialists/',
+        'api/search/specialists/',
         SpecialistSearchView.as_view(),
         name='specialist-search'
     ),
     path(
-        'search/investors/',
+        'api/search/investors/',
         InvestorSearchView.as_view(),
         name='investor-search'
     ),
 
     path(
-        'specialists/recommendations/',
+        'api/specialists/recommendations/',
         RecommendedSpecialistsView.as_view(),
         name='specialist-recommendations'
     ),
 
-    path('', include(router.urls)),
+    path('api/', include(router.urls)),
 
     path(
         'swagger/',

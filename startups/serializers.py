@@ -228,7 +228,10 @@ class StartupForSpecialistShortSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Startup
-        fields = ['id', 'title', 'description', 'stage', 'image', 'role']
+        fields = [
+            'id', 'title', 'description', 'stage',
+            'image', 'role', 'invitation_id'
+        ]
 
     def get_role(self, obj):
         invited_roles = self.context.get('invited_roles', {})

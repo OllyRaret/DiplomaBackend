@@ -5,7 +5,7 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 
 from messaging.models import Invitation
-from reference.permissions import IsFounderOrReadOnly, IsStartupFounder
+from startups.permissions import IsFounderOrReadOnly, IsStartupFounder
 from users.models import User
 from .filters import (
     filter_startups_for_specialist,
