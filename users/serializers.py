@@ -18,6 +18,7 @@ from reference.serializers import (
     IndustrySerializer
 )
 from reference.stages import StartupStage
+from .fields import Base64ImageField
 from .models import (
     User, SpecialistProfile, FounderProfile,
     InvestorProfile, WorkExperience,
@@ -164,7 +165,7 @@ class SpecialistShortSerializer(serializers.ModelSerializer):
 class SpecialistCardSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
     full_name = serializers.CharField(source='user.full_name', read_only=True)
-    avatar = serializers.ImageField(source='user.avatar', read_only=True)
+    avatar = Base64ImageField(source='user.avatar', read_only=True)
     bio = serializers.CharField(source='user.bio', read_only=True)
     profession = ProfessionSerializer()
     skills = SkillSerializer(many=True)
@@ -218,7 +219,7 @@ class SpecialistProfileSerializer(serializers.ModelSerializer):
         allow_blank=False,
         allow_null=False
     )
-    avatar = serializers.ImageField(
+    avatar = Base64ImageField(
         source='user.avatar',
         required=False,
         allow_null=True
@@ -332,7 +333,7 @@ class FounderProfileSerializer(serializers.ModelSerializer):
         allow_blank=False,
         allow_null=False
     )
-    avatar = serializers.ImageField(
+    avatar = Base64ImageField(
         source='user.avatar',
         required=False,
         allow_null=True
@@ -381,7 +382,7 @@ class FounderProfileSerializer(serializers.ModelSerializer):
 class InvestorCardSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
     full_name = serializers.CharField(source='user.full_name', read_only=True)
-    avatar = serializers.ImageField(source='user.avatar', read_only=True)
+    avatar = Base64ImageField(source='user.avatar', read_only=True)
     bio = serializers.CharField(source='user.bio', read_only=True)
     industry = IndustrySerializer()
     is_favorited = serializers.SerializerMethodField()
@@ -437,7 +438,7 @@ class InvestorProfileSerializer(serializers.ModelSerializer):
         allow_blank=False,
         allow_null=False
     )
-    avatar = serializers.ImageField(
+    avatar = Base64ImageField(
         source='user.avatar',
         required=False,
         allow_null=True

@@ -10,6 +10,7 @@ from reference.serializers import (
     ProfessionSerializer, IndustrySerializer,
     SkillSerializer
 )
+from users.fields import Base64ImageField
 from users.serializers import SpecialistShortSerializer, FounderShortSerializer
 from .models import Startup, RequiredSpecialist
 
@@ -64,7 +65,7 @@ class RequiredSpecialistSerializer(serializers.ModelSerializer):
 
 class StartupSerializer(serializers.ModelSerializer):
     founder = FounderShortSerializer(read_only=True)
-    image = serializers.ImageField(required=False, allow_null=True)
+    image = Base64ImageField(required=False, allow_null=True)
     industry = IndustrySerializer(read_only=True)
     industry_id = serializers.PrimaryKeyRelatedField(
         queryset=Industry.objects.all(),
