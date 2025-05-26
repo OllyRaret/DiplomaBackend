@@ -52,7 +52,11 @@ urlpatterns = [
         name='public-user-profile'
     ),
 
-    path('api/professions/', ProfessionListView.as_view(), name='profession-list'),
+    path(
+        'api/professions/',
+        ProfessionListView.as_view(),
+        name='profession-list'
+    ),
     path('api/skills/', SkillListView.as_view(), name='skill-list'),
     path('api/industries/', IndustryListView.as_view(), name='industry-list'),
 
