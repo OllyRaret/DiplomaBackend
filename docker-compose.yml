@@ -47,7 +47,7 @@ services:
       - "80:80"
       - "443:443"
     depends_on:
-      - web
+      - frontend
     volumes:
       - static_volume:/app/static
       - media_volume:/app/media
