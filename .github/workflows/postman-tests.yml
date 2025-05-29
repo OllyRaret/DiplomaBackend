@@ -44,11 +44,7 @@ jobs:
 
       - name: Start Django server
         run: |
-          python manage.py runserver 0.0.0.0:8000 &
-
-      - name: Start Django server
-        run: |
-          python manage.py runserver 0.0.0.0:8000 > server.log 2>&1 &
+          python manage.py runserver 0.0.0.0:8000 --noreload > server.log 2>&1 &
       
       - name: Wait for server startup
         run: |
@@ -57,7 +53,7 @@ jobs:
           curl -v http://localhost:8000 || echo "Server not responding"
       
       - name: Wait for server
-        run: npx wait-on http://localhost:8000/api/ --timeout 30000
+        run: npx wait-on http://localhost:8000/api/ --timeout 60000 --httpStatusAllow404
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
