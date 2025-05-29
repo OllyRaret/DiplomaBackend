@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "4c483ac5-fb77-4ec7-9924-dc50a406c5a2",
+		"_postman_id": "9863f92b-71c6-445b-942d-ea6e27869c40",
 		"name": "2. Login",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "44112372",
-		"_collection_link": "https://alinaobrezkova.postman.co/workspace/Diploma-tests~e4acbeed-fff8-4ec3-84d0-7292590347e4/collection/44112372-4c483ac5-fb77-4ec7-9924-dc50a406c5a2?action=share&source=collection_link&creator=44112372"
+		"_collection_link": "https://alinaobrezkova.postman.co/workspace/Diploma-tests~e4acbeed-fff8-4ec3-84d0-7292590347e4/collection/44112372-9863f92b-71c6-445b-942d-ea6e27869c40?action=share&source=collection_link&creator=44112372"
 	},
 	"item": [
 		{
@@ -54,7 +54,8 @@
 							"  pm.expect(responseData.auth_token).to.be.a('string').and.to.match(/[A-Za-z0-9]{30,}/, \"Auth token format is not valid\");",
 							"});"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -77,13 +78,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/token/login/",
+					"raw": "http://localhost:8000/api/auth/token/login/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"auth",
 						"token",
 						"login",
@@ -101,7 +103,7 @@
 					"script": {
 						"exec": [
 							"pm.sendRequest({\r",
-							"    url: 'http://localhost:8000/auth/token/logout/',\r",
+							"    url: 'http://localhost:8000/api/auth/token/logout/',\r",
 							"    method: 'POST',\r",
 							"    header: {\r",
 							"        'Authorization': 'Token ' + pm.environment.get(\"access_token\"),\r",
@@ -176,7 +178,8 @@
 							"    pm.expect(responseData.auth_token).to.be.a('string').and.to.match(/[A-Za-z0-9]{20}/, \"Auth token should be a 20-character alphanumeric string\");",
 							"});"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -199,13 +202,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/token/login/",
+					"raw": "http://localhost:8000/api/auth/token/login/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"auth",
 						"token",
 						"login",
@@ -261,7 +265,8 @@
 							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
 							"});"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -284,13 +289,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/token/login/",
+					"raw": "http://localhost:8000/api/auth/token/login/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"auth",
 						"token",
 						"login",
@@ -366,13 +372,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/token/login/",
+					"raw": "http://localhost:8000/api/auth/token/login/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"auth",
 						"token",
 						"login",
@@ -435,13 +442,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/token/login/",
+					"raw": "http://localhost:8000/api/auth/token/login/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"auth",
 						"token",
 						"login",
@@ -522,13 +530,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/token/login/",
+					"raw": "http://localhost:8000/api/auth/token/login/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"auth",
 						"token",
 						"login",
@@ -583,7 +592,8 @@
 							"  pm.expect(pm.response.responseTime).to.be.below(200);",
 							"});"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -606,13 +616,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/token/login/",
+					"raw": "http://localhost:8000/api/auth/token/login/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"auth",
 						"token",
 						"login",
@@ -670,13 +681,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/token/login/",
+					"raw": "http://localhost:8000/api/auth/token/login/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"auth",
 						"token",
 						"login",
@@ -720,7 +732,8 @@
 							"    });",
 							"})"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -743,13 +756,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/token/login/",
+					"raw": "http://localhost:8000/api/auth/token/login/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"auth",
 						"token",
 						"login",
@@ -807,13 +821,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/token/login/",
+					"raw": "http://localhost:8000/api/auth/token/login/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"auth",
 						"token",
 						"login",
@@ -872,7 +887,8 @@
 							"  });",
 							"});"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -895,13 +911,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/token/login/",
+					"raw": "http://localhost:8000/api/auth/token/login/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"auth",
 						"token",
 						"login",

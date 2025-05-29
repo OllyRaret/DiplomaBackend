@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "c3679120-46da-466c-bbb8-7aeb3cd6cd1a",
+		"_postman_id": "586354b0-cfa3-4a3d-b256-9f7b8a5d683c",
 		"name": "7. Favorite",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "44112372",
-		"_collection_link": "https://alinaobrezkova.postman.co/workspace/Diploma-tests~e4acbeed-fff8-4ec3-84d0-7292590347e4/collection/44112372-c3679120-46da-466c-bbb8-7aeb3cd6cd1a?action=share&source=collection_link&creator=44112372"
+		"_collection_link": "https://alinaobrezkova.postman.co/workspace/Diploma-tests~e4acbeed-fff8-4ec3-84d0-7292590347e4/collection/44112372-586354b0-cfa3-4a3d-b256-9f7b8a5d683c?action=share&source=collection_link&creator=44112372"
 	},
 	"item": [
 		{
@@ -81,13 +81,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/auth/token/login/",
+							"raw": "http://localhost:8000/api/auth/token/login/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"auth",
 								"token",
 								"login",
@@ -168,13 +169,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/auth/token/login/",
+							"raw": "http://localhost:8000/api/auth/token/login/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"auth",
 								"token",
 								"login",
@@ -255,13 +257,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/auth/token/login/",
+							"raw": "http://localhost:8000/api/auth/token/login/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"auth",
 								"token",
 								"login",
@@ -323,13 +326,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								""
 							]
@@ -378,13 +382,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								""
 							]
@@ -440,13 +445,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								""
 							]
@@ -501,13 +507,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								""
 							]
@@ -562,13 +569,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								""
 							]
@@ -620,13 +628,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/specialists/",
+							"raw": "http://localhost:8000/api/favorites/specialists/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								"specialists",
 								""
@@ -679,13 +688,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/investors/",
+							"raw": "http://localhost:8000/api/favorites/investors/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								"investors",
 								""
@@ -738,13 +748,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/startup_for_specialist/",
+							"raw": "http://localhost:8000/api/favorites/startup_for_specialist/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								"startup_for_specialist",
 								""
@@ -797,13 +808,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/startup_for_investor/",
+							"raw": "http://localhost:8000/api/favorites/startup_for_investor/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								"startup_for_investor",
 								""
@@ -852,13 +864,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/remove/",
+							"raw": "http://localhost:8000/api/favorites/remove/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								"remove",
 								""
@@ -907,13 +920,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/remove/",
+							"raw": "http://localhost:8000/api/favorites/remove/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								"remove",
 								""
@@ -962,13 +976,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/remove/",
+							"raw": "http://localhost:8000/api/favorites/remove/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								"remove",
 								""
@@ -1017,13 +1032,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/remove/",
+							"raw": "http://localhost:8000/api/favorites/remove/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								"remove",
 								""
@@ -1072,13 +1088,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/remove/",
+							"raw": "http://localhost:8000/api/favorites/remove/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								"remove",
 								""
@@ -1127,13 +1144,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/remove/",
+							"raw": "http://localhost:8000/api/favorites/remove/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								"remove",
 								""
@@ -1194,13 +1212,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								""
 							]
@@ -1248,13 +1267,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								""
 							]
@@ -1310,13 +1330,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								""
 							]
@@ -1371,13 +1392,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								""
 							]
@@ -1432,13 +1454,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								""
 							]
@@ -1490,13 +1513,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/specialists/",
+							"raw": "http://localhost:8000/api/favorites/specialists/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								"specialists",
 								""
@@ -1549,13 +1573,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/investors/",
+							"raw": "http://localhost:8000/api/favorites/investors/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								"investors",
 								""
@@ -1608,13 +1633,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/startup_for_specialist/",
+							"raw": "http://localhost:8000/api/favorites/startup_for_specialist/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								"startup_for_specialist",
 								""
@@ -1667,13 +1693,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/startup_for_investor/",
+							"raw": "http://localhost:8000/api/favorites/startup_for_investor/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								"startup_for_investor",
 								""
@@ -1734,13 +1761,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								""
 							]
@@ -1788,13 +1816,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								""
 							]
@@ -1850,13 +1879,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								""
 							]
@@ -1911,13 +1941,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								""
 							]
@@ -1969,13 +2000,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/specialists/",
+							"raw": "http://localhost:8000/api/favorites/specialists/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								"specialists",
 								""
@@ -2028,13 +2060,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/investors/",
+							"raw": "http://localhost:8000/api/favorites/investors/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								"investors",
 								""
@@ -2087,13 +2120,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/startup_for_specialist/",
+							"raw": "http://localhost:8000/api/favorites/startup_for_specialist/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								"startup_for_specialist",
 								""
@@ -2146,13 +2180,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/startup_for_investor/",
+							"raw": "http://localhost:8000/api/favorites/startup_for_investor/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"favorites",
 								"startup_for_investor",
 								""

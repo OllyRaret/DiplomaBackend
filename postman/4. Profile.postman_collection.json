@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "44e3eb53-c1e8-4ad2-8120-0bf426bad947",
+		"_postman_id": "2e3fbaa1-1789-40b0-ba33-d472252757ce",
 		"name": "4. Profile",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "44112372",
-		"_collection_link": "https://alinaobrezkova.postman.co/workspace/Diploma-tests~e4acbeed-fff8-4ec3-84d0-7292590347e4/collection/44112372-44e3eb53-c1e8-4ad2-8120-0bf426bad947?action=share&source=collection_link&creator=44112372"
+		"_collection_link": "https://alinaobrezkova.postman.co/workspace/Diploma-tests~e4acbeed-fff8-4ec3-84d0-7292590347e4/collection/44112372-2e3fbaa1-1789-40b0-ba33-d472252757ce?action=share&source=collection_link&creator=44112372"
 	},
 	"item": [
 		{
@@ -81,13 +81,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/auth/token/login/",
+							"raw": "http://localhost:8000/api/auth/token/login/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"auth",
 								"token",
 								"login",
@@ -165,13 +166,14 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -265,13 +267,14 @@
 							"raw": "{\r\n  \"industry_id\": 2,\r\n  \"experience\": [\r\n    {\r\n      \"organization\": \"TechStars\",\r\n      \"position\": \"CEO\",\r\n      \"start_date\": \"2020-01-01\",\r\n      \"end_date\": \"2022-12-31\",\r\n      \"description\": \"Руководство командой и запуск продукта\"\r\n    },\r\n    {\r\n      \"organization\": \"YCombinator\",\r\n      \"position\": \"CTO\",\r\n      \"start_date\": \"2018-03-01\",\r\n      \"end_date\": \"2019-11-30\",\r\n      \"description\": \"Разработка MVP и управление разработкой\"\r\n    }\r\n  ]\r\n}\r\n"
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -398,13 +401,14 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -532,13 +536,14 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -665,13 +670,14 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -753,13 +759,14 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -851,13 +858,14 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -948,13 +956,14 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -1077,13 +1086,14 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -1173,13 +1183,14 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -1302,13 +1313,14 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -1399,13 +1411,14 @@
 							"raw": "{\r\n  \"experience\": [\r\n    {\r\n      \"organization\": \"TechStars\",\r\n      \"position\": \"CEO\",\r\n      \"start_date\": \"2020-01-01\",\r\n      \"end_date\": \"2022-12-31\",\r\n      \"description\": \"Руководство командой и запуск продукта\"\r\n    },\r\n    {\r\n      \"organization\": \"YCombinator\",\r\n      \"position\": \"CTO\",\r\n      \"start_date\": \"2018-03-01\",\r\n      \"end_date\": \"2019-11-30\",\r\n      \"description\": \"Разработка MVP и управление разработкой\"\r\n    },\r\n    {\r\n      \"organization\": \"TechStars2\",\r\n      \"position\": \"CEO2\",\r\n      \"start_date\": \"2020-01-01\",\r\n      \"end_date\": \"2022-12-31\",\r\n      \"description\": \"Руководство командой и запуск продукта2\"\r\n    },\r\n    {\r\n      \"organization\": \"TechStars3\",\r\n      \"position\": \"CEO3\",\r\n      \"start_date\": \"2020-01-01\",\r\n      \"end_date\": \"2022-12-31\",\r\n      \"description\": \"Руководство командой и запуск продукта3\"\r\n    }\r\n  ]\r\n}\r\n"
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -1481,13 +1494,14 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -1572,13 +1586,14 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -1622,13 +1637,14 @@
 							"raw": "{\r\n  \"experience\": [\r\n    {\r\n      \"organization\": \"TechStars\",\r\n      \"position\": \"CEO\",\r\n      \"start_date\": \"2022-12-31\",\r\n      \"end_date\": \"2020-12-31\",\r\n      \"description\": \"Руководство командой и запуск продукта\"\r\n    },\r\n    {\r\n      \"organization\": \"YCombinator\",\r\n      \"position\": \"CTO\",\r\n      \"start_date\": \"2019-11-30\",\r\n      \"end_date\": \"2019-11-30\",\r\n      \"description\": \"Разработка MVP и управление разработкой\"\r\n    },\r\n    {\r\n      \"organization\": \"TechStars2\",\r\n      \"position\": \"CEO2\",\r\n      \"start_date\": \"20202-012-021\",\r\n      \"end_date\": \"2022-12-31\",\r\n      \"description\": \"Руководство командой и запуск продукта2\"\r\n    },\r\n    {\r\n      \"organization\": \"TechStars3\",\r\n      \"position\": \"CEO3\",\r\n      \"start_date\": \"\",\r\n      \"end_date\": \"2022-12-31\",\r\n      \"description\": \"Руководство командой и запуск продукта3\"\r\n    }\r\n  ]\r\n}\r\n"
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -1686,13 +1702,14 @@
 							"raw": "{\r\n  \"experience\": [\r\n    {\r\n      \"organization\": \"TechStars3\",\r\n      \"start_date\": \"2020-01-01\",\r\n      \"description\": \"Руководство командой и запуск продукта3\"\r\n    },\r\n    {\r\n      \"position\": \"CEO4\",\r\n      \"start_date\": \"2020-01-01\",\r\n      \"end_date\": \"2022-12-31\"\r\n    }\r\n  ]\r\n}\r\n"
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -1777,13 +1794,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/auth/token/login/",
+							"raw": "http://localhost:8000/api/auth/token/login/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"auth",
 								"token",
 								"login",
@@ -1908,13 +1926,14 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -2004,13 +2023,14 @@
 							"raw": "{\r\n  \"profession_id\": 2,\r\n  \"skill_ids\": [1,2],\r\n  \"experience\": [\r\n    {\r\n      \"organization\": \"TechStars\",\r\n      \"position\": \"CEO\",\r\n      \"start_date\": \"2020-01-01\",\r\n      \"end_date\": \"2022-01-01\",\r\n      \"description\": \"Руководство командой и запуск продукта\"\r\n    },\r\n    {\r\n      \"organization\": \"YCombinator\",\r\n      \"position\": \"CTO\",\r\n      \"start_date\": \"2016-03-01\",\r\n      \"end_date\": \"2019-03-01\",\r\n      \"description\": \"Разработка MVP и управление разработкой\"\r\n    }\r\n  ]\r\n}\r\n"
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -2062,13 +2082,14 @@
 							"raw": "{\r\n  \"profession_id\": 2,\r\n  \"skill_ids\": [1,2,9999],\r\n  \"experience\": [\r\n    {\r\n      \"organization\": \"TechStars\",\r\n      \"position\": \"CEO\",\r\n      \"start_date\": \"2020-01-01\",\r\n      \"end_date\": \"2022-12-31\",\r\n      \"description\": \"Руководство командой и запуск продукта\"\r\n    },\r\n    {\r\n      \"organization\": \"YCombinator\",\r\n      \"position\": \"CTO\",\r\n      \"start_date\": \"2018-03-01\",\r\n      \"end_date\": \"2019-11-30\",\r\n      \"description\": \"Разработка MVP и управление разработкой\"\r\n    }\r\n  ]\r\n}\r\n"
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -2153,13 +2174,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/auth/token/login/",
+							"raw": "http://localhost:8000/api/auth/token/login/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"auth",
 								"token",
 								"login",
@@ -2263,13 +2285,14 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -2372,13 +2395,14 @@
 							"raw": "{\r\n  \"industry_id\": 1,\r\n  \"preferred_stages\": [\r\n        \"waiting\",\r\n        \"in_progress\"\r\n    ],\r\n  \"experience\": [\r\n    {\r\n    \"title\": \"TechStars\",\r\n    \"industry\": \"rrr\",\r\n    \"stage\": \"waiting\",\r\n    \"date\": \"2022-12-31\",\r\n    \"description\": \"Руководство командой и запуск продукта\"\r\n    },\r\n    {\r\n      \"title\": \"YCombinator\",\r\n      \"industry\": \"rrr2\",\r\n      \"stage\": \"waiting\",\r\n      \"date\": \"2019-11-30\",\r\n      \"description\": \"Разработка MVP и управление разработкой\"\r\n    }\r\n  ]\r\n}\r\n"
 						},
 						"url": {
-							"raw": "http://localhost:8000/profile/me/",
+							"raw": "http://localhost:8000/api/profile/me/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -2458,13 +2482,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8000/profile/2/",
+					"raw": "http://localhost:8000/api/profile/2/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"profile",
 						"2",
 						""
@@ -2534,13 +2559,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8000/profile/6/",
+					"raw": "http://localhost:8000/api/profile/6/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"profile",
 						"6",
 						""
@@ -2624,13 +2650,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8000/profile/5/",
+					"raw": "http://localhost:8000/api/profile/5/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"profile",
 						"5",
 						""
