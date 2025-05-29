@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "7b08eef1-5b86-4b8b-974a-d69c2a2ae2a3",
+		"_postman_id": "c0c9ee06-348f-4318-a2b6-cfb87dcc0b66",
 		"name": "8. Search",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "44112372",
-		"_collection_link": "https://alinaobrezkova.postman.co/workspace/Diploma-tests~e4acbeed-fff8-4ec3-84d0-7292590347e4/collection/44112372-7b08eef1-5b86-4b8b-974a-d69c2a2ae2a3?action=share&source=collection_link&creator=44112372"
+		"_collection_link": "https://alinaobrezkova.postman.co/workspace/Diploma-tests~e4acbeed-fff8-4ec3-84d0-7292590347e4/collection/44112372-c0c9ee06-348f-4318-a2b6-cfb87dcc0b66?action=share&source=collection_link&creator=44112372"
 	},
 	"item": [
 		{
@@ -91,6 +91,7 @@
 									],
 									"port": "8000",
 									"path": [
+										"api",
 										"auth",
 										"token",
 										"login",
@@ -202,6 +203,7 @@
 									],
 									"port": "8000",
 									"path": [
+										"api",
 										"profile",
 										"me",
 										""
@@ -288,6 +290,7 @@
 									],
 									"port": "8000",
 									"path": [
+										"api",
 										"auth",
 										"token",
 										"login",
@@ -399,6 +402,7 @@
 									],
 									"port": "8000",
 									"path": [
+										"api",
 										"profile",
 										"me",
 										""
@@ -487,6 +491,7 @@
 									],
 									"port": "8000",
 									"path": [
+										"api",
 										"startups",
 										""
 									]
@@ -574,6 +579,7 @@
 									],
 									"port": "8000",
 									"path": [
+										"api",
 										"startups",
 										""
 									]
@@ -661,6 +667,7 @@
 									],
 									"port": "8000",
 									"path": [
+										"api",
 										"startups",
 										""
 									]
@@ -748,6 +755,7 @@
 									],
 									"port": "8000",
 									"path": [
+										"api",
 										"startups",
 										""
 									]
@@ -838,6 +846,7 @@
 									],
 									"port": "8000",
 									"path": [
+										"api",
 										"auth",
 										"token",
 										"login",
@@ -935,6 +944,7 @@
 									],
 									"port": "8000",
 									"path": [
+										"api",
 										"profile",
 										"me",
 										""
@@ -1021,6 +1031,7 @@
 									],
 									"port": "8000",
 									"path": [
+										"api",
 										"auth",
 										"token",
 										"login",
@@ -1118,6 +1129,7 @@
 									],
 									"port": "8000",
 									"path": [
+										"api",
 										"profile",
 										"me",
 										""
@@ -1203,6 +1215,7 @@
 									],
 									"port": "8000",
 									"path": [
+										"api",
 										"auth",
 										"users",
 										""
@@ -1289,6 +1302,7 @@
 									],
 									"port": "8000",
 									"path": [
+										"api",
 										"auth",
 										"token",
 										"login",
@@ -1399,6 +1413,7 @@
 									],
 									"port": "8000",
 									"path": [
+										"api",
 										"profile",
 										"me",
 										""
@@ -1479,6 +1494,7 @@
 									],
 									"port": "8000",
 									"path": [
+										"api",
 										"auth",
 										"users",
 										""
@@ -1565,6 +1581,7 @@
 									],
 									"port": "8000",
 									"path": [
+										"api",
 										"auth",
 										"token",
 										"login",
@@ -1675,6 +1692,7 @@
 									],
 									"port": "8000",
 									"path": [
+										"api",
 										"profile",
 										"me",
 										""
@@ -1750,6 +1768,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"search",
 								"specialists",
 								""
@@ -1818,6 +1837,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"search",
 								"specialists",
 								""
@@ -1892,6 +1912,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"search",
 								"specialists",
 								""
@@ -1966,6 +1987,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"search",
 								"specialists",
 								""
@@ -2040,6 +2062,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"search",
 								"specialists",
 								""
@@ -2114,6 +2137,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"search",
 								"specialists",
 								""
@@ -2197,6 +2221,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"search",
 								"investors",
 								""
@@ -2261,6 +2286,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"search",
 								"investors",
 								""
@@ -2331,6 +2357,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"search",
 								"investors",
 								""
@@ -2401,6 +2428,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"search",
 								"investors",
 								""
@@ -2471,6 +2499,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"search",
 								"investors",
 								""
@@ -2569,6 +2598,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"startups",
 								"search",
 								""
@@ -2646,6 +2676,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"startups",
 								"search",
 								""
@@ -2729,6 +2760,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"startups",
 								"search",
 								""
@@ -2812,6 +2844,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"startups",
 								"search",
 								""
@@ -2895,6 +2928,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"startups",
 								"search",
 								""
@@ -2979,6 +3013,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"startups",
 								"search",
 								""
@@ -3073,6 +3108,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"startups",
 								"search",
 								""
@@ -3139,6 +3175,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"startups",
 								"search",
 								""
@@ -3211,6 +3248,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"startups",
 								"search",
 								""
@@ -3283,6 +3321,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"startups",
 								"search",
 								""
@@ -3355,6 +3394,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"startups",
 								"search",
 								""
@@ -3427,6 +3467,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"startups",
 								"search",
 								""
@@ -3503,6 +3544,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"startups",
 								"search",
 								""

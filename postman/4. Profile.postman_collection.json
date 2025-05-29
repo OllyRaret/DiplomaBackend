@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "44e3eb53-c1e8-4ad2-8120-0bf426bad947",
+		"_postman_id": "2e3fbaa1-1789-40b0-ba33-d472252757ce",
 		"name": "4. Profile",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "44112372",
-		"_collection_link": "https://alinaobrezkova.postman.co/workspace/Diploma-tests~e4acbeed-fff8-4ec3-84d0-7292590347e4/collection/44112372-44e3eb53-c1e8-4ad2-8120-0bf426bad947?action=share&source=collection_link&creator=44112372"
+		"_collection_link": "https://alinaobrezkova.postman.co/workspace/Diploma-tests~e4acbeed-fff8-4ec3-84d0-7292590347e4/collection/44112372-2e3fbaa1-1789-40b0-ba33-d472252757ce?action=share&source=collection_link&creator=44112372"
 	},
 	"item": [
 		{
@@ -88,6 +88,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"auth",
 								"token",
 								"login",
@@ -172,6 +173,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -272,6 +274,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -405,6 +408,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -539,6 +543,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -672,6 +677,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -760,6 +766,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -858,6 +865,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -955,6 +963,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -1084,6 +1093,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -1180,6 +1190,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -1309,6 +1320,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -1406,6 +1418,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -1488,6 +1501,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -1579,6 +1593,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -1629,6 +1644,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -1693,6 +1709,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -1784,6 +1801,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"auth",
 								"token",
 								"login",
@@ -1915,6 +1933,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -2011,6 +2030,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -2069,6 +2089,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -2160,6 +2181,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"auth",
 								"token",
 								"login",
@@ -2270,6 +2292,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -2379,6 +2402,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"profile",
 								"me",
 								""
@@ -2465,6 +2489,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"profile",
 						"2",
 						""
@@ -2541,6 +2566,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"profile",
 						"6",
 						""
@@ -2631,6 +2657,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"profile",
 						"5",
 						""

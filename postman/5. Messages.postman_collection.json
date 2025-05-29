@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "c02fefeb-4708-4674-a05c-d611cea3908c",
+		"_postman_id": "d05d32f7-89fd-4fec-abbf-6b2b22d77575",
 		"name": "5. Messages",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "44112372",
-		"_collection_link": "https://alinaobrezkova.postman.co/workspace/Diploma-tests~e4acbeed-fff8-4ec3-84d0-7292590347e4/collection/44112372-c02fefeb-4708-4674-a05c-d611cea3908c?action=share&source=collection_link&creator=44112372"
+		"_collection_link": "https://alinaobrezkova.postman.co/workspace/Diploma-tests~e4acbeed-fff8-4ec3-84d0-7292590347e4/collection/44112372-d05d32f7-89fd-4fec-abbf-6b2b22d77575?action=share&source=collection_link&creator=44112372"
 	},
 	"item": [
 		{
@@ -88,6 +88,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"auth",
 								"token",
 								"login",
@@ -175,6 +176,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"auth",
 								"token",
 								"login",
@@ -262,6 +264,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"auth",
 								"token",
 								"login",
@@ -396,6 +399,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"messages",
 								""
 							]
@@ -528,6 +532,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"messages",
 								""
 							]
@@ -660,6 +665,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"messages",
 								""
 							]
@@ -804,6 +810,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"messages",
 								"dialogs",
 								""
@@ -938,6 +945,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"messages",
 								"6",
 								""
@@ -1080,6 +1088,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"messages",
 								"dialogs",
 								""
@@ -1225,6 +1234,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"messages",
 								"dialogs",
 								""
@@ -1358,6 +1368,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"messages",
 								""
 							]
@@ -1498,6 +1509,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"messages",
 								"6",
 								""
@@ -1631,6 +1643,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"messages",
 								""
 							]
@@ -1679,7 +1692,8 @@
 									"    pm.expect(responseData.non_field_errors).to.be.an('array').and.to.have.lengthOf.at.least(1, 'Non field errors array should not be empty');",
 									"})"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1714,6 +1728,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"messages",
 								""
 							]
@@ -1754,7 +1769,8 @@
 									"    pm.expect(pm.response.responseTime).to.be.below(500);",
 									"})"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1789,6 +1805,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"messages",
 								""
 							]
@@ -1843,7 +1860,8 @@
 									"  pm.expect(responseData.detail).to.exist.and.to.be.a('string');",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1879,6 +1897,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"messages",
 								""
 							]
@@ -1932,7 +1951,8 @@
 									"  pm.expect(pm.response.responseTime).to.be.below(500);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1967,6 +1987,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"messages",
 								""
 							]
@@ -2002,7 +2023,8 @@
 									"    pm.expect(responseData.detail).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Value should not be empty');",
 									"})"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -2042,6 +2064,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"messages",
 								"dialogs",
 								""
@@ -2077,7 +2100,8 @@
 									"    pm.expect(responseData.detail).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Detail field should not be empty');",
 									"})"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -2116,6 +2140,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"messages",
 								"dialogs",
 								""
@@ -2173,6 +2198,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"messages",
 								"999999",
 								""
@@ -2238,6 +2264,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"messages",
 								"2",
 								""
@@ -2303,6 +2330,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"messages",
 								"6",
 								""
@@ -2368,6 +2396,7 @@
 							],
 							"port": "8000",
 							"path": [
+								"api",
 								"messages",
 								"6",
 								""

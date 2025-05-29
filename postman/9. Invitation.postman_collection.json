@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "9607cf2f-c9f2-4333-9010-7b4805472243",
+		"_postman_id": "af23f681-fcf6-46c8-99ab-94e30ea7b193",
 		"name": "9. Invitation",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "44112372",
-		"_collection_link": "https://alinaobrezkova.postman.co/workspace/Diploma-tests~e4acbeed-fff8-4ec3-84d0-7292590347e4/collection/44112372-9607cf2f-c9f2-4333-9010-7b4805472243?action=share&source=collection_link&creator=44112372"
+		"_collection_link": "https://alinaobrezkova.postman.co/workspace/Diploma-tests~e4acbeed-fff8-4ec3-84d0-7292590347e4/collection/44112372-af23f681-fcf6-46c8-99ab-94e30ea7b193?action=share&source=collection_link&creator=44112372"
 	},
 	"item": [
 		{
@@ -85,6 +85,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"auth",
 						"token",
 						"login",
@@ -172,6 +173,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"auth",
 						"token",
 						"login",
@@ -259,6 +261,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"auth",
 						"token",
 						"login",
@@ -346,6 +349,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"auth",
 						"token",
 						"login",
@@ -433,6 +437,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"invitations",
 						""
 					]
@@ -488,6 +493,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"invitations",
 						""
 					]
@@ -543,6 +549,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"invitations",
 						""
 					]
@@ -598,6 +605,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"invitations",
 						""
 					]
@@ -695,6 +703,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"invitations",
 						""
 					]
@@ -792,6 +801,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"invitations",
 						""
 					]
@@ -889,6 +899,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"invitations",
 						""
 					]
@@ -943,6 +954,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"invitations",
 						"2",
 						"accept",
@@ -999,6 +1011,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"invitations",
 						"1",
 						"accept",
@@ -1055,6 +1068,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"invitations",
 						""
 					]
@@ -1109,6 +1123,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"invitations",
 						""
 					]
@@ -1194,6 +1209,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"invitations",
 						""
 					]
@@ -1248,6 +1264,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"invitations",
 						"2",
 						"decline",
@@ -1305,6 +1322,7 @@
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"invitations",
 						""
 					]
