@@ -87,6 +87,14 @@ class InvitationSerializer(serializers.ModelSerializer):
                 'Уже есть активное приглашение на эту вакансию.'
             )
 
+        if Invitation.objects.filter(
+                required_specialist=required_specialist,
+                specialist=specialist
+        ).exists():
+            raise serializers.ValidationError(
+                'Вы уже отправляли приглашение этому специалисту на эту вакансию.'
+            )
+
         if specialist.user == user:
             raise serializers.ValidationError('Нельзя приглашать самого себя.')
 

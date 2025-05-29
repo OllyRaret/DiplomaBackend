@@ -1,3 +1,5 @@
+from contextlib import nullcontext
+
 from django.db.models import Q, Max
 from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
@@ -46,7 +48,10 @@ class MessageViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request, pk=None):
         ''' Получить диалог с конкретным пользователем (по его id) '''
-        other_user = self.get_object()
+        if pk == '-1':
+            other_user = None
+        else:
+            other_user = self.get_object()
         user = request.user
 
         # Отметим непрочитанные входящие сообщения как прочитанные
@@ -97,16 +102,34 @@ class MessageViewSet(viewsets.ModelViewSet):
         # и (sender=B, recipient=A) — это один диалог
         unique_dialogs = {}
         for m in Message.objects.filter(id__in=latest_ids):
-            user1 = min(m.sender.id, m.recipient.id)
-            user2 = max(m.sender.id, m.recipient.id)
-            key = (user1, user2)
+            if m.sender is None:
+                key = (None, m.recipient.id)
+            else:
+                user1 = min(m.sender.id, m.recipient.id)
+                user2 = max(m.sender.id, m.recipient.id)
+                key = (user1, user2)
             if (
                     key not in unique_dialogs
                     or unique_dialogs[key].timestamp < m.timestamp
             ):
                 unique_dialogs[key] = m
 
-        serializer = self.get_serializer(unique_dialogs.values(), many=True)
+        # Разделим системные и обычные диалоги
+        system_dialogs = []
+        user_dialogs = []
+        for msg in unique_dialogs.values():
+            if msg.sender is None:
+                system_dialogs.append(msg)
+            else:
+                user_dialogs.append(msg)
+
+        # Сортируем обычные диалоги по убыванию времени
+        user_dialogs.sort(key=lambda m: m.timestamp, reverse=True)
+
+        # Объединяем: сначала системные, потом обычные
+        ordered_dialogs = system_dialogs + user_dialogs
+
+        serializer = self.get_serializer(ordered_dialogs, many=True)
         return Response(serializer.data)
 
 
