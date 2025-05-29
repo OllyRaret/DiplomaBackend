@@ -78,7 +78,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/token/login/",
+					"raw": "http://localhost:8000/api/auth/token/login/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -165,7 +165,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/token/login/",
+					"raw": "http://localhost:8000/api/auth/token/login/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -252,7 +252,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/token/login/",
+					"raw": "http://localhost:8000/api/auth/token/login/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -339,7 +339,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/",
+					"raw": "http://localhost:8000/api/startups/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -428,7 +428,7 @@
 					"raw": "{\r\n  \"title\": \"Test\",\r\n  \"industry_id\": 2,\r\n  \"description\": \"Test test test\",\r\n  \"stage\": \"waiting\",\r\n  \"investment_needed\": 10000,\r\n  \"required_specialists\": [\r\n    {\r\n      \"profession_id\": 1,\r\n      \"skills_ids\": [1, 2]\r\n    },\r\n    {\r\n      \"profession_id\": 2,\r\n      \"skills_ids\": [3, 4]\r\n    }\r\n  ]\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/",
+					"raw": "http://localhost:8000/api/startups/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -517,7 +517,7 @@
 					"raw": "{\r\n  \"title\": \"Test change\",\r\n  \"industry_id\": 3,\r\n  \"description\": \"Test test test change\",\r\n  \"stage\": \"launch\",\r\n  \"investment_needed\": 20000,\r\n  \"required_specialists\": [\r\n    {\r\n      \"profession_id\": 3,\r\n      \"skills_ids\": [3, 2]\r\n    },\r\n    {\r\n      \"profession_id\": 4,\r\n      \"skills_ids\": [1, 4]\r\n    }\r\n  ]\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/1/",
+					"raw": "http://localhost:8000/api/startups/1/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -574,7 +574,7 @@
 					"raw": "{\r\n  \"title\": \"Test change\",\r\n  \"industry_id\": 3,\r\n  \"description\": \"Test test test change\",\r\n  \"stage\": \"launch\",\r\n  \"investment_needed\": 20000,\r\n  \"required_specialists\": [\r\n    {\r\n      \"profession_id\": 3,\r\n      \"skills_ids\": [3, 2]\r\n    },\r\n    {\r\n      \"profession_id\": 4,\r\n      \"skills_ids\": [1, 4]\r\n    }\r\n  ]\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/1/",
+					"raw": "http://localhost:8000/api/startups/1/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -639,7 +639,7 @@
 					"raw": "{\r\n  \"title\": \"Test change\",\r\n  \"industry_id\": 99999,\r\n  \"description\": \"Test test test change\",\r\n  \"stage\": \"launch\",\r\n  \"investment_needed\": 20000,\r\n  \"required_specialists\": [\r\n    {\r\n      \"profession_id\": 3,\r\n      \"skills_ids\": [3, 2]\r\n    },\r\n    {\r\n      \"profession_id\": 4,\r\n      \"skills_ids\": [1, 4]\r\n    }\r\n  ]\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/1/",
+					"raw": "http://localhost:8000/api/startups/1/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -704,7 +704,7 @@
 					"raw": "{\r\n  \"title\": \"Test change\",\r\n  \"industry_id\": \"str\",\r\n  \"description\": \"Test test test change\",\r\n  \"stage\": \"launch\",\r\n  \"investment_needed\": 20000,\r\n  \"required_specialists\": [\r\n    {\r\n      \"profession_id\": 3,\r\n      \"skills_ids\": [3, 2]\r\n    },\r\n    {\r\n      \"profession_id\": 4,\r\n      \"skills_ids\": [1, 4]\r\n    }\r\n  ]\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/1/",
+					"raw": "http://localhost:8000/api/startups/1/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -769,7 +769,7 @@
 					"raw": "{\r\n  \"title\": \"Test change\",\r\n  \"industry_id\": 1,\r\n  \"description\": \"Test test test change\",\r\n  \"stage\": \"unknown\",\r\n  \"investment_needed\": 20000,\r\n  \"required_specialists\": [\r\n    {\r\n      \"profession_id\": 3,\r\n      \"skills_ids\": [3, 2]\r\n    },\r\n    {\r\n      \"profession_id\": 4,\r\n      \"skills_ids\": [1, 4]\r\n    }\r\n  ]\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/1/",
+					"raw": "http://localhost:8000/api/startups/1/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -834,7 +834,7 @@
 					"raw": "{\r\n  \"title\": \"Test change\",\r\n  \"industry_id\": 1,\r\n  \"description\": \"Test test test change\",\r\n  \"stage\": 1,\r\n  \"investment_needed\": 20000,\r\n  \"required_specialists\": [\r\n    {\r\n      \"profession_id\": 3,\r\n      \"skills_ids\": [3, 2]\r\n    },\r\n    {\r\n      \"profession_id\": 4,\r\n      \"skills_ids\": [1, 4]\r\n    }\r\n  ]\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/1/",
+					"raw": "http://localhost:8000/api/startups/1/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -899,7 +899,7 @@
 					"raw": "{\r\n  \"title\": \"Test change\",\r\n  \"industry_id\": 1,\r\n  \"description\": \"Test test test change\",\r\n  \"stage\": \"launch\",\r\n  \"investment_needed\": -10000,\r\n  \"required_specialists\": [\r\n    {\r\n      \"profession_id\": 3,\r\n      \"skills_ids\": [3, 2]\r\n    },\r\n    {\r\n      \"profession_id\": 4,\r\n      \"skills_ids\": [1, 4]\r\n    }\r\n  ]\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/1/",
+					"raw": "http://localhost:8000/api/startups/1/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -979,7 +979,7 @@
 					"raw": "{\r\n  \"title\": \"Test change\",\r\n  \"industry_id\": 1,\r\n  \"description\": \"Test test test change\",\r\n  \"stage\": \"launch\",\r\n  \"investment_needed\": 10000,\r\n  \"required_specialists\": [\r\n    {\r\n      \"profession_id\": 9999,\r\n      \"skills_ids\": [3999, 2999]\r\n    },\r\n    {\r\n      \"profession_id\": 4999,\r\n      \"skills_ids\": [1999, 4999]\r\n    }\r\n  ]\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/1/",
+					"raw": "http://localhost:8000/api/startups/1/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1051,7 +1051,7 @@
 					"raw": "{\r\n  \"title\": \"Test change\",\r\n  \"industry_id\": 1,\r\n  \"description\": \"Test test test change\",\r\n  \"stage\": \"launch\",\r\n  \"investment_needed\": 10000,\r\n  \"required_specialists\": [\r\n    {\r\n      \"profession_id\": 1,\r\n      \"skills_ids\": [3, 2]\r\n    },\r\n    {\r\n      \"profession_id\": 4,\r\n      \"skills_ids\": [1, 4]\r\n    }\r\n  ]\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/1/",
+					"raw": "http://localhost:8000/api/startups/1/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1122,7 +1122,7 @@
 					"raw": "{\r\n  \"title\": \"Test change\",\r\n  \"industry_id\": 1,\r\n  \"description\": \"Test test test change\",\r\n  \"stage\": \"launch\",\r\n  \"investment_needed\": 10000,\r\n  \"required_specialists\": [\r\n    {\r\n      \"profession_id\": 1,\r\n      \"skills_ids\": [3, 2]\r\n    },\r\n    {\r\n      \"profession_id\": 4,\r\n      \"skills_ids\": [1, 4]\r\n    }\r\n  ]\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/1/",
+					"raw": "http://localhost:8000/api/startups/1/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1193,7 +1193,7 @@
 					"raw": "{\r\n  \"title\": \"Test\",\r\n  \"industry_id\": 2,\r\n  \"description\": \"Test test test\",\r\n  \"stage\": \"waiting\",\r\n  \"investment_needed\": 10000,\r\n  \"required_specialists\": [\r\n    {\r\n      \"profession_id\": 1,\r\n      \"skills_ids\": [1, 2]\r\n    },\r\n    {\r\n      \"profession_id\": 2,\r\n      \"skills_ids\": [3, 4]\r\n    }\r\n  ]\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/",
+					"raw": "http://localhost:8000/api/startups/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1256,7 +1256,7 @@
 					"raw": "{\r\n  \"title\": \"Test\",\r\n  \"industry_id\": 2,\r\n  \"description\": \"Test test test\",\r\n  \"stage\": \"waiting\",\r\n  \"investment_needed\": 10000,\r\n  \"required_specialists\": [\r\n    {\r\n      \"profession_id\": 1,\r\n      \"skills_ids\": [1, 2]\r\n    },\r\n    {\r\n      \"profession_id\": 2,\r\n      \"skills_ids\": [3, 4]\r\n    }\r\n  ]\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/",
+					"raw": "http://localhost:8000/api/startups/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1320,7 +1320,7 @@
 					"raw": "{\r\n  \"title\": \"Test\",\r\n  \"industry_id\": 2,\r\n  \"description\": \"Test test test\",\r\n  \"stage\": \"waiting\",\r\n  \"investment_needed\": 10000,\r\n  \"required_specialists\": [\r\n    {\r\n      \"profession_id\": 1,\r\n      \"skills_ids\": [1, 2]\r\n    },\r\n    {\r\n      \"profession_id\": 2,\r\n      \"skills_ids\": [3, 4]\r\n    }\r\n  ]\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/",
+					"raw": "http://localhost:8000/api/startups/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1383,7 +1383,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/1/",
+					"raw": "http://localhost:8000/api/startups/1/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1447,7 +1447,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/1/",
+					"raw": "http://localhost:8000/api/startups/1/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1512,7 +1512,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/1/",
+					"raw": "http://localhost:8000/api/startups/1/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1562,7 +1562,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/1/",
+					"raw": "http://localhost:8000/api/startups/1/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1654,7 +1654,7 @@
 					"raw": "{\r\n  \"title\": \"Test\",\r\n  \"industry_id\": 2,\r\n  \"description\": \"Test test test\",\r\n  \"stage\": \"waiting\",\r\n  \"investment_needed\": 10000,\r\n  \"required_specialists\": [\r\n    {\r\n      \"profession_id\": 1,\r\n      \"skills_ids\": [1, 2],\r\n      \"specialist_user_id\": 6\r\n    },\r\n    {\r\n      \"profession_id\": 2,\r\n      \"skills_ids\": [3, 4],\r\n      \"specialist_user_id\": 7\r\n    }\r\n  ]\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/",
+					"raw": "http://localhost:8000/api/startups/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1726,7 +1726,7 @@
 					"raw": "{\r\n  \"title\": \"Test\",\r\n  \"industry_id\": 2,\r\n  \"description\": \"Test test test\",\r\n  \"stage\": \"waiting\",\r\n  \"investment_needed\": 10000,\r\n  \"required_specialists\": [\r\n    {\r\n      \"profession_id\": 1,\r\n      \"skills_ids\": [1, 2],\r\n      \"specialist_user_id\": 3\r\n    },\r\n    {\r\n      \"profession_id\": 2,\r\n      \"skills_ids\": [3, 4],\r\n      \"specialist_user_id\": 5\r\n    }\r\n  ]\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/",
+					"raw": "http://localhost:8000/api/startups/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1775,7 +1775,7 @@
 					"raw": "{\r\n  \"title\": \"Test\",\r\n  \"industry_id\": 2,\r\n  \"description\": \"Test test test\",\r\n  \"stage\": \"waiting\",\r\n  \"investment_needed\": 10000,\r\n  \"required_specialists\": [\r\n    {\r\n      \"profession_id\": 1,\r\n      \"skills_ids\": [1, 2],\r\n      \"specialist_user_id\": 9999\r\n    },\r\n    {\r\n      \"profession_id\": 2,\r\n      \"skills_ids\": [3, 4],\r\n      \"specialist_user_id\": \"\"\r\n    }\r\n  ]\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/",
+					"raw": "http://localhost:8000/api/startups/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1813,7 +1813,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/my-startups/",
+					"raw": "http://localhost:8000/api/startups/my-startups/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1852,7 +1852,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8000/startups/my-startups/",
+					"raw": "http://localhost:8000/api/startups/my-startups/",
 					"protocol": "http",
 					"host": [
 						"localhost"

@@ -81,7 +81,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/auth/token/login/",
+							"raw": "http://localhost:8000/api/auth/token/login/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -168,7 +168,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/auth/token/login/",
+							"raw": "http://localhost:8000/api/auth/token/login/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -255,7 +255,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/auth/token/login/",
+							"raw": "http://localhost:8000/api/auth/token/login/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -323,7 +323,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -378,7 +378,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -440,7 +440,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -501,7 +501,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -562,7 +562,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -620,7 +620,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/specialists/",
+							"raw": "http://localhost:8000/api/favorites/specialists/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -679,7 +679,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/investors/",
+							"raw": "http://localhost:8000/api/favorites/investors/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -738,7 +738,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/startup_for_specialist/",
+							"raw": "http://localhost:8000/api/favorites/startup_for_specialist/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -797,7 +797,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/startup_for_investor/",
+							"raw": "http://localhost:8000/api/favorites/startup_for_investor/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -852,7 +852,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/remove/",
+							"raw": "http://localhost:8000/api/favorites/remove/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -907,7 +907,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/remove/",
+							"raw": "http://localhost:8000/api/favorites/remove/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -962,7 +962,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/remove/",
+							"raw": "http://localhost:8000/api/favorites/remove/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1017,7 +1017,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/remove/",
+							"raw": "http://localhost:8000/api/favorites/remove/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1072,7 +1072,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/remove/",
+							"raw": "http://localhost:8000/api/favorites/remove/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1127,7 +1127,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/remove/",
+							"raw": "http://localhost:8000/api/favorites/remove/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1194,7 +1194,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1248,7 +1248,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1310,7 +1310,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1371,7 +1371,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1432,7 +1432,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1490,7 +1490,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/specialists/",
+							"raw": "http://localhost:8000/api/favorites/specialists/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1549,7 +1549,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/investors/",
+							"raw": "http://localhost:8000/api/favorites/investors/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1608,7 +1608,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/startup_for_specialist/",
+							"raw": "http://localhost:8000/api/favorites/startup_for_specialist/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1667,7 +1667,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/startup_for_investor/",
+							"raw": "http://localhost:8000/api/favorites/startup_for_investor/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1734,7 +1734,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1788,7 +1788,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1850,7 +1850,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1911,7 +1911,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/",
+							"raw": "http://localhost:8000/api/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1969,7 +1969,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/specialists/",
+							"raw": "http://localhost:8000/api/favorites/specialists/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2028,7 +2028,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/investors/",
+							"raw": "http://localhost:8000/api/favorites/investors/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2087,7 +2087,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/startup_for_specialist/",
+							"raw": "http://localhost:8000/api/favorites/startup_for_specialist/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2146,7 +2146,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/favorites/startup_for_investor/",
+							"raw": "http://localhost:8000/api/favorites/startup_for_investor/",
 							"protocol": "http",
 							"host": [
 								"localhost"

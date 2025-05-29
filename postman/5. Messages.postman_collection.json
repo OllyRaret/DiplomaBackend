@@ -81,7 +81,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/auth/token/login/",
+							"raw": "http://localhost:8000/api/auth/token/login/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -168,7 +168,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/auth/token/login/",
+							"raw": "http://localhost:8000/api/auth/token/login/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -255,7 +255,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/auth/token/login/",
+							"raw": "http://localhost:8000/api/auth/token/login/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -389,7 +389,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/messages/",
+							"raw": "http://localhost:8000/api/messages/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -414,9 +414,9 @@
 									"",
 									"if (jsonData && jsonData.id) {",
 									"    pm.environment.set(\"message_id3\", jsonData.id);",
-									"    console.log(\"✅ ID сообщения сохранён:\", jsonData.id);",
+									"    console.log(\"ID сообщения сохранён:\", jsonData.id);",
 									"} else {",
-									"    console.log(\"❌ ID сообщения не найден в ответе\");",
+									"    console.log(\"ID сообщения не найден в ответе\");",
 									"}",
 									"",
 									"pm.test('Response status code is 201', function () {",
@@ -521,7 +521,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/messages/",
+							"raw": "http://localhost:8000/api/messages/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -546,9 +546,9 @@
 									"",
 									"if (jsonData && jsonData.id) {",
 									"    pm.environment.set(\"message_id4\", jsonData.id);",
-									"    console.log(\"✅ ID сообщения сохранён:\", jsonData.id);",
+									"    console.log(\"ID сообщения сохранён:\", jsonData.id);",
 									"} else {",
-									"    console.log(\"❌ ID сообщения не найден в ответе\");",
+									"    console.log(\"ID сообщения не найден в ответе\");",
 									"}",
 									"",
 									"pm.test('Response status code is 201', function () {",
@@ -653,7 +653,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/messages/",
+							"raw": "http://localhost:8000/api/messages/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -797,7 +797,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/messages/dialogs/",
+							"raw": "http://localhost:8000/api/messages/dialogs/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -931,7 +931,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/messages/6/",
+							"raw": "http://localhost:8000/api/messages/6/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1073,7 +1073,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/messages/dialogs/",
+							"raw": "http://localhost:8000/api/messages/dialogs/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1218,7 +1218,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/messages/dialogs/",
+							"raw": "http://localhost:8000/api/messages/dialogs/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1244,9 +1244,9 @@
 									"",
 									"if (jsonData && jsonData.id) {",
 									"    pm.environment.set(\"message_id7\", jsonData.id);",
-									"    console.log(\"✅ ID сообщения сохранён:\", jsonData.id);",
+									"    console.log(\"ID сообщения сохранён:\", jsonData.id);",
 									"} else {",
-									"    console.log(\"❌ ID сообщения не найден в ответе\");",
+									"    console.log(\"ID сообщения не найден в ответе\");",
 									"}",
 									"",
 									"pm.test('Response status code is 201', function () {",
@@ -1351,7 +1351,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/messages/",
+							"raw": "http://localhost:8000/api/messages/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1491,7 +1491,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/messages/6/",
+							"raw": "http://localhost:8000/api/messages/6/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1517,9 +1517,9 @@
 									"",
 									"if (jsonData && jsonData.id) {",
 									"    pm.environment.set(\"message_id8\", jsonData.id);",
-									"    console.log(\"✅ ID сообщения сохранён:\", jsonData.id);",
+									"    console.log(\"ID сообщения сохранён:\", jsonData.id);",
 									"} else {",
-									"    console.log(\"❌ ID сообщения не найден в ответе\");",
+									"    console.log(\"ID сообщения не найден в ответе\");",
 									"}",
 									"",
 									"pm.test('Response status code is 201', function () {",
@@ -1624,7 +1624,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/messages/",
+							"raw": "http://localhost:8000/api/messages/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1654,9 +1654,9 @@
 									"\r",
 									"if (jsonData && jsonData.id) {\r",
 									"    pm.environment.set(\"message_id_wrong\", jsonData.id);\r",
-									"    console.log(\"✅ ID сообщения сохранён:\", jsonData.id);\r",
+									"    console.log(\"ID сообщения сохранён:\", jsonData.id);\r",
 									"} else {\r",
-									"    console.log(\"❌ ID сообщения не найден в ответе\");\r",
+									"    console.log(\"ID сообщения не найден в ответе\");\r",
 									"}\r",
 									"",
 									"",
@@ -1707,7 +1707,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/messages/",
+							"raw": "http://localhost:8000/api/messages/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1732,9 +1732,9 @@
 									"\r",
 									"if (jsonData && jsonData.id) {\r",
 									"    pm.environment.set(\"message_id_wrong\", jsonData.id);\r",
-									"    console.log(\"✅ ID сообщения сохранён:\", jsonData.id);\r",
+									"    console.log(\"ID сообщения сохранён:\", jsonData.id);\r",
 									"} else {\r",
-									"    console.log(\"❌ ID сообщения не найден в ответе\");\r",
+									"    console.log(\"ID сообщения не найден в ответе\");\r",
 									"}\r",
 									"",
 									"pm.test('Response status code is 400', function () {",
@@ -1782,7 +1782,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/messages/",
+							"raw": "http://localhost:8000/api/messages/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1807,9 +1807,9 @@
 									"\r",
 									"if (jsonData && jsonData.id) {\r",
 									"    pm.environment.set(\"message_id_wrong\", jsonData.id);\r",
-									"    console.log(\"✅ ID сообщения сохранён:\", jsonData.id);\r",
+									"    console.log(\"ID сообщения сохранён:\", jsonData.id);\r",
 									"} else {\r",
-									"    console.log(\"❌ ID сообщения не найден в ответе\");\r",
+									"    console.log(\"ID сообщения не найден в ответе\");\r",
 									"}\r",
 									"",
 									"pm.test(\"Response status code is 401\", function () {",
@@ -1872,7 +1872,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/messages/",
+							"raw": "http://localhost:8000/api/messages/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1897,9 +1897,9 @@
 									"\r",
 									"if (jsonData && jsonData.id) {\r",
 									"    pm.environment.set(\"message_id_wrong\", jsonData.id);\r",
-									"    console.log(\"✅ ID сообщения сохранён:\", jsonData.id);\r",
+									"    console.log(\"ID сообщения сохранён:\", jsonData.id);\r",
 									"} else {\r",
-									"    console.log(\"❌ ID сообщения не найден в ответе\");\r",
+									"    console.log(\"ID сообщения не найден в ответе\");\r",
 									"}\r",
 									"",
 									"",
@@ -1960,7 +1960,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/messages/",
+							"raw": "http://localhost:8000/api/messages/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2035,7 +2035,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/messages/dialogs/",
+							"raw": "http://localhost:8000/api/messages/dialogs/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2109,7 +2109,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/messages/dialogs/",
+							"raw": "http://localhost:8000/api/messages/dialogs/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2166,7 +2166,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/messages/999999/",
+							"raw": "http://localhost:8000/api/messages/999999/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2231,7 +2231,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/messages/2/",
+							"raw": "http://localhost:8000/api/messages/2/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2296,7 +2296,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/messages/6/",
+							"raw": "http://localhost:8000/api/messages/6/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2361,7 +2361,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/messages/6/",
+							"raw": "http://localhost:8000/api/messages/6/",
 							"protocol": "http",
 							"host": [
 								"localhost"

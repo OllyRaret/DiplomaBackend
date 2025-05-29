@@ -75,7 +75,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/users/",
+					"raw": "http://localhost:8000/api/auth/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -144,7 +144,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/users/",
+					"raw": "http://localhost:8000/api/auth/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -232,7 +232,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/users/",
+					"raw": "http://localhost:8000/api/auth/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -309,7 +309,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/users/",
+					"raw": "http://localhost:8000/api/auth/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -372,7 +372,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/users/",
+					"raw": "http://localhost:8000/api/auth/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -445,7 +445,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/users/",
+					"raw": "http://localhost:8000/api/auth/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -510,7 +510,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/users/",
+					"raw": "http://localhost:8000/api/auth/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -586,7 +586,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/users/",
+					"raw": "http://localhost:8000/api/auth/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -663,7 +663,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/users/",
+					"raw": "http://localhost:8000/api/auth/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -742,7 +742,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/users/",
+					"raw": "http://localhost:8000/api/auth/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -822,7 +822,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/users/",
+					"raw": "http://localhost:8000/api/auth/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -886,7 +886,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/users/",
+					"raw": "http://localhost:8000/api/auth/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -963,7 +963,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/users/",
+					"raw": "http://localhost:8000/api/auth/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1044,7 +1044,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/users/",
+					"raw": "http://localhost:8000/api/auth/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1120,7 +1120,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/users/",
+					"raw": "http://localhost:8000/api/auth/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1178,7 +1178,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/users/",
+					"raw": "http://localhost:8000/api/auth/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1257,7 +1257,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/users/",
+					"raw": "http://localhost:8000/api/auth/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1336,7 +1336,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/users/",
+					"raw": "http://localhost:8000/api/auth/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1419,7 +1419,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/users/",
+					"raw": "http://localhost:8000/api/auth/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1499,7 +1499,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth/users/",
+					"raw": "http://localhost:8000/api/auth/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
