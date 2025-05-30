@@ -92,7 +92,8 @@ class InvitationSerializer(serializers.ModelSerializer):
                 specialist=specialist
         ).exists():
             raise serializers.ValidationError(
-                'Вы уже отправляли приглашение этому специалисту на эту вакансию.'
+                'Вы уже отправляли приглашение '
+                'этому специалисту на эту вакансию.'
             )
 
         if specialist.user == user:
